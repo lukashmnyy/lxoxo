@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L,XOXO — #1 Best-Selling Emote Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#191b1d;--bg2:#1e2022;--card:#232527;--card2:#2d2f31;
+--border:#303236;--blue:#3a8afd;--blue-hover:#5a9eff;--blue-glow:rgba(58,138,253,.3);
+--green:#3dd756;--green-glow:rgba(61,215,86,.3);
+--text:#e8eaed;--text2:#9ca0a5;--text3:#6b7075;
+--font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;
+--serif:'Playfair Display',Georgia,'Times New Roman',serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;background:#191b1d}
+body{font-family:var(--font);background:transparent;color:var(--text);overflow-x:hidden;line-height:1.6}
+/* Make sections transparent so fixed video shows through */
+section,.stats-scroll,.catalog-wrap,.pin-spacer,[class*="pin-spacer"]{background:transparent!important}
+
+.bg-glow{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.bg-glow .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.08;will-change:transform}
+.bg-glow .orb1{width:800px;height:800px;background:radial-gradient(circle,#3a6afd,transparent 70%);top:-200px;left:-100px;animation:orbFloat1 25s ease-in-out infinite}
+.bg-glow .orb2{width:600px;height:600px;background:radial-gradient(circle,#6c5ce7,transparent 70%);bottom:-100px;right:-100px;animation:orbFloat2 30s ease-in-out infinite}
+.bg-glow .orb3{width:500px;height:500px;background:radial-gradient(circle,#3a8afd,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);animation:orbFloat3 20s ease-in-out infinite}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,60px)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,-80px)}}
+@keyframes orbFloat3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-40%,-40%) scale(1.15)}}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+
+section{position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* PERSISTENT VIDEO BG — fixed behind everything */
+.video-bg-fixed{position:fixed;inset:0;z-index:0;overflow:hidden}
+.video-bg-fixed video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video-bg-fixed canvas.vbf-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.video-bg-fixed .vbf-overlay{position:absolute;inset:0;z-index:2;background:rgba(25,27,29,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);transition:none}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-content{position:relative;z-index:2;padding:60px 24px 80px;display:flex;flex-direction:column;align-items:center}
+.hero-logo{width:clamp(380px,55vw,680px);margin:0 auto 28px;filter:drop-shadow(0 0 60px rgba(0,0,0,.5)) drop-shadow(0 0 120px rgba(58,138,253,.15))}
+.hero-logo img{width:100%;height:auto}
+.hero-tagline{font-size:clamp(.85rem,1.8vw,1.15rem);color:rgba(255,255,255,.55);letter-spacing:4px;text-transform:uppercase;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.5);margin-bottom:48px}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-bottom:40px}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:2.2rem;font-weight:800;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.hero-stat .label{font-size:.68rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+.hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.glass-btn{position:relative;overflow:hidden;padding:14px 32px;border-radius:20px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .5s cubic-bezier(.4,0,.2,1);font-family:var(--font);text-decoration:none;display:inline-flex;align-items:center;gap:8px;color:#fff;z-index:1;border:none}
+/* Real refraction layer — cloned video with SVG displacement */
+.glass-btn .liquid-bg{position:absolute;inset:0;border-radius:20px;overflow:hidden;z-index:-2;pointer-events:none}
+.glass-btn .liquid-bg canvas{position:absolute;inset:0;width:100%;height:100%;filter:url(#liquid-refract) blur(6px) brightness(1.1) saturate(1.5);will-change:filter}
+.glass-btn:hover .liquid-bg canvas{filter:url(#liquid-refract-hover) blur(4px) brightness(1.15) saturate(1.6)}
+/* Color tint overlay */
+.glass-btn .liquid-tint{position:absolute;inset:0;border-radius:20px;z-index:-1;pointer-events:none}
+/* Glass border */
+.glass-btn::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1.5px;background:linear-gradient(160deg,rgba(255,255,255,.5),rgba(255,255,255,.06) 35%,transparent 55%,rgba(255,255,255,.08) 80%,rgba(255,255,255,.4));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+/* Top edge highlight */
+.glass-btn::after{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5) 30%,rgba(255,255,255,.7) 50%,rgba(255,255,255,.5) 70%,transparent);pointer-events:none;filter:blur(0.3px);border-radius:20px}
+.btn-primary .liquid-tint{background:linear-gradient(160deg,rgba(58,138,253,.4),rgba(58,138,253,.1) 50%,rgba(58,138,253,.2))}
+.btn-primary{box-shadow:0 4px 24px rgba(58,138,253,.25),0 1px 2px rgba(0,0,0,.3),inset 0 1px 1px rgba(255,255,255,.15),inset 0 -1px 1px rgba(0,0,0,.15)}
+.btn-primary:hover{box-shadow:0 8px 40px rgba(58,138,253,.4),0 2px 4px rgba(0,0,0,.3),inset 0 1px 1px rgba(255,255,255,.25),inset 0 -1px 1px rgba(0,0,0,.1);transform:translateY(-2px) scale(1.05)}
+.btn-secondary .liquid-tint{background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.02) 50%,rgba(255,255,255,.08))}
+.btn-secondary{box-shadow:0 4px 20px rgba(0,0,0,.2),0 1px 2px rgba(0,0,0,.3),inset 0 1px 1px rgba(255,255,255,.12),inset 0 -1px 1px rgba(0,0,0,.15)}
+.btn-secondary:hover{box-shadow:0 8px 36px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.3),inset 0 1px 1px rgba(255,255,255,.2),inset 0 -1px 1px rgba(0,0,0,.1);transform:translateY(-2px) scale(1.05)}
+.btn-secondary:hover{background:linear-gradient(160deg,rgba(255,255,255,.26),rgba(255,255,255,.05) 45%,rgba(255,255,255,.16));box-shadow:0 8px 36px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.3),inset 0 1px 1px rgba(255,255,255,.25),inset 0 -1px 1px rgba(0,0,0,.1),inset 0 0 24px rgba(255,255,255,.05);transform:translateY(-2px) scale(1.05)}
+.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;opacity:.4}
+.scroll-mouse{width:22px;height:34px;border:2px solid rgba(255,255,255,.4);border-radius:11px;position:relative}
+.scroll-mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:7px;background:rgba(255,255,255,.5);border-radius:2px;animation:scrollDot 1.8s ease-in-out infinite}
+@keyframes scrollDot{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(10px)}}
+
+/* TEXT REVEAL */
+.text-reveal-section{padding:0 24px;text-align:center;height:70vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;margin-bottom:-85vh}
+.text-reveal{font-size:clamp(1.5rem,3.8vw,2.8rem);font-weight:700;line-height:1.6;max-width:850px;margin:0 auto}
+.text-reveal .word{display:inline-block;margin:0 5px;opacity:.15;will-change:opacity;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.text-reveal .word.active{opacity:1;transition:opacity .5s}
+.text-reveal .word.brand-word{font-family:var(--serif);color:var(--blue)}
+.text-reveal .inline-logo{height:1.5em;width:auto;vertical-align:middle;filter:drop-shadow(0 0 12px rgba(58,138,253,.3));margin:-0.55em 0.05em;position:relative;top:-0.15em}
+
+/* GNARLY — removed */
+
+/* ======== STAT SCROLL — pinned counter ======== */
+.stats-scroll{position:relative;z-index:1}
+.stats-scroll-pin{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.stat-counter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(60px) scale(.85);pointer-events:none;will-change:transform,opacity}
+.stat-counter .sc-label{font-size:.72rem;text-transform:uppercase;letter-spacing:4px;color:var(--blue);font-weight:600;margin-bottom:20px;position:relative;z-index:2}
+.stat-counter .sc-number{font-size:clamp(5rem,15vw,10rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:16px;position:relative;z-index:2;display:inline-block;overflow:hidden}
+/* Liquid-bg canvas — clipped to text shape via mask on parent */
+.stat-counter .sc-number .liquid-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.stat-counter .sc-number .liquid-bg canvas{position:absolute;inset:0;width:100%;height:100%;filter:url(#liquid-refract) blur(2px) brightness(1.2) saturate(1.3)}
+/* Tint overlay */
+.stat-counter .sc-number .liquid-tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(58,138,253,.08) 60%,rgba(58,138,253,.15))}
+/* Hide original text — mask handles shape */
+.stat-counter .sc-number .num-text{position:relative;z-index:2;color:transparent;pointer-events:none}
+/* Shine sweep clipped to text */
+.stat-counter .sc-number::after{content:'';position:absolute;inset:0;z-index:4;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.15) 42%,rgba(255,255,255,.3) 45%,rgba(255,255,255,.15) 48%,transparent 60%);background-size:250% 100%;background-position:var(--shine-pos,120%) 0;pointer-events:none}
+.stat-counter .sc-desc{font-size:clamp(.95rem,1.5vw,1.12rem);color:var(--text2);max-width:440px;line-height:1.7;padding:0 24px;position:relative;z-index:2}
+.stat-counter .sc-glow{position:absolute;width:clamp(300px,50vw,600px);height:clamp(300px,50vw,600px);border-radius:50%;background:radial-gradient(circle,rgba(58,138,253,.18),transparent 70%);filter:blur(60px);pointer-events:none;z-index:0;opacity:0;transition:opacity .6s}
+/* Floating visual elements behind stats — frameless PNGs */
+.sc-visuals{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.sc-float{position:absolute;will-change:transform;transition:none;border:none;background:none;box-shadow:none;overflow:visible}
+.sc-float img{display:block;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));border-radius:14px}
+/* Emote thumbs for stat 0 — scroll-driven L,XOXO formation */
+.sc-float.emote-thumb{width:58px;height:58px;left:50%;top:50%;margin-left:-29px;margin-top:-29px;transition:none;will-change:transform,opacity}
+.sc-float.emote-thumb img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:rgba(30,32,36,.7);padding:3px;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+/* 3D Globe for stat 1 — behind text so avatars pass under liquid glass */
+.globe-wrap{position:absolute;inset:0;z-index:1;pointer-events:none}
+.globe-wrap canvas{width:100%!important;height:100%!important;position:absolute;inset:0}
+/* 138K+ stat text = liquid glass window into the globe behind */
+#sc1 .sc-number{backdrop-filter:blur(6px) brightness(1.15) saturate(1.6);-webkit-backdrop-filter:blur(6px) brightness(1.15) saturate(1.6)}
+#sc1 .sc-number .liquid-bg canvas{opacity:0.25}
+#sc1 .sc-number .liquid-tint{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(58,138,253,.06) 60%,rgba(58,138,253,.1))}
+/* Trophy/crown for stat 2 */
+.sc-float.crown-float{display:flex;align-items:center;justify-content:center;font-size:2.8rem;filter:drop-shadow(0 4px 16px rgba(255,215,0,.3))}
+.stats-dots{position:absolute;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:10}
+.stats-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .35s}
+.stats-dots .dot.active{background:var(--blue);box-shadow:0 0 10px var(--blue-glow);transform:scale(1.3)}
+
+/* ======== PLATINUM — start hidden ======== */
+
+/* ======== CATALOG — side-by-side layout ======== */
+.catalog-section{padding:120px 24px;position:relative;z-index:1}
+
+/* BEST SELLERS SECTION */
+/* ======== 3D CAROUSEL — FULLSCREEN GOD-MODE ======== */
+.bestsellers{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;overflow:hidden}
+.bs-fx-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.bs-header{text-align:center;margin-bottom:48px;padding:0 24px;position:relative;z-index:2}
+.bs-label{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+.bs-logo{height:clamp(40px,5.5vw,58px);width:auto;filter:drop-shadow(0 0 24px rgba(58,138,253,.4));margin-top:6px}
+.carousel-wrap{position:relative;height:clamp(440px,58vh,600px);width:100%;perspective:1400px;cursor:grab;user-select:none;-webkit-user-select:none;z-index:2}
+.carousel-wrap:active{cursor:grabbing}
+.carousel-ring{position:absolute;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.carousel-ring.dragging{transition:none}
+/* --- Liquid glass cards --- */
+.c-card{position:absolute;left:50%;top:50%;width:240px;height:340px;margin:-170px 0 0 -120px;backface-visibility:hidden;border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.06) 100%);border:1.5px solid rgba(255,255,255,.14);overflow:visible;transition:filter .45s,opacity .45s,box-shadow .45s,border-color .45s,transform .45s;text-decoration:none;display:flex;flex-direction:column;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.08),0 8px 32px rgba(0,0,0,.3)}
+.c-card::before{content:'';position:absolute;inset:0;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.15) 0%,transparent 35%,transparent 65%,rgba(255,255,255,.05) 100%);pointer-events:none;z-index:1}
+.c-card::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 180deg,transparent 0%,rgba(255,255,255,.04) 15%,transparent 30%,rgba(255,255,255,.02) 60%,transparent 75%);animation:glassShimmer 5s linear infinite;pointer-events:none;z-index:1}
+@keyframes glassShimmer{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.c-card.front{filter:none;opacity:1;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 80px rgba(58,138,253,.15),0 30px 60px rgba(0,0,0,.5);border-color:rgba(255,255,255,.22);z-index:10}
+.c-card:not(.front){filter:brightness(.4) saturate(.4) blur(1px);opacity:.5}
+.c-card .c-inner{overflow:hidden;border-radius:24px;display:flex;flex-direction:column;height:100%;position:relative;z-index:2;background:linear-gradient(180deg,rgba(25,27,31,.2) 0%,rgba(25,27,31,.6) 100%)}
+.c-card img{width:100%;flex:1;object-fit:contain;padding:18px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.6));position:relative;z-index:2}
+.c-card .c-rank{position:absolute;top:14px;left:14px;color:#fff;font-size:.65rem;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.5px;z-index:5;background:linear-gradient(135deg,rgba(58,138,253,.9),rgba(58,138,253,.4));box-shadow:0 2px 12px rgba(58,138,253,.3)}
+.c-card .c-info{padding:0 16px 16px;text-align:center;position:relative;z-index:2}
+.c-card .c-name{font-size:.88rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.c-card .c-buy{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:.65rem;color:var(--blue);font-weight:600;letter-spacing:.5px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.c-card.front .c-buy{opacity:1;transform:translateY(0)}
+
+/* --- TOP 3: GOD-TIER EFFECTS --- */
+/* Pulsing aura ring behind card */
+.c-aura{position:absolute;inset:-40px;border-radius:50%;pointer-events:none;z-index:-1;opacity:0;transition:opacity .6s;animation:auraPulse 2.5s ease-in-out infinite}
+.c-card.front .c-aura{opacity:1}
+@keyframes auraPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.08);opacity:1}}
+.top-1 .c-aura{background:radial-gradient(circle,rgba(255,215,0,.15) 0%,rgba(255,215,0,.05) 40%,transparent 70%)}
+.top-2 .c-aura{background:radial-gradient(circle,rgba(200,200,220,.12) 0%,rgba(200,200,220,.04) 40%,transparent 70%)}
+.top-3 .c-aura{background:radial-gradient(circle,rgba(205,127,50,.12) 0%,rgba(205,127,50,.04) 40%,transparent 70%)}
+
+/* Card glow for top 3 */
+.c-card.top-1.front{border-color:rgba(255,215,0,.5);box-shadow:inset 0 1px 0 rgba(255,215,0,.25),0 0 120px rgba(255,215,0,.25),0 0 50px rgba(255,215,0,.15),0 0 200px rgba(255,215,0,.08),0 30px 60px rgba(0,0,0,.5)}
+.c-card.top-2.front{border-color:rgba(210,210,220,.45);box-shadow:inset 0 1px 0 rgba(210,210,220,.2),0 0 100px rgba(210,210,220,.18),0 0 45px rgba(210,210,220,.1),0 0 160px rgba(210,210,220,.06),0 30px 60px rgba(0,0,0,.5)}
+.c-card.top-3.front{border-color:rgba(205,127,50,.45);box-shadow:inset 0 1px 0 rgba(205,127,50,.2),0 0 100px rgba(205,127,50,.18),0 0 45px rgba(205,127,50,.1),0 0 160px rgba(205,127,50,.06),0 30px 60px rgba(0,0,0,.5)}
+.c-card.top-1 .c-rank{background:linear-gradient(135deg,#ffd700,#f0a500);box-shadow:0 2px 16px rgba(255,215,0,.5)}
+.c-card.top-2 .c-rank{background:linear-gradient(135deg,#e8e8e8,#a0a0a0);box-shadow:0 2px 16px rgba(200,200,200,.4)}
+.c-card.top-3 .c-rank{background:linear-gradient(135deg,#d4883c,#8b4513);box-shadow:0 2px 16px rgba(205,127,50,.4)}
+/* Top 3 card inner gradient tint */
+.c-card.top-1 .c-inner{background:linear-gradient(180deg,rgba(255,215,0,.06) 0%,rgba(25,27,31,.6) 100%)}
+.c-card.top-2 .c-inner{background:linear-gradient(180deg,rgba(200,200,220,.05) 0%,rgba(25,27,31,.6) 100%)}
+.c-card.top-3 .c-inner{background:linear-gradient(180deg,rgba(205,127,50,.05) 0%,rgba(25,27,31,.6) 100%)}
+
+/* Sparkles removed — angelic screen FX canvas handles top 3 effects */
+
+/* Spotlight cone under carousel */
+.carousel-spotlight{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:200px;background:radial-gradient(ellipse at center,rgba(58,138,253,.08) 0%,transparent 70%);pointer-events:none;z-index:0;transition:all .6s}
+.carousel-spotlight.gold{width:600px;height:240px;background:radial-gradient(ellipse at center,rgba(255,215,0,.12) 0%,rgba(255,215,0,.04) 40%,transparent 70%)}
+.carousel-spotlight.silver{width:550px;height:220px;background:radial-gradient(ellipse at center,rgba(200,200,220,.1) 0%,rgba(200,200,220,.03) 40%,transparent 70%)}
+.carousel-spotlight.bronze{width:550px;height:220px;background:radial-gradient(ellipse at center,rgba(205,127,50,.1) 0%,rgba(205,127,50,.03) 40%,transparent 70%)}
+
+/* Info panel */
+.carousel-detail{text-align:center;margin-top:28px;min-height:70px;position:relative;z-index:2}
+.carousel-detail .cd-name{font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:800;color:#fff;letter-spacing:.3px;transition:opacity .3s,text-shadow .5s}
+.carousel-detail .cd-name.glow-gold{text-shadow:0 0 30px rgba(255,215,0,.4),0 0 60px rgba(255,215,0,.15)}
+.carousel-detail .cd-name.glow-silver{text-shadow:0 0 25px rgba(200,200,220,.35),0 0 50px rgba(200,200,220,.12)}
+.carousel-detail .cd-name.glow-bronze{text-shadow:0 0 25px rgba(205,127,50,.35),0 0 50px rgba(205,127,50,.12)}
+.carousel-detail .cd-meta{display:flex;justify-content:center;gap:20px;margin-top:10px;font-size:.8rem;color:rgba(255,255,255,.5);font-weight:500}
+.carousel-detail .cd-meta span{display:inline-flex;align-items:center;gap:4px}
+.carousel-detail .cd-cta{display:inline-block;margin-top:16px;padding:12px 34px;font-size:.84rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),#2563eb);border-radius:30px;text-decoration:none;letter-spacing:.5px;transition:transform .25s,box-shadow .25s,background .3s}
+.carousel-detail .cd-cta:hover{transform:scale(1.06);box-shadow:0 6px 30px rgba(58,138,253,.35)}
+.carousel-detail .cd-cta.gold{background:linear-gradient(135deg,#ffd700,#c8940a);box-shadow:0 4px 24px rgba(255,215,0,.3)}
+.carousel-detail .cd-cta.gold:hover{box-shadow:0 8px 40px rgba(255,215,0,.45)}
+.carousel-detail .cd-cta.silver{background:linear-gradient(135deg,#d0d0d0,#909090);box-shadow:0 4px 20px rgba(200,200,200,.25)}
+.carousel-detail .cd-cta.silver:hover{box-shadow:0 8px 36px rgba(200,200,200,.4)}
+.carousel-detail .cd-cta.bronze{background:linear-gradient(135deg,#d4883c,#8b4513);box-shadow:0 4px 20px rgba(205,127,50,.25)}
+.carousel-detail .cd-cta.bronze:hover{box-shadow:0 8px 36px rgba(205,127,50,.4)}
+/* Nav arrows */
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:1.3rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;transition:background .2s,border-color .2s,transform .2s}
+.carousel-nav:hover{background:rgba(58,138,253,.15);border-color:rgba(58,138,253,.3);transform:translateY(-50%) scale(1.1)}
+.carousel-nav.prev{left:max(16px,calc(50% - 300px))}
+.carousel-nav.next{right:max(16px,calc(50% - 300px))}
+/* Dots */
+.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:24px;position:relative;z-index:2}
+.carousel-dots .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .3s,transform .3s,box-shadow .3s}
+.carousel-dots .dot.active{background:var(--blue);transform:scale(1.5);box-shadow:0 0 10px rgba(58,138,253,.4)}
+.carousel-dots .dot.gold{background:#ffd700;box-shadow:0 0 10px rgba(255,215,0,.5)}
+.carousel-dots .dot.silver{background:#c0c0c0;box-shadow:0 0 10px rgba(200,200,200,.4)}
+.carousel-dots .dot.bronze{background:#cd7f32;box-shadow:0 0 10px rgba(205,127,50,.4)}
+.catalog-layout{display:flex;gap:48px;align-items:center;max-width:1000px;margin:0 auto;opacity:0;transform:translateY(40px)}
+.catalog-thumb{flex-shrink:0;width:clamp(260px,35vw,400px);aspect-ratio:1/1;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);border:1px solid var(--border);position:relative;opacity:0;transform:translateX(-40px) scale(.95)}
+.catalog-info .ci-label,.catalog-info h2,.catalog-info .ci-stats,.catalog-info .ci-desc,.catalog-btn{opacity:0;transform:translateY(20px)}
+.catalog-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.catalog-thumb .ct-shine{position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.06) 55%,transparent 70%);opacity:0;transition:opacity .4s}
+.catalog-thumb:hover .ct-shine{opacity:1}
+.catalog-info{flex:1;min-width:0}
+.catalog-info .ci-label{font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--blue);font-weight:600;margin-bottom:12px}
+.catalog-info h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:-.02em}
+.catalog-info h2 .brand{font-family:var(--serif);color:var(--blue)}
+.catalog-info .ci-stats{display:flex;gap:32px;margin-bottom:20px;flex-wrap:wrap}
+.catalog-info .ci-stat .cin{font-size:1.8rem;font-weight:800;color:#fff}
+.catalog-info .ci-stat .cil{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.catalog-info .ci-desc{font-size:.95rem;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:400px}
+.catalog-btn{background:linear-gradient(160deg,rgba(58,138,253,.4),rgba(58,138,253,.12) 60%,rgba(58,138,253,.2));border:none;box-shadow:0 4px 24px rgba(58,138,253,.2),0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
+.catalog-btn:hover{background:linear-gradient(160deg,rgba(58,138,253,.55),rgba(58,138,253,.2) 60%,rgba(58,138,253,.3));box-shadow:0 8px 40px rgba(58,138,253,.35),0 2px 4px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.15);transform:translateY(-2px) scale(1.03)}
+.catalog-btn svg{width:18px;height:18px;fill:currentColor}
+
+/* EMOTES FLASH — integrated into stats scroll */
+.ef-frame{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;z-index:6;padding:5vh 0}
+.ef-frame img{max-height:55vh;max-width:80vw;object-fit:contain;filter:drop-shadow(0 20px 80px rgba(0,0,0,.7)) drop-shadow(0 0 40px rgba(58,138,253,.15));border-radius:6px;flex-shrink:0}
+.ef-info{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px;opacity:0;transform:translateY(15px);transition:opacity .4s .15s,transform .4s .15s;z-index:10;position:relative;flex-shrink:0}
+.ef-frame.active .ef-info{opacity:1;transform:translateY(0)}
+.ef-name{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;color:#fff;letter-spacing:.5px;text-shadow:0 2px 20px rgba(0,0,0,.8),0 0 40px rgba(0,0,0,.5);text-align:center;max-width:80vw}
+.ef-buy{display:inline-flex;align-items:center;gap:8px;padding:10px 28px;border-radius:50px;background:linear-gradient(135deg,rgba(58,138,253,.8),rgba(58,138,253,.5));color:#fff;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.5px;border:1px solid rgba(255,255,255,.15);box-shadow:0 4px 24px rgba(58,138,253,.25);transition:all .25s;pointer-events:auto;cursor:pointer}
+.ef-buy:hover{background:linear-gradient(135deg,rgba(58,138,253,1),rgba(58,138,253,.7));box-shadow:0 8px 32px rgba(58,138,253,.4);transform:translateY(-2px)}
+.ef-buy svg{width:16px;height:16px;fill:currentColor}
+.ef-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:10}
+.ef-counter{position:absolute;bottom:40px;right:48px;font-size:.85rem;letter-spacing:3px;color:rgba(255,255,255,.3);font-weight:600;text-transform:uppercase;z-index:7;opacity:0;transition:opacity .3s}
+.ef-counter .ef-cur{color:#fff;font-size:2.2rem;font-weight:900;letter-spacing:-.02em;display:block;line-height:1}
+.ef-side-label{position:absolute;left:48px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center;font-size:.9rem;letter-spacing:6px;text-transform:uppercase;color:rgba(58,138,253,.6);font-weight:700;z-index:7;opacity:0;transition:opacity .3s}
+.ef-line{position:absolute;height:1px;background:rgba(255,255,255,.06);z-index:4;pointer-events:none;opacity:0;transition:opacity .3s}
+.ef-line.top{top:12%;left:8%;right:8%}
+.ef-line.bottom{bottom:12%;left:8%;right:8%}
+
+/* FOOTER */
+footer{padding:60px 24px 32px;border-top:1px solid var(--border);text-align:center;position:relative;z-index:1}
+footer .brand{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:6px;letter-spacing:1px}
+footer p{font-size:.78rem;color:var(--text3)}
+footer .footer-links{display:flex;gap:24px;justify-content:center;margin-top:16px}
+footer .footer-links a{color:var(--text2);text-decoration:none;font-size:.78rem;transition:color .25s}
+footer .footer-links a:hover{color:var(--blue)}
+
+@media(max-width:768px){
+.hero-stats{gap:24px}
+.hero-stat .num{font-size:1.7rem}
+.catalog-layout{flex-direction:column;gap:32px}
+.catalog-thumb{width:100%;max-width:320px;margin:0 auto}
+.stat-counter .sc-number{font-size:clamp(3.5rem,12vw,5.5rem)}
+.stats-dots{right:16px}
+}
+</style>
+</head>
+<body>
+<!-- SVG Liquid Glass — real displacement on cloned video -->
+<svg width="0" height="0" style="position:absolute" color-interpolation-filters="sRGB">
+  <filter id="liquid-refract" x="-2%" y="-2%" width="104%" height="104%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.025 0.03" numOctaves="3" seed="3" result="noise">
+      <animate attributeName="seed" dur="6s" values="3;8;14;8;3" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="liquid-refract-hover" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022 0.028" numOctaves="3" seed="3" result="noise">
+      <animate attributeName="seed" dur="4s" values="3;10;18;10;3" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- FIXED VIDEO BG — persists blurred behind all content -->
+<div class="video-bg-fixed" id="videoBgFixed">
+  <video autoplay muted loop playsinline src="hero-video-compressed.mp4"></video>
+  <canvas class="vbf-canvas" id="vbfCanvas"></canvas>
+  <div class="vbf-overlay" id="vbfOverlay"></div>
+</div>
+
+<div class="bg-glow">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+<div class="hero-content">
+  <div class="hero-logo"><img src="lxoxoicon.png" alt="L,XOXO"></div>
+  <div class="hero-tagline">Best Selling Emotes on Roblox</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num" data-count="4000000">0</div><div class="label">EMOTES SOLD</div></div>
+    <div class="hero-stat"><div class="num" data-count="138000">0</div><div class="label">MEMBERS</div></div>
+  </div>
+  <div class="hero-buttons">
+    <a href="https://www.roblox.com/communities/10783491" target="_blank" class="glass-btn btn-primary">Join L,XOXO</a>
+    <a href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group" target="_blank" class="glass-btn btn-secondary">View Emotes</a>
+  </div>
+</div>
+<div class="scroll-indicator"><div class="scroll-mouse"></div></div>
+</section>
+
+<!-- TEXT REVEAL -->
+<section class="text-reveal-section">
+<div class="container">
+  <p class="text-reveal" id="textReveal">
+    <span class="word">4</span>
+    <span class="word">million</span>
+    <span class="word">in</span>
+    <span class="word">6</span>
+    <span class="word">months.</span>
+    <span class="word brand-word"><img src="lxoxoicon.png" alt="L,XOXO" class="inline-logo"></span>
+    <span class="word">isn't</span>
+    <span class="word">just</span>
+    <span class="word">the</span>
+    <span class="word">standard</span>
+    <span class="word">for</span>
+    <span class="word">emotes</span>
+    <span class="word">—</span>
+    <span class="word">it's</span>
+    <span class="word">outpacing</span>
+    <span class="word">the</span>
+    <span class="word">entire</span>
+    <span class="word">UGC</span>
+    <span class="word">industry.</span>
+  </p>
+</div>
+</section>
+
+
+<!-- ======== STATS — PINNED SCROLL COUNTER ======== -->
+<div class="stats-scroll" id="statsScroll">
+  <div class="stats-scroll-pin" id="statsPin">
+    <!-- STAT 0: Emotes Sold — floating emote thumbnails -->
+    <div class="stat-counter" id="sc0">
+      <div class="sc-glow"></div>
+      <div class="sc-visuals" id="sv0">
+        <div class="sc-float emote-thumb" style="top:3%;left:3%"><img id="et0" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:6%;right:5%"><img id="et1" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:14%;left:12%"><img id="et2" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:10%;right:14%"><img id="et3" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:22%;left:2%"><img id="et4" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:20%;right:1%"><img id="et5" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:30%;left:8%"><img id="et6" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:28%;right:10%"><img id="et7" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:38%;left:1%"><img id="et8" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:36%;right:3%"><img id="et9" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:44%;left:14%"><img id="et10" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:46%;right:12%"><img id="et11" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:42%;left:4%"><img id="et12" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:44%;right:6%"><img id="et13" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:34%;left:11%"><img id="et14" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:36%;right:9%"><img id="et15" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:26%;left:2%"><img id="et16" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:28%;right:1%"><img id="et17" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:18%;left:13%"><img id="et18" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:20%;right:11%"><img id="et19" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:10%;left:5%"><img id="et20" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:8%;right:4%"><img id="et21" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:2%;left:10%"><img id="et22" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:4%;right:15%"><img id="et23" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:5%;left:7%"><img id="et24" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:8%;right:8%"><img id="et25" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:16%;left:6%"><img id="et26" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:12%;right:6%"><img id="et27" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:24%;left:5%"><img id="et28" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:22%;right:7%"><img id="et29" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:32%;left:10%"><img id="et30" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:30%;right:12%"><img id="et31" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:40%;left:6%"><img id="et32" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:42%;right:8%"><img id="et33" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:48%;left:12%"><img id="et34" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:50%;right:10%"><img id="et35" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:40%;left:8%"><img id="et36" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:38%;right:5%"><img id="et37" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:30%;left:6%"><img id="et38" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:32%;right:7%"><img id="et39" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:24%;left:10%"><img id="et40" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:22%;right:12%"><img id="et41" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:16%;left:4%"><img id="et42" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:14%;right:3%"><img id="et43" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:6%;left:7%"><img id="et44" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:8%;right:9%"><img id="et45" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:7%;left:15%"><img id="et46" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:15%;right:16%"><img id="et47" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:25%;left:15%"><img id="et48" alt=""></div>
+        <div class="sc-float emote-thumb" style="top:35%;right:15%"><img id="et49" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:35%;left:14%"><img id="et50" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:25%;right:14%"><img id="et51" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:15%;left:15%"><img id="et52" alt=""></div>
+        <div class="sc-float emote-thumb" style="bottom:5%;right:13%"><img id="et53" alt=""></div>
+      </div>
+      <div class="sc-label">Total Sales</div>
+      <div class="sc-number" data-text="4M+"><span class="num-text">4<span class="blue">M+</span></span></div>
+      <div class="sc-desc">Over four million emotes sold across Roblox. Every number a player who chose <span class="brand">L,XOXO</span>.</div>
+    </div>
+    <!-- STAT 1: Members — floating avatar busts -->
+    <div class="stat-counter" id="sc1">
+      <div class="sc-glow"></div>
+      <div class="sc-visuals globe-wrap" id="sv1">
+        <canvas id="globeCanvas"></canvas>
+      </div>
+      <div class="sc-label">Community</div>
+      <div class="sc-number" data-text="138K+"><span class="num-text">138<span class="blue">K+</span></span></div>
+      <div class="sc-desc">The largest emote community on Roblox. Growing every single day.</div>
+    </div>
+    <!-- STAT 2: #1 — floating trophies/crowns -->
+    <div class="stat-counter" id="sc2">
+      <div class="sc-glow" style="background:radial-gradient(circle,rgba(255,215,0,.1),transparent 70%)"></div>
+      <div class="sc-visuals" id="sv2">
+        <div class="sc-float crown-float" style="top:12%;left:8%">👑</div>
+        <div class="sc-float crown-float" style="top:8%;right:10%">🏆</div>
+        <div class="sc-float crown-float" style="bottom:18%;left:6%">🥇</div>
+        <div class="sc-float crown-float" style="bottom:14%;right:8%">👑</div>
+        <div class="sc-float crown-float" style="top:42%;left:2%">🏆</div>
+        <div class="sc-float crown-float" style="top:48%;right:3%">🥇</div>
+        <div class="sc-float crown-float" style="bottom:40%;left:12%">👑</div>
+        <div class="sc-float crown-float" style="bottom:36%;right:14%">🏆</div>
+      </div>
+      <div class="sc-label">Ranking</div>
+      <div class="sc-number" data-text="#1"><span class="num-text">#<span class="blue">1</span></span></div>
+      <div class="sc-desc">The best-selling emote community on Roblox. No one else comes close.</div>
+    </div>
+    <div class="stats-dots">
+      <div class="dot" id="dot0"></div>
+      <div class="dot" id="dot1"></div>
+      <div class="dot" id="dot2"></div>
+    </div>
+    <!-- Flash elements layered inside stats pin -->
+    <div class="ef-flash" id="efFlash"></div>
+    <div class="ef-line top"></div>
+    <div class="ef-line bottom"></div>
+    <div class="ef-side-label">L,XOXO Collection</div>
+    <div class="ef-counter"><span class="ef-cur" id="efCur">01</span><span id="efTotal">/ 10</span></div>
+    <div id="efFrames"></div>
+  </div>
+</div>
+
+<!-- ======== BEST-SELLING EMOTES — 3D CAROUSEL SPOTLIGHT ======== -->
+<section class="bestsellers" id="bestSellers">
+  <canvas class="bs-fx-canvas" id="bsFxCanvas"></canvas>
+  <div class="bs-header">
+    <div class="bs-label">Best Sellers</div>
+    <img src="lxoxoicon.png" alt="L,XOXO" class="bs-logo">
+  </div>
+  <div class="carousel-wrap" id="carouselWrap">
+    <div class="carousel-ring" id="carouselRing"></div>
+    <div class="carousel-spotlight" id="carSpotlight"></div>
+    <button class="carousel-nav prev" id="carPrev">&#8249;</button>
+    <button class="carousel-nav next" id="carNext">&#8250;</button>
+  </div>
+  <div class="carousel-detail" id="carDetail">
+    <div class="cd-name" id="cdName"></div>
+    <div class="cd-meta" id="cdMeta"></div>
+    <a class="cd-cta" id="cdCta" target="_blank" rel="noopener">View in Catalog</a>
+  </div>
+  <div class="carousel-dots" id="carDots"></div>
+</section>
+
+<!-- ======== EMOTE CATALOG — SIDE-BY-SIDE ======== -->
+<section class="catalog-section" id="catalog">
+<div class="catalog-layout" id="catalogLayout">
+  <div class="catalog-thumb">
+    <img src="TestIconSideUICatalog2.jpg" alt="Emote Catalog">
+    <div class="ct-shine"></div>
+  </div>
+  <div class="catalog-info">
+    <div class="ci-label">Emote Catalog</div>
+    <h2>Create, Share &amp; <span class="brand">Play</span></h2>
+    <div class="ci-stats">
+      <div class="ci-stat"><div class="cin" id="catVisits">—</div><div class="cil">Visits</div></div>
+      <div class="ci-stat"><div class="cin" id="catPlaying">—</div><div class="cil">Playing</div></div>
+      <div class="ci-stat"><div class="cin" id="catFavs">—</div><div class="cil">Favorites</div></div>
+    </div>
+    <div class="ci-desc">Create, publish, and share outfits. Try on emotes and discover new ones from the community.</div>
+    <a href="https://www.roblox.com/games/102071609564196" target="_blank" class="glass-btn catalog-btn">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      Play Now
+    </a>
+  </div>
+</div>
+</section>
+
+<footer>
+<div class="brand">L,XOXO</div>
+<p>#1 Best-Selling Emote Community on Roblox</p>
+<div class="footer-links">
+  <a href="https://www.roblox.com/communities/10783491" target="_blank">Community</a>
+  <a href="https://www.roblox.com/games/102071609564196" target="_blank">Emote Catalog</a>
+  <a href="https://x.com/lukashmny" target="_blank">Twitter</a>
+</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ==================== HERO COUNTER ==================== */
+function animateCounter(el,target,dur){
+  dur=dur||2000;var st=null;
+  function step(ts){
+    if(!st)st=ts;var p=Math.min((ts-st)/dur,1);
+    var ease=1-Math.pow(1-p,3);var val=Math.floor(ease*target);
+    if(target>=1000000)el.textContent=(val/1000000).toFixed(1)+'M+';
+    else if(target>=1000)el.textContent=Math.floor(val/1000)+'K+';
+    else el.textContent=val;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+document.querySelectorAll('.hero-stat .num[data-count]').forEach(function(el){
+  var obs=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){animateCounter(el,+el.dataset.count);obs.disconnect()}
+  },{threshold:.5});obs.observe(el);
+});
+
+/* ==================== HERO PARALLAX + PERSISTENT VIDEO BG ==================== */
+var heroEl=document.getElementById('hero');
+var heroContent=heroEl.querySelector('.hero-content');
+var vbfOverlay=document.getElementById('vbfOverlay');
+
+// Paint video to canvas every frame — Chrome can't pause a canvas
+(function videoBgCanvas(){
+  var vid=document.querySelector('.video-bg-fixed video');
+  var cvs=document.getElementById('vbfCanvas');
+  if(!vid||!cvs) return;
+  var ctx=cvs.getContext('2d');
+  var lastW=0,lastH=0;
+
+  function paint(){
+    var vw=window.innerWidth, vh=window.innerHeight;
+    if(cvs.width!==vw||cvs.height!==vh){cvs.width=vw;cvs.height=vh;}
+
+    // Force video to keep playing
+    if(vid.paused) vid.play().catch(function(){});
+
+    if(vid.readyState>=2){
+      // object-fit:cover math
+      var vidW=vid.videoWidth||1920, vidH=vid.videoHeight||1080;
+      var vidR=vidW/vidH, winR=vw/vh;
+      var sx,sy,sw,sh;
+      if(winR>vidR){sw=vidW;sh=vidW/winR;sx=0;sy=(vidH-sh)/2;}
+      else{sh=vidH;sw=vidH*winR;sy=0;sx=(vidW-sw)/2;}
+      ctx.drawImage(vid,sx,sy,sw,sh,0,0,vw,vh);
+    }
+    requestAnimationFrame(paint);
+  }
+  vid.addEventListener('loadeddata',function(){requestAnimationFrame(paint);});
+  if(vid.readyState>=2) requestAnimationFrame(paint);
+  // Fallback start
+  setTimeout(function(){requestAnimationFrame(paint);},500);
+})();
+
+window.addEventListener('scroll',function(){
+  var scrollY=window.scrollY;
+  var heroH=heroEl.offsetHeight;
+
+  // Hero content: parallax up + fade out
+  if(scrollY<heroH*1.2){
+    var p=scrollY/heroH;
+    heroContent.style.transform='translateY('+(scrollY*.35)+'px)';
+    heroContent.style.opacity=Math.max(0,1-p*1.5);
+  }
+
+  // Single fixed video: clear in hero → blurred glass as you scroll past
+  var postP=Math.max(0,Math.min(1,(scrollY-heroH*0.5)/(heroH*0.6)));
+  var eased=postP*postP*(3-2*postP);
+  var blurAmount=eased*6; // light blur — keeps video motion visible
+  // Darkness: gentle tint, never too opaque so video stays alive
+  var darkness=eased*0.3;
+  if(scrollY<=0){blurAmount=0;darkness=0;}
+  vbfOverlay.style.backdropFilter='blur('+blurAmount+'px)';
+  vbfOverlay.style.webkitBackdropFilter='blur('+blurAmount+'px)';
+  vbfOverlay.style.background='rgba(25,27,29,'+Math.min(darkness,0.40)+')';
+});
+
+/* ==================== TEXT REVEAL ==================== */
+var words=document.querySelectorAll('#textReveal .word');
+var trSection=document.querySelector('.text-reveal-section');
+var trWords=document.querySelectorAll('.text-reveal .word');
+var trWordCount=trWords.length;
+gsap.timeline({scrollTrigger:{trigger:'.text-reveal-section',start:'top 15%',end:'+=120%',pin:true,scrub:2.0,
+  onUpdate:function(self){
+    var p=self.progress;
+    // 0-0.55: words reveal one by one (slow)
+    var revealP=Math.min(p/0.55,1);
+    for(var i=0;i<trWordCount;i++){
+      trWords[i].style.opacity=revealP>i/trWordCount?'1':'.15';
+    }
+    // 0.50-0.65: hold fully visible
+    // 0.65-0.95: smooth fade out + drift up
+    // 0.95-1.0: fully gone (tiny buffer)
+    if(p>0.65){
+      var fadeP=Math.min((p-0.65)/0.30,1);
+      trSection.style.opacity=String(1-fadeP);
+      trSection.style.transform='translateY('+(-fadeP*50)+'px)';
+    }else{
+      trSection.style.opacity='1';
+      trSection.style.transform='translateY(0)';
+    }
+  }
+}});
+/* ==================== EMOTE THUMB URLS ==================== */
+// Emote data — thumbnail URLs as fallback, names+IDs fetched live from Roblox API
+var emoteData=[
+  {url:'https://tr.rbxcdn.com/180DAY-85f7fe78e4b07013fb3bf51d10874a33/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-de664c82f382cd6c602efe36fafd2679/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-12c559c92a3cf2063555f7a320faa92b/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-a49ddee74af49d8c1b01f09ca90270eb/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-2a6c75354af034ccbae5a00a9422fda3/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-754e2dfed8b1694fbd36d3ade0184aad/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-de72b6f09e349d6ecbe35179472e6086/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-722fa783ed17e0b089fe5370f5e1e598/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-e5492f86e8dd2e3909e7585c4db1c348/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-0e7d1f7f79dde268d702b522cea52347/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-87ec5c147ef4bdd14d108f67a52ff307/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-198d574f85fdf57ebaee49414d897506/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-15760aaa4e57b2a7b60f20eb7c52550f/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-2f0d4b77b1e7b60831c14fe2f9868d15/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-8a6e2ba3811caa43ea8e662bf79bdb6a/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-0d35930a735304ebda88f7cb0621374f/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-3dcec58d944be8c6e2fba607b8064b8f/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-2f310c0f0fef779b92ca0581c8653786/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-29dfc2b98d4fbd9bbb22f41b6da68191/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-af67d23cf7e7e6bbafe247757c73b284/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-729633102b54562179bed6b59fe55b0b/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-0c88e94c418b05212b96bc9b2ca38538/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-153887398c38c7130cde194fc134a00d/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-537a986cb964c6e1591a6de1ba47397c/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-e199695e5f55577f7fd74844ad631ef7/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-f6ecb072ff0c1092adea1a64de22de3b/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-16fafb07e54439e9b3fc0716ee3affff/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-a074867426f1b518d672365500fab2a0/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-53601fd3e00191f15ba44a8df185962e/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0},
+  {url:'https://tr.rbxcdn.com/180DAY-9196bc3755a69bb736bb16c634f18f0e/420/420/EmoteAnimation/Png/noFilter',name:'Loading...',id:0}
+];
+var emoteThumbUrls=emoteData.map(function(e){return e.url});
+
+// Fetch real emote names, IDs + fresh thumbnails from Roblox catalog API
+// Uses /v1/search/items/details which returns names, IDs, favorites in one call
+// Stores a promise so other code can await the result
+var emoteDataReady=(async function fetchEmoteNames(){
+  /* CORS proxy helper — roproxy mirrors Roblox APIs without CORS restrictions */
+  var fetchOpts={headers:{'Accept-Language':'en-US,en;q=0.9'}};
+  async function corsGet(robloxUrl){
+    var proxyUrl=robloxUrl.replace('.roblox.com','.roproxy.com');
+    try{var r=await fetch(proxyUrl,fetchOpts);if(r.ok)return r;}catch(e){}
+    try{var r2=await fetch(robloxUrl,fetchOpts);if(r2.ok)return r2;}catch(e2){}
+    return null;
+  }
+  try{
+    /* Category=12 & Subcategory=39 = Emotes ONLY. sortType=2 = best selling.
+       /details endpoint returns name, price, favorites etc — /search/items does NOT return names! */
+    var allItems=[];
+    var baseUrl='https://catalog.roblox.com/v1/search/items/details?Category=12&Subcategory=39&creatorTargetId=10783491&creatorType=Group&limit=30&sortType=2&salesTypeFilter=1';
+
+    // Page 1
+    var r1=await corsGet(baseUrl);
+    var cursor=null;
+    if(r1){
+      var d1=await r1.json();
+      if(d1.data)d1.data.forEach(function(item){allItems.push({id:item.id,name:item.name,favs:item.favoriteCount||0,itemType:item.itemType||'Asset'});});
+      cursor=d1.nextPageCursor;
+    }
+    // Page 2 if available
+    if(cursor){
+      var r2=await corsGet(baseUrl+'&cursor='+encodeURIComponent(cursor));
+      if(r2){
+        var d2=await r2.json();
+        if(d2.data)d2.data.forEach(function(item){allItems.push({id:item.id,name:item.name,favs:item.favoriteCount||0,itemType:item.itemType||'Asset'});});
+      }
+    }
+
+    if(!allItems.length){console.log('No emotes found from catalog API');return;}
+
+    // Get fresh 420x420 thumbnails — separate Asset IDs from Bundle IDs
+    var assetIds=allItems.filter(function(x){return x.itemType!=='Bundle'}).map(function(x){return x.id});
+    var bundleIds=allItems.filter(function(x){return x.itemType==='Bundle'}).map(function(x){return x.id});
+    var thumbMap={};
+
+    // Fetch asset thumbnails
+    if(assetIds.length){
+      var tr=await corsGet('https://thumbnails.roblox.com/v1/assets?assetIds='+assetIds.join(',')+'&returnPolicy=PlaceHolder&size=420x420&format=Png&isCircular=false');
+      if(tr){var td=await tr.json();if(td.data)td.data.forEach(function(t){if(t.imageUrl)thumbMap[t.targetId]=t.imageUrl;});}
+    }
+    // Fetch bundle thumbnails (different endpoint!)
+    if(bundleIds.length){
+      var br=await corsGet('https://thumbnails.roblox.com/v1/bundles/thumbnails?bundleIds='+bundleIds.join(',')+'&size=420x420&format=Png&isCircular=false');
+      if(br){var bd=await br.json();if(bd.data)bd.data.forEach(function(t){if(t.imageUrl)thumbMap[t.targetId]=t.imageUrl;});}
+    }
+
+    // Rebuild emoteData completely from API — each slot gets matched name+id+thumbnail+type
+    emoteData.length=0;
+    allItems.forEach(function(item){
+      emoteData.push({
+        id:item.id,
+        name:item.name,
+        favs:item.favs,
+        itemType:item.itemType,
+        url:thumbMap[item.id]||''
+      });
+    });
+
+    // Update vortex thumb images (in #sv0) with fresh URLs
+    var vortexImgs=document.querySelectorAll('#sv0 .emote-thumb img');
+    emoteData.forEach(function(ed,i){
+      if(i>=vortexImgs.length||!ed.url)return;
+      vortexImgs[i].src=ed.url;
+    });
+
+    console.log('Emote data loaded: '+emoteData.length+' emotes ('+assetIds.length+' assets, '+bundleIds.length+' bundles), '+Object.keys(thumbMap).length+' thumbnails');
+    console.log('Top 10 best selling:');
+    emoteData.slice(0,10).forEach(function(e,i){
+      console.log('  #'+(i+1)+': '+e.name+' | ID:'+e.id+' | type:'+(e.itemType||'?')+' | thumb:'+(e.url?'yes':'MISSING'));
+    });
+  }catch(e){console.log('Emote fetch error:',e)}
+})();
+
+/* ==================== STATS + EMOTE FLASH — INTEGRATED PINNED SCROLL ==================== */
+(async function(){
+// Wait for emote data to be fetched before building frames
+await emoteDataReady;
+
+var statCounters=document.querySelectorAll('.stat-counter');
+var statDots=document.querySelectorAll('.stats-dots .dot');
+var flash=document.getElementById('efFlash');
+var curEl=document.getElementById('efCur');
+var totalEl=document.getElementById('efTotal');
+var framesContainer=document.getElementById('efFrames');
+var sideLabel=document.querySelector('.ef-side-label');
+var efLines=document.querySelectorAll('.ef-line');
+var efCounter=document.querySelector('.ef-counter');
+
+// Use top 10 best sellers only
+var allUrls=emoteData.slice(0,10).map(function(e){return e.url});
+var half=Math.ceil(allUrls.length/2);
+var group1=allUrls.slice(0,half);
+var group2=allUrls.slice(half);
+totalEl.textContent='/ '+String(allUrls.length).padStart(2,'0');
+
+// Entrance animations for emotes
+var entrances=[
+  {x:0,y:120,r:8,s:1.3},
+  {x:-100,y:0,r:-12,s:0.6},
+  {x:100,y:0,r:15,s:1.5},
+  {x:0,y:-100,r:-5,s:0.9},
+  {x:80,y:80,r:20,s:1.2},
+  {x:-80,y:-60,r:-18,s:0.7},
+  {x:0,y:0,r:0,s:2.0},
+  {x:0,y:150,r:-10,s:1.4},
+  {x:-120,y:30,r:12,s:0.8},
+  {x:60,y:-80,r:-8,s:1.6}
+];
+
+// Build all emote frames with name + buy button
+var allFrames=[];
+var catalogFallback='https://www.roblox.com/catalog?Category=12&CreatorName=L%2CXOXO&CreatorType=Group';
+allUrls.forEach(function(url,i){
+  var frame=document.createElement('div');
+  frame.className='ef-frame';
+  var img=document.createElement('img');
+  img.src=url;img.alt='Emote '+(i+1);
+  frame.appendChild(img);
+
+  // Info overlay: name + buy button
+  var info=document.createElement('div');
+  info.className='ef-info';
+  var name=document.createElement('div');
+  name.className='ef-name';
+  name.textContent=emoteData[i]?emoteData[i].name:'L,XOXO Emote';
+  info.appendChild(name);
+
+  var buyLink=document.createElement('a');
+  buyLink.className='ef-buy';
+  buyLink.target='_blank';
+  buyLink.rel='noopener';
+  // Link to correct Roblox page — /catalog/ for Assets, /bundles/ for Bundles
+  var emoteId=emoteData[i]?emoteData[i].id:0;
+  var emoteSlug=emoteData[i]?emoteData[i].name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,''):'';
+  var isBundle=emoteData[i]&&emoteData[i].itemType==='Bundle';
+  var catalogPath=isBundle?'https://www.roblox.com/bundles/':'https://www.roblox.com/catalog/';
+  buyLink.href=emoteId?catalogPath+emoteId+'/'+emoteSlug:catalogFallback;
+  buyLink.setAttribute('data-emote-id',emoteId);
+  buyLink.setAttribute('data-emote-name',emoteData[i]?emoteData[i].name:'');
+  buyLink.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>Buy Emote';
+  info.appendChild(buyLink);
+
+  frame.appendChild(info);
+  framesContainer.appendChild(frame);
+  allFrames.push({el:frame,img:img,entrance:entrances[i%entrances.length]});
+});
+
+var lastFlashIdx=-1;
+
+/*
+  SCROLL ZONES (5 zones):
+  0.00-0.12  = Stat 0 (4M+)
+  0.12-0.32  = Emote flash group 1
+  0.38-0.62  = Stat 1 (138K+ globe)
+  0.62-0.80  = Emote flash group 2
+  0.80-1.00  = Stat 2 (#1)
+*/
+var zones=[
+  {type:'stat',idx:0,start:0,end:0.14},
+  {type:'flash',group:group1,offset:0,start:0.14,end:0.34},
+  {type:'stat',idx:1,start:0.34,end:0.54},
+  {type:'flash',group:group2,offset:half,start:0.54,end:0.74},
+  {type:'stat',idx:2,start:0.74,end:0.92}
+];
+
+/* GALAXY VORTEX — emotes orbit in spiral arms around the 4M+ stat */
+var vortexThumbs=document.querySelectorAll('#sv0 .emote-thumb');
+var vortexCount=vortexThumbs.length;
+
+var vortexItems=[];
+var spiralArms=3;
+for(var vi=0;vi<vortexCount;vi++){
+  var el=vortexThumbs[vi];
+  var arm=vi%spiralArms;
+  var posInArm=Math.floor(vi/spiralArms);
+  var totalInArm=Math.ceil(vortexCount/spiralArms);
+  // Golden angle offset per arm for nice spiral distribution
+  var armAngle=(arm/spiralArms)*Math.PI*2;
+  // Spread emotes along each arm from inner to outer ring
+  var radiusNorm=(posInArm+0.5)/totalInArm; // 0→1
+  var radius=12+radiusNorm*32; // vw units, inner 12vw to outer 44vw
+  var angleOffset=armAngle+radiusNorm*Math.PI*1.2; // spiral twist
+  var orbitSpeed=0.4+Math.random()*0.25; // radians per second base
+  var scaleBase=0.55+radiusNorm*0.5; // inner smaller, outer bigger
+
+  vortexItems.push({
+    radius:radius,
+    ry:radius*0.38, // elliptical: y-radius is 38% of x-radius for depth
+    angleOffset:angleOffset,
+    orbitSpeed:orbitSpeed,
+    scaleBase:scaleBase,
+    radiusNorm:radiusNorm,
+    scatterAngle:Math.random()*Math.PI*2,
+    scatterDist:60+Math.random()*40
+  });
+
+  el.style.top='50%';el.style.left='50%';
+  el.style.right='auto';el.style.bottom='auto';
+}
+// Mark sv0 as scroll-driven so float animation skips it
+var sv0El=document.getElementById('sv0');
+if(sv0El)sv0El._scrollDriven=true;
+
+// Vortex state — driven by scroll, rendered by rAF
+var vortexState={opacity:0, speedMult:1, active:false, time:0, scatter:0};
+
+function animateGalaxy(zp,opacity){
+  var fadeIn=Math.min(1,zp/0.15);
+  // Cruising orbit from 15%→70%
+  var cruiseSpeed=1+zp*0.5;
+  // Hyperspeed scatter phase 70%→100%
+  var hyperPhase=Math.max(0,(zp-0.70)/0.30);
+  var hyperEase=hyperPhase*hyperPhase; // ease-in for dramatic ramp
+  var speedRamp=cruiseSpeed+hyperEase*25; // up to 26x speed
+  // Exit fade
+  var exitFade=hyperPhase>0.6?1-((hyperPhase-0.6)/0.4):1;
+
+  vortexState.opacity=opacity*fadeIn*Math.max(0,exitFade);
+  vortexState.speedMult=speedRamp;
+  vortexState.scatter=hyperEase;
+  vortexState.active=true;
+}
+
+function hideGalaxy(){
+  vortexState.opacity=0;
+  vortexState.active=false;
+  vortexState.scatter=0;
+}
+
+// Continuous rAF loop for smooth orbiting
+(function vortexLoop(){
+  if(vortexState.active){
+    vortexState.time+=0.016*vortexState.speedMult;
+  }
+  var t=vortexState.time;
+  var op=vortexState.opacity;
+  var scatter=vortexState.scatter;
+
+  for(var i=0;i<vortexCount;i++){
+    var el=vortexThumbs[i];
+    var item=vortexItems[i];
+
+    // Current orbit angle
+    var angle=item.angleOffset+t*item.orbitSpeed;
+
+    // Elliptical orbit position
+    var ox=Math.cos(angle)*item.radius;
+    var oy=Math.sin(angle)*item.ry;
+
+    // Scatter outward during hyperspeed
+    if(scatter>0){
+      var sa=item.scatterAngle;
+      ox+=Math.cos(sa)*item.scatterDist*scatter;
+      oy+=Math.sin(sa)*item.scatterDist*0.5*scatter;
+    }
+
+    // Depth effect: sin(angle) determines front/back
+    // front (sin>0) = bigger, brighter; back (sin<0) = smaller, dimmer
+    var depth=Math.sin(angle); // -1 (far back) to +1 (front)
+    var depthScale=0.65+depth*0.35; // 0.3→1.0
+    var depthOpacity=0.4+depth*0.4+0.2; // 0.2→1.0
+    var finalScale=item.scaleBase*depthScale;
+
+    // z-index: front emotes on top
+    var zIdx=Math.round(50+depth*50);
+    el.style.zIndex=zIdx;
+
+    // Gentle tilt rotation based on orbit position
+    var rot=Math.sin(angle*0.5)*8+depth*5;
+
+    el.style.opacity=(op*depthOpacity*(1-scatter*0.3)).toFixed(3);
+    el.style.transform='translate('+ox.toFixed(1)+'vw,'+oy.toFixed(1)+'vh) rotate('+rot.toFixed(1)+'deg) scale('+finalScale.toFixed(3)+')';
+  }
+  requestAnimationFrame(vortexLoop);
+})();
+
+function hideAllStats(){
+  statCounters.forEach(function(sc){
+    sc.style.opacity=0;
+    sc.style.transform='translateY(60px) scale(.85)';
+    sc.style.pointerEvents='none';
+    var g=sc.querySelector('.sc-glow');if(g)g.style.opacity=0;
+    var n=sc.querySelector('.sc-number');if(n)n.style.setProperty('--shine-pos','120%');
+  });
+}
+function hideAllEmotes(){
+  allFrames.forEach(function(f){
+    f.el.style.opacity='0';f.el.style.pointerEvents='none';
+  });
+}
+function showFlashUI(show){
+  var o=show?'1':'0';
+  if(sideLabel)sideLabel.style.opacity=o;
+  efLines.forEach(function(l){l.style.opacity=o});
+  if(efCounter)efCounter.style.opacity=o;
+}
+
+ScrollTrigger.create({
+  trigger:'#statsScroll',
+  start:'top top',
+  end:'+=1000%',
+  pin:'#statsPin',
+  scrub:2.0,
+  onUpdate:function(self){
+    var p=self.progress;
+
+    // Find active zone
+    var activeZone=zones[zones.length-1];
+    for(var z=0;z<zones.length;z++){
+      if(p>=zones[z].start&&p<zones[z].end){activeZone=zones[z];break;}
+    }
+    // Handle last zone edge
+    if(p>=1)activeZone=zones[zones.length-1];
+
+    var zoneProgress=(p-activeZone.start)/(activeZone.end-activeZone.start);
+    zoneProgress=Math.max(0,Math.min(1,zoneProgress));
+
+    if(activeZone.type==='stat'){
+      // STAT ZONE
+      showFlashUI(false);
+      hideAllEmotes();
+      var idx=activeZone.idx;
+
+      statCounters.forEach(function(sc,i){
+        var glow=sc.querySelector('.sc-glow');
+        var scNum=sc.querySelector('.sc-number');
+        if(i===idx){
+          // Fade in over first 20%, hold, fade out over last 20% (except last stat)
+          var fadeIn=Math.min(zoneProgress/0.2,1);
+          var fadeOut=(idx<2&&zoneProgress>0.75)?(zoneProgress-0.75)/0.25:0;
+          var o=fadeIn*(1-fadeOut);
+          var s=0.8+fadeIn*0.2;
+          var y=(1-fadeIn)*50-fadeOut*40;
+          sc.style.opacity=o;
+          sc.style.transform='translateY('+y+'px) scale('+s+')';
+          sc.style.pointerEvents=o>0.5?'auto':'none';
+          if(glow)glow.style.opacity=o;
+          var shineP=Math.min(1,zoneProgress/0.5);
+          var shineEased=shineP<0.5?2*shineP*shineP:1-Math.pow(-2*shineP+2,2)/2;
+          scNum.style.setProperty('--shine-pos',(120-shineEased*140)+'%');
+        }else{
+          sc.style.opacity=0;
+          sc.style.transform='translateY(60px) scale(.85)';
+          sc.style.pointerEvents='none';
+          if(glow)glow.style.opacity=0;
+          scNum.style.setProperty('--shine-pos','120%');
+        }
+      });
+
+      statDots.forEach(function(d,i){d.classList.toggle('active',i===idx)});
+
+      document.querySelectorAll('.sc-visuals').forEach(function(vis,vi){
+        var o=(vi===idx)?statCounters[idx].style.opacity:0;
+        vis._statActive=(vi===idx);
+        vis._statOpacity=parseFloat(o)||0;
+      });
+
+      // Galaxy vortex for stat 0
+      if(idx===0){
+        var statO=parseFloat(statCounters[0].style.opacity)||0;
+        animateGalaxy(zoneProgress,statO);
+      }else{
+        hideGalaxy();
+      }
+
+      // Sync globe canvas opacity + flee + spin
+      var gc=document.getElementById('globeCanvas');
+      if(gc){
+        gc._globeOpacity=(idx===1)?parseFloat(statCounters[1].style.opacity)||0:0;
+        if(idx===1){
+          // Globe stays fully visible even as text fades
+          gc._globeOpacity=Math.min(zoneProgress/0.15,1); // fade in over first 15%
+          // Spin starts at 35%, flee from 45% — gets going quicker
+          var spinRamp=Math.max(0,(zoneProgress-0.35)/0.65);
+          gc._globeSpin=1+spinRamp*spinRamp*14;
+          var fleeRamp=Math.max(0,(zoneProgress-0.45)/0.55); // 0→1 over last 55%
+          gc._globeFlee=fleeRamp*fleeRamp*0.85;
+        }else{
+          gc._globeSpin=1;
+          gc._globeFlee=0;
+        }
+      }
+
+    }else{
+      // EMOTE FLASH ZONE
+      hideAllStats();
+      hideGalaxy();
+      showFlashUI(true);
+
+      // Hide stat floating visuals
+      document.querySelectorAll('.sc-visuals').forEach(function(vis){
+        vis._statActive=false;vis._statOpacity=0;
+      });
+      // Globe: keep flee going during flash zone 2 (after 138K+), fade out slowly
+      var gc2=document.getElementById('globeCanvas');
+      if(gc2){
+        var isAfterGlobe=(activeZone.start>=0.50); // flash group 2 = after community stat
+        if(isAfterGlobe){
+          // Fade globe out slowly over first 60% of this flash zone
+          var globeFadeOut=Math.max(0,1-zoneProgress/0.6);
+          gc2._globeOpacity=globeFadeOut;
+          gc2._globeFlee=0.8+zoneProgress*0.2; // gentle continued drift
+          gc2._globeSpin=8+zoneProgress*4; // slow gentle spin out
+        }else{
+          gc2._globeOpacity=0;gc2._globeFlee=0;gc2._globeSpin=1;
+        }
+      }
+
+      var group=activeZone.group;
+      var offset=activeZone.offset;
+      var count=group.length;
+      var rawIdx=zoneProgress*count;
+      var idx=Math.min(Math.floor(rawIdx),count-1);
+      var sub=rawIdx-idx;
+      var globalIdx=offset+idx;
+
+      curEl.textContent=String(globalIdx+1).padStart(2,'0');
+
+      // Camera flash on transition
+      if(globalIdx!==lastFlashIdx){
+        flash.style.transition='none';
+        flash.style.opacity='0.8';
+        requestAnimationFrame(function(){
+          flash.style.transition='opacity 0.2s ease-out';
+          flash.style.opacity='0';
+        });
+        lastFlashIdx=globalIdx;
+      }
+
+      // Instant flash swap — no tweens, just FLASH and new pose
+      allFrames.forEach(function(f,i){
+        if(i===globalIdx){
+          f.el.style.opacity='1';
+          f.el.style.pointerEvents='auto';
+          f.el.classList.add('active');
+          f.img.style.transform='scale(1)';
+        }else{
+          f.el.style.opacity='0';
+          f.el.style.pointerEvents='none';
+          f.el.classList.remove('active');
+          f.img.style.transform='scale(1)';
+        }
+      });
+    }
+  }
+});
+})();
+
+/* ==================== CONTINUOUS FLOAT ANIMATION ==================== */
+(function(){
+  var allVisuals=document.querySelectorAll('.sc-visuals');
+  // Pre-calculate random params per float for organic variety
+  var floatParams=[];
+  allVisuals.forEach(function(vis){
+    var floats=vis.querySelectorAll('.sc-float');
+    var params=[];
+    floats.forEach(function(fl,fi){
+      params.push({
+        el:fl,
+        speedX:0.3+Math.random()*0.4,
+        speedY:0.25+Math.random()*0.35,
+        speedRot:0.15+Math.random()*0.3,
+        ampX:15+Math.random()*20,
+        ampY:12+Math.random()*18,
+        ampRot:6+Math.random()*8,
+        phase:Math.random()*Math.PI*2,
+        phase2:Math.random()*Math.PI*2,
+        scaleBase:0.85+Math.random()*0.15
+      });
+    });
+    floatParams.push({vis:vis,params:params});
+  });
+
+  function animateFloats(time){
+    var t=time*0.001; // seconds
+    floatParams.forEach(function(group){
+      var vis=group.vis;
+      if(vis._scrollDriven) return; // skip — handled by scroll animation
+      var parentO=vis._statOpacity||0;
+      group.params.forEach(function(p){
+        // Continuous organic float — multi-frequency for non-repeating feel
+        var x=Math.sin(t*p.speedX+p.phase)*p.ampX+Math.sin(t*p.speedX*0.6+p.phase2)*p.ampX*0.4;
+        var y=Math.cos(t*p.speedY+p.phase*1.3)*p.ampY+Math.cos(t*p.speedY*0.7+p.phase2*0.8)*p.ampY*0.3;
+        var rot=Math.sin(t*p.speedRot+p.phase*2)*p.ampRot;
+        var scale=p.scaleBase+Math.sin(t*0.4+p.phase)*0.06;
+        // Fade with stat visibility
+        p.el.style.opacity=parentO*0.7;
+        p.el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+rot.toFixed(1)+'deg) scale('+scale.toFixed(3)+')';
+      });
+    });
+    requestAnimationFrame(animateFloats);
+  }
+  requestAnimationFrame(animateFloats);
+})();
+
+/* ==================== STAT VISUALS — load thumbnails ==================== */
+// Vortex thumb images are now updated by the main emoteDataReady fetch
+// This just ensures fallback if main fetch hasn't populated yet
+(async function(){
+  await emoteDataReady;
+  var vortexImgs=document.querySelectorAll('#sv0 .emote-thumb img');
+  emoteData.forEach(function(ed,i){
+    if(i>=vortexImgs.length||!ed.url)return;
+    var el=vortexImgs[i];
+    if(!el.src||el.src.indexOf('Loading')!==-1)el.src=ed.url;
+  });
+})();
+
+/* ==================== 3D AVATAR GLOBE — 138K+ COMMUNITY ==================== */
+(function(){
+  var canvas=document.getElementById('globeCanvas');
+  if(!canvas||typeof THREE==='undefined')return;
+
+  // Fetch real friends of lukashmnyy for globe avatars, fallback to defaults
+  var fallbackAvatars=[
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-310966282D3529E36976BF6B07B1DC90-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-882C70E071E5997E51F8CB373002AFC3-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-97C404164D7B9655EC6BFC1B3208F601-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-FEF1A5D7D145D6B7DA8B988BBC86A1A9-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-743EB92DE0637BE4E4B8FE66AD2D011D-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-95BE8C8B1FC06B580F958CA6D5075125-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-E3C2FA3C3F4D134AB59F52B389A66175-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5C5BE629439AB8D10933B6F8FBDF6A54-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1D6664C2E9169CCCF329BAB69C9936EE-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-C483762062ADD5BFB16060E13F13FF41-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-A3364D00D0C2A9E22C7DA785C1C362F5-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-4F0FF2E2E0169DBCB991DFEF1BC946A6-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-DF0F4E1771A1E713152BF91B33045F7B-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-9E2322F6CE1A1AE8DBF54256CE8D2EA5-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-971B3956AD1D78C5F51D9FDF9E25A018-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3E2FD6A18A08427D402EB7EE33E18063-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-4E263F5C1E7A9906FB102B99D204CAD3-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-071C0E28396040BF0E83DDD186709566-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-A8C0FDF9E1C2AA0C02D3F5E0677F846F-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-559874549E791C06BF187EBE0295B643-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-A984D6E338F0B78258FE706C3C28FB02-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-904DDC30364961E343C3CCC4286C19F2-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-DD50EEFE1751B4418F5E3DA00E869502-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-56DFC0F87BABBE49C6D1BE708AE9A66A-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-72B61AF586F7C71EE16389ED6E381826-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-FB43905EE1BD6C463F317B19A555E0BF-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-C6484E49CFE1F38F61CB6F98E80D3DDA-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5B69A24716522EC5FCE8B387EFD688B2-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-4C590A0CA64D083144AC4AEAA2AC04E9-Png/150/150/AvatarHeadshot/Png/noFilter',
+    'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-7802FFC34E42127693BDC6DC62B7DCFF-Png/150/150/AvatarHeadshot/Png/noFilter'
+  ];
+  var avatarUrls=[];
+  // Try live friends fetch, fall back to defaults
+  (function fetchFriends(){
+    fetch('https://users.roblox.com/v1/usernames/users',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({usernames:['lukashmnyy'],excludeBannedUsers:true})
+    }).then(function(r){return r.json()}).then(function(d){
+      var userId=d.data&&d.data[0]&&d.data[0].id;
+      if(!userId)throw new Error('no user');
+      return fetch('https://friends.roblox.com/v1/users/'+userId+'/friends?userSort=StatusFrequents')
+        .then(function(r){return r.json()});
+    }).then(function(d){
+      if(!d||!d.data||!d.data.length)throw new Error('no friends data');
+      var friendIds=d.data.map(function(f){return f.id});
+      var batches=[];
+      for(var i=0;i<friendIds.length;i+=100){batches.push(friendIds.slice(i,i+100));}
+      return Promise.all(batches.map(function(batch){
+        return fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds='+batch.join(',')+'&size=150x150&format=Png&isCircular=false')
+          .then(function(r){return r.json()});
+      }));
+    }).then(function(results){
+      results.forEach(function(batch){
+        if(batch&&batch.data){batch.data.forEach(function(item){if(item.imageUrl)avatarUrls.push(item.imageUrl)});}
+      });
+      if(avatarUrls.length>0){buildGlobe();return;}
+      throw new Error('no avatars');
+    }).catch(function(e){
+      console.warn('Friends fetch failed, using fallback avatars:',e);
+      avatarUrls=fallbackAvatars;
+      buildGlobe();
+    });
+  })();
+
+  function buildGlobe(){
+  // Scene setup
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(50,1,0.1,1000);
+  camera.position.z=5;
+
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setClearColor(0x000000,0);
+
+  // Globe group — holds all avatar sprites
+  var globe=new THREE.Group();
+  scene.add(globe);
+
+  var numPoints=avatarUrls.length;
+  var radius=2.0;
+  var loader=new THREE.TextureLoader();
+  loader.crossOrigin='anonymous';
+
+  // Wireframe globe shell
+  var wireGeo=new THREE.SphereGeometry(radius*0.95,24,24);
+  var wireMat=new THREE.MeshBasicMaterial({color:0x3a8afd,wireframe:true,transparent:true,opacity:0.04});
+  var wireMesh=new THREE.Mesh(wireGeo,wireMat);
+  globe.add(wireMesh);
+
+  // Glowing core
+  var coreGeo=new THREE.SphereGeometry(radius*0.3,16,16);
+  var coreMat=new THREE.MeshBasicMaterial({color:0x3a8afd,transparent:true,opacity:0.08});
+  var core=new THREE.Mesh(coreGeo,coreMat);
+  globe.add(core);
+
+  // Connection lines material
+  var lineMat=new THREE.LineBasicMaterial({color:0x3a8afd,transparent:true,opacity:0.06});
+
+  // Store sprites + their home positions for flee animation
+  var sprites=[];
+
+  avatarUrls.forEach(function(url,i){
+    // Fibonacci sphere distribution
+    var phi=Math.acos(1-2*(i+0.5)/numPoints);
+    var theta=Math.PI*(1+Math.sqrt(5))*i;
+    var hx=radius*Math.sin(phi)*Math.cos(theta);
+    var hy=radius*Math.sin(phi)*Math.sin(theta);
+    var hz=radius*Math.cos(phi);
+
+    // Direction vector (normalized) for flee
+    var len=Math.sqrt(hx*hx+hy*hy+hz*hz);
+    var dx=hx/len,dy=hy/len,dz=hz/len;
+
+    var tex=loader.load(url);
+    tex.minFilter=THREE.LinearFilter;
+    var mat=new THREE.SpriteMaterial({
+      map:tex,transparent:true,opacity:0.85,depthWrite:false
+    });
+    var sprite=new THREE.Sprite(mat);
+    sprite.position.set(hx,hy,hz);
+    sprite.scale.set(0.45,0.45,1);
+    globe.add(sprite);
+
+    // Connection line
+    var lineGeo=new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0,0,0),
+      new THREE.Vector3(hx,hy,hz)
+    ]);
+    var line=new THREE.Line(lineGeo,lineMat.clone());
+    globe.add(line);
+
+    // Random flee variation — some fly faster/farther
+    var fleeSpeed=0.7+Math.random()*0.6; // 0.7–1.3x
+    var fleeSpin=(Math.random()-0.5)*4; // random spin during flee
+    var fleeDelay=Math.random()*0.15; // stagger: 0–15% delay before fleeing
+
+    sprites.push({
+      sprite:sprite, line:line, mat:mat,
+      hx:hx,hy:hy,hz:hz, // home position
+      dx:dx,dy:dy,dz:dz, // flee direction
+      fleeSpeed:fleeSpeed,fleeSpin:fleeSpin,fleeDelay:fleeDelay
+    });
+  });
+
+  // Ambient ring particles
+  var ringCount=60;
+  var ringSprites=[];
+  var ringMat=new THREE.SpriteMaterial({color:0x3a8afd,transparent:true,opacity:0.15});
+  for(var r2=0;r2<ringCount;r2++){
+    var angle=(r2/ringCount)*Math.PI*2;
+    var ringR=radius*1.3;
+    var dot=new THREE.Sprite(ringMat.clone());
+    dot.position.set(Math.cos(angle)*ringR,0,Math.sin(angle)*ringR);
+    dot.scale.set(0.04,0.04,1);
+    globe.add(dot);
+    ringSprites.push({sprite:dot,homeX:Math.cos(angle)*ringR,homeZ:Math.sin(angle)*ringR,angle:angle});
+  }
+
+  // Scroll-driven state
+  canvas._globeOpacity=0;
+  canvas._globeFlee=0;   // 0 = on sphere, 1 = fully fled into orbit
+  canvas._globeSpin=1;   // spin multiplier (1 = normal, higher = faster)
+
+  function resize(){
+    var w=canvas.parentElement.offsetWidth;
+    var h=canvas.parentElement.offsetHeight;
+    renderer.setSize(w,h);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  globe.rotation.x=0.3;
+  globe.rotation.z=0.1;
+
+  var baseRotation=0;
+  var lastTime=0;
+
+  function animate(time){
+    requestAnimationFrame(animate);
+    var t=time*0.001;
+    var dt=lastTime?t-lastTime:0.016;
+    lastTime=t;
+
+    var o=parseFloat(canvas._globeOpacity)||0;
+    var flee=parseFloat(canvas._globeFlee)||0;
+    var spinMult=parseFloat(canvas._globeSpin)||1;
+
+    // Rotation speeds up with spinMult, accumulates over time
+    baseRotation+=dt*0.15*spinMult;
+    globe.rotation.y=baseRotation;
+
+    // Wobble increases with spin
+    globe.rotation.x=0.3+Math.sin(t*0.3)*0.05*(1+flee*3);
+
+    // Pulse core — gets more intense during flee
+    var pulse=1+Math.sin(t*1.5)*0.15*(1+flee*2);
+    core.scale.set(pulse,pulse,pulse);
+
+    // FLEE ANIMATION — avatars rocket outward
+    var maxFleeDist=12; // how far they fly
+    sprites.forEach(function(s){
+      // Per-sprite flee with stagger
+      var f=Math.max(0,Math.min(1,(flee-s.fleeDelay)/(1-s.fleeDelay)));
+      // Exponential ease-in for rocket feel
+      var fleeEase=f*f*f;
+      var dist=fleeEase*maxFleeDist*s.fleeSpeed;
+
+      // Position: home + direction * distance
+      s.sprite.position.x=s.hx+s.dx*dist;
+      s.sprite.position.y=s.hy+s.dy*dist;
+      s.sprite.position.z=s.hz+s.dz*dist;
+
+      // Scale: stretch along direction during flee (rocket trail)
+      var stretch=1+fleeEase*1.5;
+      var shrink=1-fleeEase*0.4;
+      s.sprite.scale.set(0.45*shrink,0.45*stretch,1);
+
+      // Spin the sprite itself
+      s.sprite.material.rotation+=dt*s.fleeSpin*flee*10;
+
+      // Opacity: fade out as they fly away
+      s.mat.opacity=0.85*o*(1-fleeEase*0.7);
+
+      // Update connection line to stretch with sprite
+      var positions=s.line.geometry.attributes.position;
+      positions.array[3]=s.sprite.position.x;
+      positions.array[4]=s.sprite.position.y;
+      positions.array[5]=s.sprite.position.z;
+      positions.needsUpdate=true;
+      s.line.material.opacity=0.06*o*(1-fleeEase);
+    });
+
+    // Ring particles expand outward during flee
+    ringSprites.forEach(function(rs){
+      var expandR=radius*1.3+flee*flee*8;
+      rs.sprite.position.x=Math.cos(rs.angle+baseRotation*0.3)*expandR;
+      rs.sprite.position.z=Math.sin(rs.angle+baseRotation*0.3)*expandR;
+      rs.sprite.material.opacity=0.15*o*(1-flee*0.8);
+    });
+
+    // Wireframe + core opacity
+    wireMat.opacity=0.04*o*(1-flee*0.6);
+    coreMat.opacity=(0.06+Math.sin(t*2)*0.03)*o*(1+flee*3); // core gets brighter as things flee
+
+    renderer.render(scene,camera);
+  }
+  animate(0);
+  } // end buildGlobe
+})();
+
+
+/* ==================== CATALOG — side-by-side reveal ==================== */
+var catLayout=document.getElementById('catalogLayout');
+if(catLayout){
+  var catTl=gsap.timeline({scrollTrigger:{trigger:'.catalog-section',start:'top 80%',end:'top 30%',scrub:.6}});
+  catTl.to('.catalog-thumb',{opacity:1,x:0,scale:1,duration:.4})
+       .to('.ci-label',{opacity:1,y:0,duration:.2},'-=.2')
+       .to('.catalog-info h2',{opacity:1,y:0,duration:.3},'-=.1')
+       .to('.ci-stats',{opacity:1,y:0,duration:.3},'-=.15')
+       .to('.ci-desc',{opacity:1,y:0,duration:.2},'-=.1')
+       .to('.catalog-btn',{opacity:1,y:0,duration:.2},'-=.1');
+  catLayout.style.opacity='1';catLayout.style.transform='none';
+}
+
+/* ==================== EMOTES FLASH SHOWCASE ==================== */
+/* old emote flash IIFE removed — now integrated into stats scroll */
+
+/* ==================== CATALOG STATS ==================== */
+(async function(){
+  function fmt(n){return n>=1000000?(n/1000000).toFixed(1)+'M+':n>=1000?Math.floor(n/1000)+'K+':n+''}
+  /* Try multiple endpoints — Roblox CORS blocks direct browser requests from non-roblox origins */
+  var endpoints=[
+    'https://games.roproxy.com/v1/games?universeIds=9209811415',
+    'https://games.roblox.com/v1/games?universeIds=9209811415'
+  ];
+  for(var ei=0;ei<endpoints.length;ei++){
+    try{
+      var r=await fetch(endpoints[ei]);
+      if(r.ok){
+        var d=await r.json();
+        if(d.data&&d.data[0]){
+          var g=d.data[0];
+          document.getElementById('catVisits').textContent=fmt(g.visits);
+          document.getElementById('catPlaying').textContent=fmt(g.playing);
+          document.getElementById('catFavs').textContent=fmt(g.favoritedCount);
+          break;
+        }
+      }
+    }catch(e){continue;}
+  }
+})();
+
+/* ==================== BEST SELLERS — 3D CAROUSEL ANGELIC ==================== */
+(async function(){
+  await emoteDataReady;
+  var ring=document.getElementById('carouselRing');
+  var wrap=document.getElementById('carouselWrap');
+  var cdName=document.getElementById('cdName');
+  var cdMeta=document.getElementById('cdMeta');
+  var cdCta=document.getElementById('cdCta');
+  var dotsWrap=document.getElementById('carDots');
+  var spotlight=document.getElementById('carSpotlight');
+  var fxCanvas=document.getElementById('bsFxCanvas');
+  var bsSection=document.getElementById('bestSellers');
+  if(!ring||!wrap)return;
+
+  var fallback='https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group';
+  var items=emoteData.filter(function(e){return e.id&&e.name!=='Loading...'}).slice(0,15);
+  if(!items.length)items=emoteData.slice(0,15);
+  var count=items.length;
+  var angle=360/count;
+  var radius=Math.max(460,count*46);
+  var current=0;
+  var rotAngle=0; // Track cumulative rotation for seamless spinning
+  var cards=[];
+  var topNames=['gold','silver','bronze'];
+
+  /* ===== FULLSCREEN ANGELIC FX CANVAS ===== */
+  var fxCtx=fxCanvas.getContext('2d');
+  var fxW,fxH;
+  function resizeFx(){fxW=fxCanvas.width=fxCanvas.offsetWidth;fxH=fxCanvas.height=fxCanvas.offsetHeight}
+  resizeFx();window.addEventListener('resize',resizeFx);
+
+  // Soft dust motes floating up (always visible)
+  var dustMotes=[];
+  for(var dm=0;dm<60;dm++){
+    dustMotes.push({x:Math.random(),y:Math.random(),vy:-.0003-Math.random()*.0006,vx:(Math.random()-.5)*.0002,size:Math.random()*1.5+.5,alpha:Math.random()*.15+.05,phase:Math.random()*Math.PI*2});
+  }
+
+  // FX state: soft white angelic
+  var fx={intensity:0,targetIntensity:0,flash:0,rays:[]};
+  // Soft volumetric light rays (wide, white, ethereal)
+  for(var gr=0;gr<5;gr++){
+    fx.rays.push({angle:-20+gr*10,width:8+Math.random()*6,speed:.03+Math.random()*.02,offset:Math.random()*Math.PI*2,alpha:.5+Math.random()*.5});
+  }
+
+  function drawFx(t){
+    fxCtx.clearRect(0,0,fxW,fxH);
+    fx.intensity+=(fx.targetIntensity-fx.intensity)*.04;
+    if(fx.flash>0)fx.flash*=.92;
+
+    // Dust motes (always)
+    dustMotes.forEach(function(d){
+      d.y+=d.vy;d.x+=d.vx+Math.sin(t*.0005+d.phase)*.0001;d.phase+=.008;
+      if(d.y<-.02){d.y=1.02;d.x=Math.random();}
+      if(d.x<0)d.x=1;if(d.x>1)d.x=0;
+      fxCtx.save();
+      fxCtx.globalAlpha=d.alpha*(.6+.4*Math.sin(d.phase));
+      fxCtx.fillStyle='#fff';
+      fxCtx.beginPath();fxCtx.arc(d.x*fxW,d.y*fxH,d.size,0,Math.PI*2);fxCtx.fill();
+      fxCtx.restore();
+    });
+
+    var inten=fx.intensity;
+    if(inten<.01&&fx.flash<.01){requestAnimationFrame(drawFx);return;}
+
+    var cx=fxW/2;
+
+    // SCREEN FLASH — whole canvas white pulse
+    if(fx.flash>.01){
+      fxCtx.save();
+      fxCtx.globalAlpha=fx.flash*.35;
+      fxCtx.fillStyle='#fff';
+      fxCtx.fillRect(0,0,fxW,fxH);
+      fxCtx.restore();
+    }
+
+    // Soft wide god-rays — pure white, heavenly
+    fx.rays.forEach(function(ray){
+      var sway=Math.sin(t*.001*ray.speed+ray.offset)*6;
+      var a=(ray.angle+sway)*Math.PI/180;
+      var len=fxH*1.3;
+      var w=ray.width*inten;
+      fxCtx.save();
+      fxCtx.globalAlpha=.04*inten*ray.alpha;
+      fxCtx.translate(cx,0);
+      fxCtx.rotate(a);
+      var grad=fxCtx.createLinearGradient(0,0,0,len);
+      grad.addColorStop(0,'rgba(255,255,255,.7)');
+      grad.addColorStop(.3,'rgba(255,255,240,.3)');
+      grad.addColorStop(.7,'rgba(255,255,240,.05)');
+      grad.addColorStop(1,'transparent');
+      fxCtx.fillStyle=grad;
+      fxCtx.beginPath();
+      fxCtx.moveTo(-w,0);fxCtx.lineTo(w,0);
+      fxCtx.lineTo(w*12,len);fxCtx.lineTo(-w*12,len);
+      fxCtx.closePath();fxCtx.fill();
+      fxCtx.restore();
+    });
+
+    // Soft central bloom — warm white glow, like looking into heaven
+    var bloom=fxCtx.createRadialGradient(cx,fxH*.35,0,cx,fxH*.35,fxH*.6);
+    bloom.addColorStop(0,'rgba(255,255,245,'+(.1*inten)+')');
+    bloom.addColorStop(.3,'rgba(255,255,240,'+(.04*inten)+')');
+    bloom.addColorStop(.6,'rgba(255,250,235,'+(.015*inten)+')');
+    bloom.addColorStop(1,'transparent');
+    fxCtx.fillStyle=bloom;
+    fxCtx.fillRect(0,0,fxW,fxH);
+
+    // Top edge heavenly glow (like light pouring from above)
+    var topGlow=fxCtx.createLinearGradient(0,0,0,fxH*.4);
+    topGlow.addColorStop(0,'rgba(255,255,250,'+(.07*inten)+')');
+    topGlow.addColorStop(.5,'rgba(255,255,245,'+(.02*inten)+')');
+    topGlow.addColorStop(1,'transparent');
+    fxCtx.fillStyle=topGlow;
+    fxCtx.fillRect(0,0,fxW,fxH*.4);
+
+    requestAnimationFrame(drawFx);
+  }
+  requestAnimationFrame(drawFx);
+
+  function setFxMode(idx){
+    fx.targetIntensity=idx<3?1:0;
+    if(idx<3)fx.flash=1; // screen flash on top 3
+  }
+
+  /* ===== Build cards ===== */
+  items.forEach(function(item,i){
+    var card=document.createElement('a');
+    card.className='c-card';
+    if(i<3)card.classList.add('top-'+(i+1));
+    var slug=item.name?item.name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,''):'';
+    var base=item.itemType==='Bundle'?'https://www.roblox.com/bundles/':'https://www.roblox.com/catalog/';
+    card.href=item.id?base+item.id+'/'+slug:fallback;
+    card.target='_blank';card.rel='noopener';
+
+    // Top 3: aura ring
+    if(i<3){
+      var aura=document.createElement('div');aura.className='c-aura';card.appendChild(aura);
+    }
+
+    var inner=document.createElement('div');inner.className='c-inner';
+    var rank=document.createElement('div');rank.className='c-rank';
+    rank.textContent='#'+(i+1);
+    inner.appendChild(rank);
+
+    var img=document.createElement('img');
+    img.src=item.url;img.alt=item.name||'Emote';img.loading='lazy';
+    inner.appendChild(img);
+
+    var info=document.createElement('div');info.className='c-info';
+    var nm=document.createElement('div');nm.className='c-name';nm.textContent=item.name||'L,XOXO Emote';
+    info.appendChild(nm);
+    var buy=document.createElement('div');buy.className='c-buy';buy.textContent='View →';
+    info.appendChild(buy);
+    inner.appendChild(info);
+    card.appendChild(inner);
+
+    card.style.transform='rotateY('+i*angle+'deg) translateZ('+radius+'px)';
+    ring.appendChild(card);
+    cards.push(card);
+  });
+
+  // Build dots
+  items.forEach(function(_,i){
+    var dot=document.createElement('div');
+    dot.className='dot'+(i===0?' active':'');
+    dot.addEventListener('click',function(){goTo(i)});
+    dotsWrap.appendChild(dot);
+  });
+  var dots=dotsWrap.querySelectorAll('.dot');
+
+  function updateDetail(){
+    var item=items[current];
+    if(!item)return;
+    cdName.textContent=item.name||'L,XOXO Emote';
+    cdName.className='cd-name';
+    if(current<3)cdName.classList.add('glow-'+topNames[current]);
+    var favText=item.favs?(item.favs>=1000?Math.round(item.favs/1000)+'K':item.favs)+' Favorites':'';
+    var rankLabel=current<3?['Gold','Silver','Bronze'][current]+' — ':'';
+    cdMeta.innerHTML='<span>'+rankLabel+'#'+(current+1)+' Best Selling</span>'+(favText?'<span>♥ '+favText+'</span>':'');
+    var slug=item.name?item.name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,''):'';
+    var base=item.itemType==='Bundle'?'https://www.roblox.com/bundles/':'https://www.roblox.com/catalog/';
+    cdCta.href=item.id?base+item.id+'/'+slug:fallback;
+    cdCta.className='cd-cta';
+    if(current<3)cdCta.classList.add(topNames[current]);
+    spotlight.className='carousel-spotlight';
+    if(current<3)spotlight.classList.add(topNames[current]);
+    dots.forEach(function(d,i){
+      d.classList.remove('gold','silver','bronze');
+      if(i===current&&i<3)d.classList.add(topNames[i]);
+    });
+  }
+
+  // Seamless rotation: always go shortest path, track cumulative angle
+  function render(animate){
+    if(animate!==false)ring.classList.remove('dragging');
+    ring.style.transform='translateZ(-'+radius+'px) rotateY('+rotAngle+'deg)';
+    cards.forEach(function(c,i){c.classList.toggle('front',i===current)});
+    dots.forEach(function(d,i){d.classList.toggle('active',i===current)});
+    updateDetail();
+    setFxMode(current);
+  }
+
+  function goTo(idx){
+    var newIdx=((idx%count)+count)%count;
+    // Calculate shortest rotation direction
+    var diff=newIdx-current;
+    if(diff>count/2)diff-=count;
+    if(diff<-count/2)diff+=count;
+    rotAngle-=diff*angle; // subtract because positive rotateY goes opposite
+    current=newIdx;
+    render();
+  }
+  function next(){goTo(current+1)}
+  function prev(){goTo(current-1)}
+
+  document.getElementById('carPrev').addEventListener('click',function(e){e.preventDefault();prev()});
+  document.getElementById('carNext').addEventListener('click',function(e){e.preventDefault();next()});
+
+  wrap.setAttribute('tabindex','0');
+  wrap.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft')prev();else if(e.key==='ArrowRight')next();
+  });
+
+  // Drag / swipe
+  var dragStartX=0,isDragging=false,dragDelta=0;
+  wrap.addEventListener('pointerdown',function(e){
+    if(e.target.closest('.carousel-nav'))return;
+    isDragging=true;dragStartX=e.clientX;dragDelta=0;
+    ring.classList.add('dragging');wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove',function(e){
+    if(!isDragging)return;dragDelta=e.clientX-dragStartX;
+    ring.style.transform='translateZ(-'+radius+'px) rotateY('+(rotAngle+dragDelta*0.3)+'deg)';
+  });
+  function endDrag(){
+    if(!isDragging)return;isDragging=false;
+    if(Math.abs(dragDelta)>40){if(dragDelta<0)next();else prev();}else{render()}
+  }
+  wrap.addEventListener('pointerup',endDrag);
+  wrap.addEventListener('pointercancel',endDrag);
+
+  // Auto-rotate
+  var autoTimer=null;
+  function startAuto(){autoTimer=setInterval(next,3800)}
+  function stopAuto(){clearInterval(autoTimer)}
+  startAuto();
+  wrap.addEventListener('pointerenter',stopAuto);
+  wrap.addEventListener('pointerleave',startAuto);
+
+  render(false);
+
+  if(typeof gsap!=='undefined'){
+    gsap.from('.bs-header',{scrollTrigger:{trigger:'.bestsellers',start:'top 85%'},opacity:0,y:40,duration:.8,ease:'power3.out'});
+    gsap.from('.carousel-wrap',{scrollTrigger:{trigger:'.bestsellers',start:'top 70%'},opacity:0,y:60,duration:1,ease:'power3.out',delay:.2});
+    gsap.from('.carousel-detail',{scrollTrigger:{trigger:'.bestsellers',start:'top 65%'},opacity:0,y:20,duration:.8,ease:'power3.out',delay:.5});
+  }
+})();
+</script>
+
+<!-- Liquid glass — real refraction via cloned video + SVG displacement -->
+<script>
+(function(){
+  var heroVideo=document.querySelector('.video-bg-fixed video');
+  var allBtns=document.querySelectorAll('.glass-btn');
+
+  // Use canvas elements instead of cloned videos — browsers limit simultaneous video decoders
+  var btnData=[];
+  allBtns.forEach(function(btn){
+    var bg=document.createElement('div');
+    bg.className='liquid-bg';
+    var canvas=document.createElement('canvas');
+    canvas.className='liquid-canvas';
+    bg.appendChild(canvas);
+    btn.insertBefore(bg,btn.firstChild);
+
+    var tint=document.createElement('div');
+    tint.className='liquid-tint';
+    btn.insertBefore(tint,btn.children[1]);
+
+    btnData.push({btn:btn,canvas:canvas,ctx:canvas.getContext('2d')});
+  });
+
+  // Stat numbers — same liquid-bg canvas system as buttons
+  // Stat numbers — liquid glass masked to text shape
+  var statNums=document.querySelectorAll('.sc-number');
+  function applyTextMasks(){
+    statNums.forEach(function(num){
+      var text=num.getAttribute('data-text')||'';
+      var cs=getComputedStyle(num);
+      var fontSize=parseFloat(cs.fontSize);
+      var w=num.offsetWidth;
+      var h=num.offsetHeight;
+      // SVG text mask — clean edges
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<text x="50%" y="72%" text-anchor="middle" font-size="'+fontSize+'" font-weight="900" '
+        +'font-family="\'Builder Sans\',system-ui,-apple-system,sans-serif" letter-spacing="-0.04em" fill="white">'
+        +text+'</text></svg>';
+      var mask='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
+      num.style.webkitMaskImage=mask;
+      num.style.maskImage=mask;
+      num.style.webkitMaskSize='100% 100%';
+      num.style.maskSize='100% 100%';
+      num.style.webkitMaskRepeat='no-repeat';
+      num.style.maskRepeat='no-repeat';
+    });
+  }
+  // Apply masks after fonts load
+  document.fonts.ready.then(applyTextMasks);
+  window.addEventListener('resize',applyTextMasks);
+
+  statNums.forEach(function(num){
+    var bg=document.createElement('div');
+    bg.className='liquid-bg';
+    var canvas=document.createElement('canvas');
+    bg.appendChild(canvas);
+    num.insertBefore(bg,num.firstChild);
+
+    var tint=document.createElement('div');
+    tint.className='liquid-tint';
+    num.insertBefore(tint,bg.nextSibling);
+
+    btnData.push({btn:num,canvas:canvas,ctx:canvas.getContext('2d')});
+  });
+
+  // Single animation loop paints all canvases from the one hero video
+  function paintButtons(){
+    var vw=window.innerWidth;
+    var vh=window.innerHeight;
+    var vidW=heroVideo.videoWidth||1920;
+    var vidH=heroVideo.videoHeight||1080;
+    // Calculate object-fit:cover source rect
+    var videoRatio=vidW/vidH;
+    var winRatio=vw/vh;
+    var sw,sh,sx,sy;
+    if(winRatio>videoRatio){
+      // Window wider than video — full width, crop height
+      sw=vidW; sh=vidW/winRatio;
+      sx=0; sy=(vidH-sh)/2;
+    } else {
+      // Window taller than video — full height, crop width
+      sh=vidH; sw=vidH*winRatio;
+      sy=0; sx=(vidW-sw)/2;
+    }
+    // Paint button canvases
+    btnData.forEach(function(d){
+      var r=d.btn.getBoundingClientRect();
+      if(r.bottom<0||r.top>vh||r.right<0||r.left>vw) return;
+      var cw=Math.ceil(r.width);
+      var ch=Math.ceil(r.height);
+      if(d.canvas.width!==cw) d.canvas.width=cw;
+      if(d.canvas.height!==ch) d.canvas.height=ch;
+      var srcX=sx+(r.left/vw)*sw;
+      var srcY=sy+(r.top/vh)*sh;
+      var srcW=(r.width/vw)*sw;
+      var srcH=(r.height/vh)*sh;
+      d.ctx.drawImage(heroVideo,srcX,srcY,srcW,srcH,0,0,cw,ch);
+    });
+    requestAnimationFrame(paintButtons);
+  }
+  // Start painting once video is ready
+  heroVideo.addEventListener('playing',function(){ requestAnimationFrame(paintButtons); });
+  if(!heroVideo.paused) requestAnimationFrame(paintButtons);
+
+  // Stat numbers — mouse-reactive liquid shine
+  document.querySelectorAll('.sc-number').forEach(function(num){
+    num.addEventListener('mousemove',function(e){
+      var r=num.getBoundingClientRect();
+      var mx=((e.clientX-r.left)/r.width*100).toFixed(0);
+      num.style.setProperty('--shine-pos',(mx-20)+'%');
+    });
+    num.addEventListener('mouseleave',function(){
+      num.style.setProperty('--shine-pos','120%');
+    });
+  });
+})();
+</script>
+</body>
+</html>
