@@ -107,10 +107,10 @@ section{position:relative;z-index:1}
 /* Floating visual elements behind stats — frameless PNGs */
 .sc-visuals{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .sc-float{position:absolute;will-change:transform;transition:none;border:none;background:none;box-shadow:none;overflow:visible}
-.sc-float img{display:block;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));border-radius:14px}
+.sc-float img{display:block;border-radius:14px}
 /* Emote thumbs for stat 0 — scroll-driven L,XOXO formation */
-.sc-float.emote-thumb{width:58px;height:58px;left:50%;top:50%;margin-left:-29px;margin-top:-29px;transition:none;will-change:transform,opacity}
-.sc-float.emote-thumb img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:rgba(30,32,36,.7);padding:3px;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.sc-float.emote-thumb{width:58px;height:58px;left:50%;top:50%;margin-left:-29px;margin-top:-29px;transition:none;will-change:transform,opacity;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.sc-float.emote-thumb img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:rgba(30,32,36,.7);padding:3px;border:1px solid rgba(255,255,255,.1)}
 /* 3D Globe for stat 1 — behind text so avatars pass under liquid glass */
 .globe-wrap{position:absolute;inset:0;z-index:1;pointer-events:none}
 .globe-wrap canvas{width:100%!important;height:100%!important;position:absolute;inset:0}
@@ -119,7 +119,7 @@ section{position:relative;z-index:1}
 #sc1 .sc-number .liquid-bg canvas{opacity:0.25}
 #sc1 .sc-number .liquid-tint{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(58,138,253,.06) 60%,rgba(58,138,253,.1))}
 /* Trophy/crown for stat 2 */
-.sc-float.crown-float{display:flex;align-items:center;justify-content:center;font-size:2.8rem;filter:drop-shadow(0 4px 16px rgba(255,215,0,.3))}
+.sc-float.crown-float{display:flex;align-items:center;justify-content:center;font-size:2.8rem}
 .stats-dots{position:absolute;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:10}
 .stats-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .35s}
 .stats-dots .dot.active{background:var(--blue);box-shadow:0 0 10px var(--blue-glow);transform:scale(1.3)}
@@ -899,40 +899,31 @@ var vortexFrame=0;
   var op=vortexState.opacity;
   var scatter=vortexState.scatter;
 
+  // Convert vw/vh to px once per frame instead of per-element
+  var vpW=window.innerWidth*0.01;
+  var vpH=window.innerHeight*0.01;
   for(var i=0;i<vortexCount;i++){
     var el=vortexThumbs[i];
     var item=vortexItems[i];
 
-    // Current orbit angle
     var angle=item.angleOffset+t*item.orbitSpeed;
+    var ox=Math.cos(angle)*item.radius*vpW;
+    var oy=Math.sin(angle)*item.ry*vpH;
 
-    // Elliptical orbit position
-    var ox=Math.cos(angle)*item.radius;
-    var oy=Math.sin(angle)*item.ry;
-
-    // Scatter outward during hyperspeed
     if(scatter>0){
       var sa=item.scatterAngle;
-      ox+=Math.cos(sa)*item.scatterDist*scatter;
-      oy+=Math.sin(sa)*item.scatterDist*0.5*scatter;
+      ox+=Math.cos(sa)*item.scatterDist*scatter*vpW;
+      oy+=Math.sin(sa)*item.scatterDist*0.5*scatter*vpH;
     }
 
-    // Depth effect: sin(angle) determines front/back
-    // front (sin>0) = bigger, brighter; back (sin<0) = smaller, dimmer
-    var depth=Math.sin(angle); // -1 (far back) to +1 (front)
-    var depthScale=0.65+depth*0.35; // 0.3→1.0
-    var depthOpacity=0.4+depth*0.4+0.2; // 0.2→1.0
-    var finalScale=item.scaleBase*depthScale;
+    var depth=Math.sin(angle);
+    var finalScale=item.scaleBase*(0.65+depth*0.35);
 
-    // z-index: front emotes on top
-    var zIdx=Math.round(50+depth*50);
-    el.style.zIndex=zIdx;
-
-    // Gentle tilt rotation based on orbit position
     var rot=Math.sin(angle*0.5)*8+depth*5;
+    var o=op*(0.4+depth*0.4+0.2)*(1-scatter*0.3);
 
-    el.style.opacity=(op*depthOpacity*(1-scatter*0.3)).toFixed(3);
-    el.style.transform='translate('+ox.toFixed(1)+'vw,'+oy.toFixed(1)+'vh) rotate('+rot.toFixed(1)+'deg) scale('+finalScale.toFixed(3)+')';
+    el.style.opacity=o<0.01?'0':o.toFixed(2);
+    el.style.transform='translate3d('+Math.round(ox)+'px,'+Math.round(oy)+'px,'+Math.round(depth*50)+'px) rotate('+Math.round(rot)+'deg) scale('+finalScale.toFixed(2)+')';
   }
   requestAnimationFrame(vortexLoop);
 })();
