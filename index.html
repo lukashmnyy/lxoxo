@@ -574,11 +574,8 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   var vidPaintFrame=0;
   function paint(){
     vidPaintFrame++;
-    // On mobile: skip frames and only paint when scrolled near top
-    if(isMobile){
-      if(vidPaintFrame%2!==0){requestAnimationFrame(paint);return;}
-      if(window.scrollY>window.innerHeight*3){requestAnimationFrame(paint);return;}
-    }
+    // On mobile: skip every other frame to save GPU, but always keep painting
+    if(isMobile&&vidPaintFrame%2!==0){requestAnimationFrame(paint);return;}
     var vw=window.innerWidth, vh=window.innerHeight;
     if(cvs.width!==vw||cvs.height!==vh){cvs.width=vw;cvs.height=vh;}
 
