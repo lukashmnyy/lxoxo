@@ -266,19 +266,15 @@ footer .footer-links a:hover{color:var(--blue)}
 </style>
 </head>
 <body>
-<!-- SVG Liquid Glass — real displacement on cloned video -->
+<!-- SVG Liquid Glass — real displacement on cloned video (desktop only, simplified on mobile) -->
 <svg width="0" height="0" style="position:absolute" color-interpolation-filters="sRGB">
   <filter id="liquid-refract" x="-2%" y="-2%" width="104%" height="104%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.025 0.03" numOctaves="3" seed="3" result="noise">
-      <animate attributeName="seed" dur="6s" values="3;8;14;8;3" repeatCount="indefinite"/>
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.025 0.03" numOctaves="2" seed="3" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
   <filter id="liquid-refract-hover" x="-3%" y="-3%" width="106%" height="106%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.022 0.028" numOctaves="3" seed="3" result="noise">
-      <animate attributeName="seed" dur="4s" values="3;10;18;10;3" repeatCount="indefinite"/>
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.022 0.028" numOctaves="2" seed="3" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>
 
@@ -508,6 +504,10 @@ footer .footer-links a:hover{color:var(--blue)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
+var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)||window.innerWidth<768;
+var perfScale=isMobile?0.5:1; // half resolution canvases on mobile
+var frameSkip=isMobile?2:1; // render every Nth frame on mobile
+var _globalFrame=0;
 
 /* ==================== HERO COUNTER ==================== */
 function animateCounter(el,target,dur){
@@ -887,10 +887,14 @@ function hideGalaxy(){
 }
 
 // Continuous rAF loop for smooth orbiting
+var vortexFrame=0;
 (function vortexLoop(){
+  vortexFrame++;
+  if(isMobile&&vortexFrame%2!==0){requestAnimationFrame(vortexLoop);return;}
   if(vortexState.active){
     vortexState.time+=0.016*vortexState.speedMult;
   }
+  if(!vortexState.active&&vortexState.opacity<0.01){requestAnimationFrame(vortexLoop);return;}
   var t=vortexState.time;
   var op=vortexState.opacity;
   var scatter=vortexState.scatter;
@@ -1130,7 +1134,10 @@ ScrollTrigger.create({
     floatParams.push({vis:vis,params:params});
   });
 
+  var floatFrame=0;
   function animateFloats(time){
+    floatFrame++;
+    if(isMobile&&floatFrame%3!==0){requestAnimationFrame(animateFloats);return;}
     var t=time*0.001; // seconds
     floatParams.forEach(function(group){
       var vis=group.vis;
@@ -1242,8 +1249,8 @@ ScrollTrigger.create({
   var camera=new THREE.PerspectiveCamera(50,1,0.1,1000);
   camera.position.z=5;
 
-  var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:!isMobile});
+  renderer.setPixelRatio(isMobile?1:Math.min(window.devicePixelRatio,2));
   renderer.setClearColor(0x000000,0);
 
   // Globe group — holds all avatar sprites
@@ -1256,7 +1263,8 @@ ScrollTrigger.create({
   loader.crossOrigin='anonymous';
 
   // Wireframe globe shell
-  var wireGeo=new THREE.SphereGeometry(radius*0.95,24,24);
+  var wireSeg=isMobile?12:24;
+  var wireGeo=new THREE.SphereGeometry(radius*0.95,wireSeg,wireSeg);
   var wireMat=new THREE.MeshBasicMaterial({color:0x3a8afd,wireframe:true,transparent:true,opacity:0.04});
   var wireMesh=new THREE.Mesh(wireGeo,wireMat);
   globe.add(wireMesh);
@@ -1317,7 +1325,7 @@ ScrollTrigger.create({
   });
 
   // Ambient ring particles
-  var ringCount=60;
+  var ringCount=isMobile?20:60;
   var ringSprites=[];
   var ringMat=new THREE.SpriteMaterial({color:0x3a8afd,transparent:true,opacity:0.15});
   for(var r2=0;r2<ringCount;r2++){
@@ -1351,13 +1359,17 @@ ScrollTrigger.create({
   var baseRotation=0;
   var lastTime=0;
 
+  var globeFrame=0;
   function animate(time){
     requestAnimationFrame(animate);
+    globeFrame++;
+    if(isMobile&&globeFrame%2!==0)return; // skip every other frame on mobile
     var t=time*0.001;
     var dt=lastTime?t-lastTime:0.016;
     lastTime=t;
 
     var o=parseFloat(canvas._globeOpacity)||0;
+    if(o<0.01){return;} // don't render when invisible
     var flee=parseFloat(canvas._globeFlee)||0;
     var spinMult=parseFloat(canvas._globeSpin)||1;
 
@@ -1511,23 +1523,28 @@ if(catLayout){
   /* ===== FULLSCREEN ANGELIC FX CANVAS ===== */
   var fxCtx=fxCanvas.getContext('2d');
   var fxW,fxH;
-  function resizeFx(){fxW=fxCanvas.width=fxCanvas.offsetWidth;fxH=fxCanvas.height=fxCanvas.offsetHeight}
+  function resizeFx(){var s=isMobile?0.5:1;fxW=fxCanvas.width=Math.round(fxCanvas.offsetWidth*s);fxH=fxCanvas.height=Math.round(fxCanvas.offsetHeight*s)}
   resizeFx();window.addEventListener('resize',resizeFx);
 
   // Soft dust motes floating up (always visible)
   var dustMotes=[];
-  for(var dm=0;dm<60;dm++){
+  var dustCount=isMobile?15:60;
+  for(var dm=0;dm<dustCount;dm++){
     dustMotes.push({x:Math.random(),y:Math.random(),vy:-.0003-Math.random()*.0006,vx:(Math.random()-.5)*.0002,size:Math.random()*1.5+.5,alpha:Math.random()*.15+.05,phase:Math.random()*Math.PI*2});
   }
 
   // FX state: soft white angelic
   var fx={intensity:0,targetIntensity:0,flash:0,rays:[]};
   // Soft volumetric light rays (wide, white, ethereal)
-  for(var gr=0;gr<5;gr++){
+  var rayCount=isMobile?2:5;
+  for(var gr=0;gr<rayCount;gr++){
     fx.rays.push({angle:-20+gr*10,width:8+Math.random()*6,speed:.03+Math.random()*.02,offset:Math.random()*Math.PI*2,alpha:.5+Math.random()*.5});
   }
 
+  var fxFrame=0;
   function drawFx(t){
+    fxFrame++;
+    if(isMobile&&fxFrame%2!==0){requestAnimationFrame(drawFx);return;}
     fxCtx.clearRect(0,0,fxW,fxH);
     fx.intensity+=(fx.targetIntensity-fx.intensity)*.04;
     if(fx.flash>0)fx.flash*=.92;
@@ -1808,7 +1825,10 @@ if(catLayout){
   });
 
   // Single animation loop paints all canvases from the one hero video
+  var paintFrame=0;
   function paintButtons(){
+    paintFrame++;
+    if(isMobile&&paintFrame%3!==0){requestAnimationFrame(paintButtons);return;}
     var vw=window.innerWidth;
     var vh=window.innerHeight;
     var vidW=heroVideo.videoWidth||1920;
