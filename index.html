@@ -262,6 +262,22 @@ footer .footer-links a:hover{color:var(--blue)}
 .catalog-thumb{width:100%;max-width:320px;margin:0 auto}
 .stat-counter .sc-number{font-size:clamp(3.5rem,12vw,5.5rem)}
 .stats-dots{right:16px}
+/* MOBILE PERF: kill expensive GPU filters */
+.video-bg-fixed .vbf-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(25,27,29,.3)!important}
+.bg-glow .orb{display:none!important}
+.stat-counter .sc-glow{filter:none!important;opacity:.15!important}
+.glass-btn .liquid-bg{display:none!important}
+.glass-btn .liquid-tint{display:none!important}
+.glass-btn{background:rgba(58,138,253,.15)!important;border:1px solid rgba(58,138,253,.3)!important}
+.sc-number .liquid-bg{display:none!important}
+.sc-number .liquid-tint{display:none!important}
+#sc1 .sc-number{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.c-card:not(.front){filter:brightness(.4) saturate(.4)!important}
+.c-card img{filter:none!important}
+.ef-frame img{filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))!important}
+.hero-logo{filter:none!important}
+.bs-logo{filter:none!important}
+.text-reveal .inline-logo{filter:none!important}
 }
 </style>
 </head>
@@ -505,9 +521,23 @@ footer .footer-links a:hover{color:var(--blue)}
 <script>
 gsap.registerPlugin(ScrollTrigger);
 var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)||window.innerWidth<768;
-var perfScale=isMobile?0.5:1; // half resolution canvases on mobile
-var frameSkip=isMobile?2:1; // render every Nth frame on mobile
-var _globalFrame=0;
+
+/* ===== VISIBILITY GATING — sections only render when on screen ===== */
+var sectionVisible={hero:true,stats:false,bestsellers:false,catalog:false};
+var visObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    var id=e.target.id||e.target.className;
+    if(id==='hero')sectionVisible.hero=e.isIntersecting;
+    else if(id==='statsScroll'||id==='statsPin')sectionVisible.stats=e.isIntersecting;
+    else if(id==='bestSellers')sectionVisible.bestsellers=e.isIntersecting;
+    else if(id==='catalog')sectionVisible.catalog=e.isIntersecting;
+  });
+},{rootMargin:'100px 0px',threshold:0});
+document.addEventListener('DOMContentLoaded',function(){
+  ['hero','statsScroll','bestSellers','catalog'].forEach(function(id){
+    var el=document.getElementById(id);if(el)visObs.observe(el);
+  });
+});
 
 /* ==================== HERO COUNTER ==================== */
 function animateCounter(el,target,dur){
@@ -541,7 +571,14 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   var ctx=cvs.getContext('2d');
   var lastW=0,lastH=0;
 
+  var vidPaintFrame=0;
   function paint(){
+    vidPaintFrame++;
+    // On mobile: skip frames and only paint when scrolled near top
+    if(isMobile){
+      if(vidPaintFrame%2!==0){requestAnimationFrame(paint);return;}
+      if(window.scrollY>window.innerHeight*3){requestAnimationFrame(paint);return;}
+    }
     var vw=window.innerWidth, vh=window.innerHeight;
     if(cvs.width!==vw||cvs.height!==vh){cvs.width=vw;cvs.height=vh;}
 
@@ -549,7 +586,6 @@ var vbfOverlay=document.getElementById('vbfOverlay');
     if(vid.paused) vid.play().catch(function(){});
 
     if(vid.readyState>=2){
-      // object-fit:cover math
       var vidW=vid.videoWidth||1920, vidH=vid.videoHeight||1080;
       var vidR=vidW/vidH, winR=vw/vh;
       var sx,sy,sw,sh;
@@ -583,8 +619,10 @@ window.addEventListener('scroll',function(){
   // Darkness: gentle tint, never too opaque so video stays alive
   var darkness=eased*0.3;
   if(scrollY<=0){blurAmount=0;darkness=0;}
-  vbfOverlay.style.backdropFilter='blur('+blurAmount+'px)';
-  vbfOverlay.style.webkitBackdropFilter='blur('+blurAmount+'px)';
+  if(!isMobile){
+    vbfOverlay.style.backdropFilter='blur('+blurAmount+'px)';
+    vbfOverlay.style.webkitBackdropFilter='blur('+blurAmount+'px)';
+  }
   vbfOverlay.style.background='rgba(25,27,29,'+Math.min(darkness,0.40)+')';
 });
 
@@ -890,6 +928,7 @@ function hideGalaxy(){
 var vortexFrame=0;
 (function vortexLoop(){
   vortexFrame++;
+  if(!sectionVisible.stats&&vortexState.opacity<0.01){requestAnimationFrame(vortexLoop);return;}
   if(isMobile&&vortexFrame%2!==0){requestAnimationFrame(vortexLoop);return;}
   if(vortexState.active){
     vortexState.time+=0.016*vortexState.speedMult;
@@ -1127,8 +1166,10 @@ ScrollTrigger.create({
 
   var floatFrame=0;
   function animateFloats(time){
+    requestAnimationFrame(animateFloats);
+    if(!sectionVisible.stats)return; // only animate when stats visible
     floatFrame++;
-    if(isMobile&&floatFrame%3!==0){requestAnimationFrame(animateFloats);return;}
+    if(isMobile&&floatFrame%3!==0)return;
     var t=time*0.001; // seconds
     floatParams.forEach(function(group){
       var vis=group.vis;
@@ -1145,7 +1186,6 @@ ScrollTrigger.create({
         p.el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+rot.toFixed(1)+'deg) scale('+scale.toFixed(3)+')';
       });
     });
-    requestAnimationFrame(animateFloats);
   }
   requestAnimationFrame(animateFloats);
 })();
@@ -1353,14 +1393,13 @@ ScrollTrigger.create({
   var globeFrame=0;
   function animate(time){
     requestAnimationFrame(animate);
+    var o=parseFloat(canvas._globeOpacity)||0;
+    if(o<0.01)return; // don't render when invisible
     globeFrame++;
-    if(isMobile&&globeFrame%2!==0)return; // skip every other frame on mobile
+    if(isMobile&&globeFrame%2!==0)return;
     var t=time*0.001;
     var dt=lastTime?t-lastTime:0.016;
     lastTime=t;
-
-    var o=parseFloat(canvas._globeOpacity)||0;
-    if(o<0.01){return;} // don't render when invisible
     var flee=parseFloat(canvas._globeFlee)||0;
     var spinMult=parseFloat(canvas._globeSpin)||1;
 
@@ -1534,8 +1573,10 @@ if(catLayout){
 
   var fxFrame=0;
   function drawFx(t){
+    requestAnimationFrame(drawFx);
+    if(!sectionVisible.bestsellers){return;}
     fxFrame++;
-    if(isMobile&&fxFrame%2!==0){requestAnimationFrame(drawFx);return;}
+    if(isMobile&&fxFrame%2!==0)return;
     fxCtx.clearRect(0,0,fxW,fxH);
     fx.intensity+=(fx.targetIntensity-fx.intensity)*.04;
     if(fx.flash>0)fx.flash*=.92;
@@ -1553,7 +1594,7 @@ if(catLayout){
     });
 
     var inten=fx.intensity;
-    if(inten<.01&&fx.flash<.01){requestAnimationFrame(drawFx);return;}
+    if(inten<.01&&fx.flash<.01){return;}
 
     var cx=fxW/2;
 
@@ -1605,8 +1646,6 @@ if(catLayout){
     topGlow.addColorStop(1,'transparent');
     fxCtx.fillStyle=topGlow;
     fxCtx.fillRect(0,0,fxW,fxH*.4);
-
-    requestAnimationFrame(drawFx);
   }
   requestAnimationFrame(drawFx);
 
@@ -1818,8 +1857,7 @@ if(catLayout){
   // Single animation loop paints all canvases from the one hero video
   var paintFrame=0;
   function paintButtons(){
-    paintFrame++;
-    if(isMobile&&paintFrame%3!==0){requestAnimationFrame(paintButtons);return;}
+    if(isMobile){return;} // liquid glass hidden on mobile, don't waste cycles
     var vw=window.innerWidth;
     var vh=window.innerHeight;
     var vidW=heroVideo.videoWidth||1920;
