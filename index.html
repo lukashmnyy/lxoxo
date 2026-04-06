@@ -271,10 +271,9 @@ footer .footer-links a:hover{color:var(--blue)}
 .glass-btn{background:rgba(58,138,253,.15)!important;border:1px solid rgba(58,138,253,.3)!important}
 .sc-number .liquid-bg{display:none!important}
 .sc-number .liquid-tint{display:none!important}
-.sc-number{-webkit-mask-image:none!important;mask-image:none!important}
-.sc-number .num-text{color:#fff!important}
-.sc-number .num-text .blue{color:var(--blue)!important}
 #sc1 .sc-number{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.sc-number .num-text{color:transparent!important;background:linear-gradient(135deg,#3a8afd 0%,#a8d0ff 25%,#fff 50%,#a8d0ff 75%,#3a8afd 100%)!important;background-size:200% 200%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;animation:mobileShine 4s ease-in-out infinite!important}
+@keyframes mobileShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .c-card:not(.front){filter:brightness(.4) saturate(.4)!important}
 .c-card img{filter:none!important}
 .ef-frame img{filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))!important}
