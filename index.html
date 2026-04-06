@@ -473,7 +473,7 @@ footer .footer-links a:hover{color:var(--blue)}
 <section class="catalog-section" id="catalog">
 <div class="catalog-layout" id="catalogLayout">
   <div class="catalog-thumb">
-    <img src="TestIconSideUICatalog2.jpg" alt="Emote Catalog">
+    <img id="catGameIcon" src="TestIconSideUICatalog2.jpg" alt="Emote Catalog">
     <div class="ct-shine"></div>
   </div>
   <div class="catalog-info">
@@ -1459,6 +1459,23 @@ if(catLayout){
           document.getElementById('catVisits').textContent=fmt(g.visits);
           document.getElementById('catPlaying').textContent=fmt(g.playing);
           document.getElementById('catFavs').textContent=fmt(g.favoritedCount);
+          // Fetch live game icon
+          var iconEndpoints=[
+            'https://thumbnails.roproxy.com/v1/games/icons?universeIds=9209811415&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false',
+            'https://thumbnails.roblox.com/v1/games/icons?universeIds=9209811415&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false'
+          ];
+          for(var ii=0;ii<iconEndpoints.length;ii++){
+            try{
+              var ir=await fetch(iconEndpoints[ii]);
+              if(ir.ok){
+                var id2=await ir.json();
+                if(id2.data&&id2.data[0]&&id2.data[0].imageUrl){
+                  document.getElementById('catGameIcon').src=id2.data[0].imageUrl;
+                  break;
+                }
+              }
+            }catch(e3){continue;}
+          }
           break;
         }
       }
