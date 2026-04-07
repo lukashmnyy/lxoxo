@@ -659,7 +659,8 @@ _dbg.id='fetchDebug';
 _dbg.style.cssText='position:fixed;top:0;left:0;z-index:999999;background:rgba(0,0,0,.92);color:#0f0;font:11px/1.4 monospace;padding:8px 12px;max-width:50vw;max-height:40vh;overflow:auto;pointer-events:none;white-space:pre-wrap;border-bottom-right-radius:8px';
 _dbg.textContent='[DBG] script2 started';
 document.body.appendChild(_dbg);
-function _dl(m){_dbg.textContent+='\n'+m;console.log('[DBG]',m);}
+var _dlines=[];
+function _dl(m){_dlines.push(m);_dbg.textContent='[LATEST] '+m+'\n---\n'+_dlines.slice(-5).reverse().join('\n');console.log('[DBG]',m);}
 _dl('timestamp: '+new Date().toISOString());
 
 /* ==================== EMOTE THUMB URLS ==================== */
@@ -788,7 +789,8 @@ var emoteDataReady=(async function fetchEmoteNames(){
     emoteData.slice(0,10).forEach(function(e,i){
       console.log('  #'+(i+1)+': '+e.name+' | ID:'+e.id+' | type:'+(e.itemType||'?')+' | thumb:'+(e.url?'yes':'MISSING'));
     });
-  }catch(e){_dl('CATCH ERROR: '+e.message+'\n'+e.stack);console.log('Emote fetch error:',e)}
+    document.title='EMOTE_OK:'+emoteData.length+':'+((emoteData[0]&&emoteData[0].name)||'?');
+  }catch(e){_dl('CATCH ERROR: '+e.message+'\n'+e.stack);document.title='EMOTE_ERR:'+e.message;console.log('Emote fetch error:',e)}
 })();
 
 /* ==================== STATS + EMOTE FLASH — INTEGRATED PINNED SCROLL ==================== */
