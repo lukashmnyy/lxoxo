@@ -696,11 +696,12 @@ var emoteDataReady=(async function fetchEmoteNames(){
   /* Safe JSON fetch — reads as text first to avoid "unexpected end of input" on truncated responses */
   async function safeJsonFetch(robloxUrl){
     var proxyUrl=robloxUrl.replace('.roblox.com','.roproxy.com');
+    var hdr={headers:{'Accept-Language':'en-US,en;q=0.9'}};
     var attempts=[
-      function(){return fetch(proxyUrl)},
-      function(){return fetch('https://corsproxy.io/?'+encodeURIComponent(robloxUrl))},
-      function(){return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(robloxUrl))},
-      function(){return fetch(robloxUrl)}
+      function(){return fetch(proxyUrl,hdr)},
+      function(){return fetch('https://corsproxy.io/?'+encodeURIComponent(robloxUrl),hdr)},
+      function(){return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(robloxUrl),hdr)},
+      function(){return fetch(robloxUrl,hdr)}
     ];
     for(var i=0;i<attempts.length;i++){
       try{
@@ -762,12 +763,14 @@ var emoteDataReady=(async function fetchEmoteNames(){
       });
     });
 
-    // Update vortex thumb images (in #sv0) with fresh URLs
+    // Update vortex thumb images (in #sv0) with fresh URLs — cycle if more slots than thumbs
     var vortexImgs=document.querySelectorAll('#sv0 .emote-thumb img');
-    emoteData.forEach(function(ed,i){
-      if(i>=vortexImgs.length||!ed.url)return;
-      vortexImgs[i].src=ed.url;
-    });
+    var validUrls=emoteData.map(function(e){return e.url}).filter(Boolean);
+    if(validUrls.length){
+      for(var vi=0;vi<vortexImgs.length;vi++){
+        vortexImgs[vi].src=validUrls[vi%validUrls.length];
+      }
+    }
 
     console.log('Emote data loaded: '+emoteData.length+' emotes ('+assetIds.length+' assets, '+bundleIds.length+' bundles), '+Object.keys(thumbMap).length+' thumbnails');
     console.log('Top 10 best selling:');
