@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head><title>Fetch Test</title></head>
+<body>
+<h1>Emote Fetch Test</h1>
+<pre id="log">Testing...</pre>
+<script>
+var log = document.getElementById('log');
+function addLog(msg) { log.textContent += '\n' + msg; }
+
+async function test() {
+  var url = 'https://catalog.roblox.com/v1/search/items/details?Category=12&Subcategory=39&creatorTargetId=10783491&creatorType=Group&limit=10&sortType=2&salesTypeFilter=1';
+
+  // Test 1: roproxy
+  addLog('\n--- Test 1: roproxy ---');
+  try {
+    var r1 = await fetch(url.replace('.roblox.com', '.roproxy.com'));
+    addLog('roproxy status: ' + r1.status + ' ok:' + r1.ok);
+    if (r1.ok) { var d1 = await r1.json(); addLog('roproxy data: ' + d1.data.length + ' items, first: ' + d1.data[0].name); }
+  } catch(e) { addLog('roproxy ERROR: ' + e.message); }
+
+  // Test 2: corsproxy.io
+  addLog('\n--- Test 2: corsproxy.io ---');
+  try {
+    var r2 = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+    addLog('corsproxy status: ' + r2.status + ' ok:' + r2.ok);
+    if (r2.ok) { var d2 = await r2.json(); addLog('corsproxy data: ' + d2.data.length + ' items, first: ' + d2.data[0].name); }
+  } catch(e) { addLog('corsproxy ERROR: ' + e.message); }
+
+  // Test 3: allorigins
+  addLog('\n--- Test 3: allorigins ---');
+  try {
+    var r3 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url));
+    addLog('allorigins status: ' + r3.status + ' ok:' + r3.ok);
+    if (r3.ok) { var d3 = await r3.json(); addLog('allorigins data: ' + d3.data.length + ' items, first: ' + d3.data[0].name); }
+  } catch(e) { addLog('allorigins ERROR: ' + e.message); }
+
+  // Test 4: direct (will probably CORS fail)
+  addLog('\n--- Test 4: direct roblox ---');
+  try {
+    var r4 = await fetch(url);
+    addLog('direct status: ' + r4.status + ' ok:' + r4.ok);
+  } catch(e) { addLog('direct ERROR: ' + e.message); }
+
+  addLog('\n=== DONE ===');
+}
+test();
+</script>
+</body>
+</html>
