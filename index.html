@@ -653,6 +653,15 @@ gsap.timeline({scrollTrigger:{trigger:'.text-reveal-section',start:'top 15%',end
 }});
 </script>
 <script>
+/* === TEMPORARY DEBUG PANEL — remove after fixing === */
+var _dbg=document.createElement('div');
+_dbg.id='fetchDebug';
+_dbg.style.cssText='position:fixed;top:0;left:0;z-index:999999;background:rgba(0,0,0,.92);color:#0f0;font:11px/1.4 monospace;padding:8px 12px;max-width:50vw;max-height:40vh;overflow:auto;pointer-events:none;white-space:pre-wrap;border-bottom-right-radius:8px';
+_dbg.textContent='[DBG] script2 started';
+document.body.appendChild(_dbg);
+function _dl(m){_dbg.textContent+='\n'+m;console.log('[DBG]',m);}
+_dl('timestamp: '+new Date().toISOString());
+
 /* ==================== EMOTE THUMB URLS ==================== */
 // Emote data — thumbnail URLs as fallback, names+IDs fetched live from Roblox API
 var emoteData=[
@@ -692,18 +701,21 @@ var emoteThumbUrls=emoteData.map(function(e){return e.url});
 // Fetch real emote names, IDs + fresh thumbnails from Roblox catalog API
 // Uses /v1/search/items/details which returns names, IDs, favorites in one call
 // Stores a promise so other code can await the result
+_dl('emoteDataReady IIFE starting...');
 var emoteDataReady=(async function fetchEmoteNames(){
   /* CORS proxy helper — tries multiple proxies for reliability */
   async function corsGet(robloxUrl){
+    _dl('corsGet called: '+robloxUrl.substring(0,60)+'...');
     /* 1) roproxy — dedicated Roblox CORS proxy */
     var proxyUrl=robloxUrl.replace('.roblox.com','.roproxy.com');
-    try{var r=await fetch(proxyUrl);if(r.ok)return r;console.warn('roproxy returned '+r.status+' for '+proxyUrl);}catch(e){console.warn('roproxy failed:',e.message);}
+    try{_dl('trying roproxy: '+proxyUrl.substring(0,60));var r=await fetch(proxyUrl);_dl('roproxy status: '+r.status+' ok:'+r.ok);if(r.ok)return r;console.warn('roproxy returned '+r.status+' for '+proxyUrl);}catch(e){_dl('roproxy ERROR: '+e.message);console.warn('roproxy failed:',e.message);}
     /* 2) corsproxy.io — general CORS proxy */
-    try{var r2=await fetch('https://corsproxy.io/?'+encodeURIComponent(robloxUrl));if(r2.ok)return r2;console.warn('corsproxy.io returned '+r2.status);}catch(e2){console.warn('corsproxy.io failed:',e2.message);}
+    try{_dl('trying corsproxy.io');var r2=await fetch('https://corsproxy.io/?'+encodeURIComponent(robloxUrl));_dl('corsproxy status: '+r2.status);if(r2.ok)return r2;console.warn('corsproxy.io returned '+r2.status);}catch(e2){_dl('corsproxy ERROR: '+e2.message);console.warn('corsproxy.io failed:',e2.message);}
     /* 3) allorigins — another fallback */
-    try{var r3=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(robloxUrl));if(r3.ok)return r3;console.warn('allorigins returned '+r3.status);}catch(e3){console.warn('allorigins failed:',e3.message);}
+    try{_dl('trying allorigins');var r3=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(robloxUrl));_dl('allorigins status: '+r3.status);if(r3.ok)return r3;console.warn('allorigins returned '+r3.status);}catch(e3){_dl('allorigins ERROR: '+e3.message);console.warn('allorigins failed:',e3.message);}
     /* 4) direct — will fail with CORS on most browsers but worth trying */
     try{var r4=await fetch(robloxUrl);if(r4.ok)return r4;}catch(e4){}
+    _dl('ALL PROXIES FAILED for: '+robloxUrl.substring(0,60));
     console.error('All CORS proxies failed for: '+robloxUrl);
     return null;
   }
@@ -714,10 +726,13 @@ var emoteDataReady=(async function fetchEmoteNames(){
     var baseUrl='https://catalog.roblox.com/v1/search/items/details?Category=12&Subcategory=39&creatorTargetId=10783491&creatorType=Group&limit=30&sortType=2&salesTypeFilter=1';
 
     // Page 1
+    _dl('fetching page 1...');
     var r1=await corsGet(baseUrl);
+    _dl('page 1 response: '+(r1?'got response':'NULL'));
     var cursor=null;
     if(r1){
       var d1=await r1.json();
+      _dl('page 1 data: '+(d1.data?d1.data.length+' items':'NO DATA FIELD')+', cursor:'+(d1.nextPageCursor||'none'));
       if(d1.data)d1.data.forEach(function(item){allItems.push({id:item.id,name:item.name,favs:item.favoriteCount||0,itemType:item.itemType||'Asset'});});
       cursor=d1.nextPageCursor;
     }
@@ -730,7 +745,8 @@ var emoteDataReady=(async function fetchEmoteNames(){
       }
     }
 
-    if(!allItems.length){console.log('No emotes found from catalog API');return;}
+    _dl('allItems count: '+allItems.length);
+    if(!allItems.length){_dl('NO ITEMS FOUND — returning early');console.log('No emotes found from catalog API');return;}
 
     // Get fresh 420x420 thumbnails — separate Asset IDs from Bundle IDs
     var assetIds=allItems.filter(function(x){return x.itemType!=='Bundle'}).map(function(x){return x.id});
@@ -772,7 +788,7 @@ var emoteDataReady=(async function fetchEmoteNames(){
     emoteData.slice(0,10).forEach(function(e,i){
       console.log('  #'+(i+1)+': '+e.name+' | ID:'+e.id+' | type:'+(e.itemType||'?')+' | thumb:'+(e.url?'yes':'MISSING'));
     });
-  }catch(e){console.log('Emote fetch error:',e)}
+  }catch(e){_dl('CATCH ERROR: '+e.message+'\n'+e.stack);console.log('Emote fetch error:',e)}
 })();
 
 /* ==================== STATS + EMOTE FLASH — INTEGRATED PINNED SCROLL ==================== */
