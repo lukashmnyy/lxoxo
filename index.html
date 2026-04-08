@@ -600,20 +600,31 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   setTimeout(function(){requestAnimationFrame(paint);},500);
 
   // Aggressive autoplay for restrictive WebViews (Google app, etc.)
-  // Some WebViews block autoplay until any user interaction
   function forcePlay(){
-    if(vid.paused){vid.muted=true;vid.play().catch(function(){});}
+    if(vid.paused||vid.currentTime===0){
+      vid.muted=true;
+      vid.setAttribute('muted','');
+      vid.play().catch(function(){});
+    }
   }
+  // Keep trying on every interaction type — don't use {once:true} since
+  // some WebViews only honor play() from specific gesture types
+  ['touchstart','touchend','touchmove','scroll','click','pointerdown','pointerup','visibilitychange'].forEach(function(evt){
+    document.addEventListener(evt,forcePlay);
+  });
   vid.addEventListener('suspend',forcePlay);
   vid.addEventListener('stalled',forcePlay);
-  document.addEventListener('touchstart',forcePlay,{once:true});
-  document.addEventListener('scroll',forcePlay,{once:true});
-  document.addEventListener('click',forcePlay,{once:true});
-  // Retry every 500ms for first 5s in case WebView delays playback
+  // Also try on IntersectionObserver — some WebViews allow play when element is visible
+  if(window.IntersectionObserver){
+    new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting)forcePlay();
+    },{threshold:0.1}).observe(vid);
+  }
+  // Retry aggressively for first 10s
   var retries=0;
   var retryInterval=setInterval(function(){
     forcePlay();
-    if(!vid.paused||++retries>=10)clearInterval(retryInterval);
+    if((!vid.paused&&vid.currentTime>0)||++retries>=20)clearInterval(retryInterval);
   },500);
 })();
 
