@@ -298,7 +298,7 @@ footer .footer-links a:hover{color:var(--blue)}
 
 <!-- FIXED VIDEO BG — persists blurred behind all content -->
 <div class="video-bg-fixed" id="videoBgFixed">
-  <video autoplay muted loop playsinline src="hero-video-compressed.mp4"></video>
+  <video autoplay muted loop playsinline webkit-playsinline preload="auto" src="hero-video-compressed.mp4"></video>
   <canvas class="vbf-canvas" id="vbfCanvas"></canvas>
   <div class="vbf-overlay" id="vbfOverlay"></div>
 </div>
@@ -598,6 +598,23 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   if(vid.readyState>=2) requestAnimationFrame(paint);
   // Fallback start
   setTimeout(function(){requestAnimationFrame(paint);},500);
+
+  // Aggressive autoplay for restrictive WebViews (Google app, etc.)
+  // Some WebViews block autoplay until any user interaction
+  function forcePlay(){
+    if(vid.paused){vid.muted=true;vid.play().catch(function(){});}
+  }
+  vid.addEventListener('suspend',forcePlay);
+  vid.addEventListener('stalled',forcePlay);
+  document.addEventListener('touchstart',forcePlay,{once:true});
+  document.addEventListener('scroll',forcePlay,{once:true});
+  document.addEventListener('click',forcePlay,{once:true});
+  // Retry every 500ms for first 5s in case WebView delays playback
+  var retries=0;
+  var retryInterval=setInterval(function(){
+    forcePlay();
+    if(!vid.paused||++retries>=10)clearInterval(retryInterval);
+  },500);
 })();
 
 window.addEventListener('scroll',function(){
