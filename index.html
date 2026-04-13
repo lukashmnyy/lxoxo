@@ -25,7 +25,7 @@ body{font-family:var(--font);background:transparent;color:var(--text);overflow-x
 .pinkyup-splash video.pu-bg.playing{opacity:.35}
 .pinkyup-splash .pu-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.2) 0%,rgba(0,0,0,.7) 70%,#000 100%);z-index:1}
 .pinkyup-splash .pu-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center;padding:0 24px}
-.pinkyup-splash .pu-lxoxo-logo{width:clamp(80px,12vw,140px);margin-bottom:-8px;filter:drop-shadow(0 0 30px rgba(255,255,255,.15))}
+.pinkyup-splash .pu-lxoxo-logo{width:clamp(120px,18vw,200px);margin-bottom:-4px;filter:drop-shadow(0 0 30px rgba(255,255,255,.15))}
 .pinkyup-splash .pu-logo{width:clamp(280px,55vw,700px);mix-blend-mode:screen;filter:drop-shadow(0 0 40px rgba(255,105,180,.3)) drop-shadow(0 0 80px rgba(255,105,180,.15))}
 .pinkyup-splash .pu-play-btn{width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .4s;margin-top:8px}
 .pinkyup-splash .pu-play-btn:hover{background:rgba(255,105,180,.2);border-color:rgba(255,105,180,.6);transform:scale(1.1)}
@@ -42,6 +42,12 @@ body{font-family:var(--font);background:transparent;color:var(--text);overflow-x
 .pinkyup-splash .pu-scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4}
 .pinkyup-splash .pu-scroll-hint span{font-size:.65rem;text-transform:uppercase;letter-spacing:3px;color:#fff}
 .pinkyup-splash .pu-scroll-hint .pu-arrow{width:20px;height:20px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);animation:puBounce 2s infinite}
+.pinkyup-splash .pu-volume{display:none;align-items:center;gap:10px;margin-top:4px}
+.pinkyup-splash .pu-volume.visible{display:flex}
+.pinkyup-splash .pu-volume svg{width:18px;height:18px;fill:rgba(255,255,255,.5);flex-shrink:0}
+.pinkyup-splash .pu-volume input[type=range]{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;outline:none;cursor:pointer}
+.pinkyup-splash .pu-volume input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#ff69b4;border:none;cursor:pointer}
+.pinkyup-splash .pu-volume input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#ff69b4;border:none;cursor:pointer}
 @keyframes puBounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
 @media(max-width:768px){
 .pinkyup-splash .pu-play-btn{width:60px;height:60px}
@@ -50,6 +56,7 @@ body{font-family:var(--font);background:transparent;color:var(--text);overflow-x
 }
 /* Make sections transparent so fixed video shows through */
 section,.stats-scroll,.catalog-wrap,.pin-spacer,[class*="pin-spacer"]{background:transparent!important}
+.pinkyup-splash{background:#000!important}
 
 .bg-glow{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
 .bg-glow .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.08;will-change:transform}
@@ -340,6 +347,10 @@ footer .footer-links a:hover{color:var(--blue)}
     <div class="pu-play-btn" id="puPlayBtn">
       <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
     </div>
+    <div class="pu-volume" id="puVolume">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <input type="range" id="puVolSlider" min="0" max="100" value="80">
+    </div>
     <div class="pu-buttons">
       <a href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group&Keyword=Pinky+Up" target="_blank" class="pu-btn pu-btn-primary">Buy Collection</a>
       <a href="#hero" class="pu-btn pu-btn-secondary">Explore L,XOXO</a>
@@ -576,40 +587,30 @@ footer .footer-links a:hover{color:var(--blue)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-/* ====== PINKY UP — click to play trailer with sound ====== */
+/* ====== PINKY UP — click to play trailer with sound + volume ====== */
 (function(){
   var vid=document.getElementById('puVideo');
   var btn=document.getElementById('puPlayBtn');
+  var volWrap=document.getElementById('puVolume');
+  var volSlider=document.getElementById('puVolSlider');
   if(!vid||!btn)return;
   var playing=false;
+  vid.volume=0.8;
+  function showPlaying(){vid.classList.add('playing');btn.classList.add('is-playing');volWrap.classList.add('visible');playing=true;}
+  function showStopped(){vid.classList.remove('playing');btn.classList.remove('is-playing');volWrap.classList.remove('visible');playing=false;}
   btn.addEventListener('click',function(){
     if(!playing){
       vid.muted=false;
       vid.currentTime=0;
-      vid.play().then(function(){
-        vid.classList.add('playing');
-        btn.classList.add('is-playing');
-        playing=true;
-      }).catch(function(){
-        // Fallback: play muted if unmuted fails
-        vid.muted=true;
-        vid.play();
-        vid.classList.add('playing');
-        btn.classList.add('is-playing');
-        playing=true;
+      vid.play().then(showPlaying).catch(function(){
+        vid.muted=true;vid.play();showPlaying();
       });
     }else{
-      vid.pause();
-      vid.classList.remove('playing');
-      btn.classList.remove('is-playing');
-      playing=false;
+      vid.pause();showStopped();
     }
   });
-  vid.addEventListener('ended',function(){
-    vid.classList.remove('playing');
-    btn.classList.remove('is-playing');
-    playing=false;
-  });
+  vid.addEventListener('ended',showStopped);
+  if(volSlider){volSlider.addEventListener('input',function(){vid.volume=this.value/100;vid.muted=false;});}
 })();
 </script>
 <script>
