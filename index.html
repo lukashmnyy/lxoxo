@@ -15,8 +15,39 @@
 --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;
 --serif:'Playfair Display',Georgia,'Times New Roman',serif;
 }
-html{scroll-behavior:smooth;overflow-x:hidden;background:#191b1d}
+html{scroll-behavior:smooth;overflow-x:hidden;background:#000}
 body{font-family:var(--font);background:transparent;color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* ====== PINKY UP SPLASH ====== */
+.pinkyup-splash{position:relative;width:100%;height:100vh;min-height:600px;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;z-index:10}
+.pinkyup-splash .pu-video-wrap{position:absolute;inset:0;z-index:0}
+.pinkyup-splash video.pu-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.pinkyup-splash video.pu-bg.playing{opacity:.35}
+.pinkyup-splash .pu-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.2) 0%,rgba(0,0,0,.7) 70%,#000 100%);z-index:1}
+.pinkyup-splash .pu-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center;padding:0 24px}
+.pinkyup-splash .pu-lxoxo-logo{width:clamp(80px,12vw,140px);margin-bottom:-8px;filter:drop-shadow(0 0 30px rgba(255,255,255,.15))}
+.pinkyup-splash .pu-logo{width:clamp(280px,55vw,700px);mix-blend-mode:screen;filter:drop-shadow(0 0 40px rgba(255,105,180,.3)) drop-shadow(0 0 80px rgba(255,105,180,.15))}
+.pinkyup-splash .pu-play-btn{width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .4s;margin-top:8px}
+.pinkyup-splash .pu-play-btn:hover{background:rgba(255,105,180,.2);border-color:rgba(255,105,180,.6);transform:scale(1.1)}
+.pinkyup-splash .pu-play-btn svg{width:28px;height:28px;fill:#fff;margin-left:3px}
+.pinkyup-splash .pu-play-btn.is-playing svg{display:none}
+.pinkyup-splash .pu-play-btn.is-playing::after{content:'';width:18px;height:22px;border-left:5px solid #fff;border-right:5px solid #fff}
+.pinkyup-splash .pu-label{font-size:.7rem;text-transform:uppercase;letter-spacing:5px;color:rgba(255,255,255,.45);font-weight:500}
+.pinkyup-splash .pu-buttons{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+.pinkyup-splash .pu-btn{padding:14px 36px;border-radius:50px;font-size:.85rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
+.pinkyup-splash .pu-btn-primary{background:linear-gradient(135deg,#ff69b4,#ff1493);color:#fff;border:none;box-shadow:0 4px 24px rgba(255,20,147,.35)}
+.pinkyup-splash .pu-btn-primary:hover{box-shadow:0 8px 40px rgba(255,20,147,.5);transform:translateY(-2px) scale(1.05)}
+.pinkyup-splash .pu-btn-secondary{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.pinkyup-splash .pu-btn-secondary:hover{background:rgba(255,255,255,.12);transform:translateY(-2px) scale(1.05)}
+.pinkyup-splash .pu-scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4}
+.pinkyup-splash .pu-scroll-hint span{font-size:.65rem;text-transform:uppercase;letter-spacing:3px;color:#fff}
+.pinkyup-splash .pu-scroll-hint .pu-arrow{width:20px;height:20px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);animation:puBounce 2s infinite}
+@keyframes puBounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+@media(max-width:768px){
+.pinkyup-splash .pu-play-btn{width:60px;height:60px}
+.pinkyup-splash .pu-play-btn svg{width:22px;height:22px}
+.pinkyup-splash .pu-btn{padding:12px 28px;font-size:.8rem}
+}
 /* Make sections transparent so fixed video shows through */
 section,.stats-scroll,.catalog-wrap,.pin-spacer,[class*="pin-spacer"]{background:transparent!important}
 
@@ -296,6 +327,30 @@ footer .footer-links a:hover{color:var(--blue)}
   </filter>
 </svg>
 
+<!-- ====== PINKY UP COLLECTION SPLASH ====== -->
+<section class="pinkyup-splash" id="pinkyupSplash">
+  <div class="pu-video-wrap">
+    <video class="pu-bg" id="puVideo" loop playsinline webkit-playsinline preload="metadata" src="pinkyup-trailer.mp4"></video>
+    <div class="pu-overlay"></div>
+  </div>
+  <div class="pu-content">
+    <img class="pu-lxoxo-logo" src="lxoxoicon.png" alt="L,XOXO">
+    <img class="pu-logo" src="pinkyup-logo.png" alt="Pinky Up Collection">
+    <div class="pu-label">New Collection</div>
+    <div class="pu-play-btn" id="puPlayBtn">
+      <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+    </div>
+    <div class="pu-buttons">
+      <a href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group&Keyword=Pinky+Up" target="_blank" class="pu-btn pu-btn-primary">Buy Collection</a>
+      <a href="#hero" class="pu-btn pu-btn-secondary">Explore L,XOXO</a>
+    </div>
+  </div>
+  <div class="pu-scroll-hint">
+    <span>Scroll</span>
+    <div class="pu-arrow"></div>
+  </div>
+</section>
+
 <!-- FIXED VIDEO BG — persists blurred behind all content -->
 <div class="video-bg-fixed" id="videoBgFixed">
   <video autoplay muted loop playsinline webkit-playsinline preload="auto" src="hero-video-compressed.mp4"></video>
@@ -520,6 +575,43 @@ footer .footer-links a:hover{color:var(--blue)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ====== PINKY UP — click to play trailer with sound ====== */
+(function(){
+  var vid=document.getElementById('puVideo');
+  var btn=document.getElementById('puPlayBtn');
+  if(!vid||!btn)return;
+  var playing=false;
+  btn.addEventListener('click',function(){
+    if(!playing){
+      vid.muted=false;
+      vid.currentTime=0;
+      vid.play().then(function(){
+        vid.classList.add('playing');
+        btn.classList.add('is-playing');
+        playing=true;
+      }).catch(function(){
+        // Fallback: play muted if unmuted fails
+        vid.muted=true;
+        vid.play();
+        vid.classList.add('playing');
+        btn.classList.add('is-playing');
+        playing=true;
+      });
+    }else{
+      vid.pause();
+      vid.classList.remove('playing');
+      btn.classList.remove('is-playing');
+      playing=false;
+    }
+  });
+  vid.addEventListener('ended',function(){
+    vid.classList.remove('playing');
+    btn.classList.remove('is-playing');
+    playing=false;
+  });
+})();
+</script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)||window.innerWidth<768;
