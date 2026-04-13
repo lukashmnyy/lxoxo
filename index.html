@@ -37,7 +37,7 @@ body{font-family:var(--font);background:transparent;color:var(--text);overflow-x
 .pinkyup-splash .pu-scroll-hint span{font-size:.65rem;text-transform:uppercase;letter-spacing:3px;color:#fff}
 .pinkyup-splash .pu-scroll-hint .pu-arrow{width:20px;height:20px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);animation:puBounce 2s infinite}
 /* Bottom gradient fade into main site */
-.pu-fade{position:relative;z-index:10;height:200px;margin-top:-200px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
+.pu-fade{position:relative;z-index:10;height:300px;margin-top:-1px;background:linear-gradient(to bottom,#000 0%,var(--bg) 100%);pointer-events:none}
 /* Mute button — bottom-right corner, no circle */
 .pu-mute-corner{position:absolute;bottom:32px;right:28px;z-index:5;display:flex;align-items:center;gap:10px}
 .pu-mute-corner .pu-mute-btn{background:none;border:none;cursor:pointer;padding:6px;transition:opacity .3s}
@@ -379,22 +379,8 @@ footer .footer-links a:hover{color:var(--blue)}
   <div class="orb orb3"></div>
 </div>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-<div class="hero-content">
-  <div class="hero-logo"><img src="lxoxoicon.png" alt="L,XOXO"></div>
-  <div class="hero-tagline">Best Selling Emotes on Roblox</div>
-  <div class="hero-stats">
-    <div class="hero-stat"><div class="num" data-count="4000000">0</div><div class="label">EMOTES SOLD</div></div>
-    <div class="hero-stat"><div class="num" data-count="138000">0</div><div class="label">MEMBERS</div></div>
-  </div>
-  <div class="hero-buttons">
-    <a href="https://www.roblox.com/communities/10783491" target="_blank" class="glass-btn btn-primary">Join L,XOXO</a>
-    <a href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group" target="_blank" class="glass-btn btn-secondary">View Emotes</a>
-  </div>
-</div>
-<div class="scroll-indicator"><div class="scroll-mouse"></div></div>
-</section>
+<!-- HERO (anchor for scroll links) -->
+<div id="hero"></div>
 
 <!-- TEXT REVEAL -->
 <section class="text-reveal-section">
