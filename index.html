@@ -21,17 +21,19 @@ body{font-family:var(--font);background:transparent;color:var(--text);overflow-x
 /* ====== PINKY UP SPLASH ====== */
 .pinkyup-splash{position:relative;width:100%;height:100vh;min-height:600px;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;z-index:10}
 .pinkyup-splash .pu-video-wrap{position:absolute;inset:0;z-index:0}
-.pinkyup-splash video.pu-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
-.pinkyup-splash video.pu-bg.playing{opacity:.35}
-.pinkyup-splash .pu-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.2) 0%,rgba(0,0,0,.7) 70%,#000 100%);z-index:1}
+.pinkyup-splash video.pu-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
+
+.pinkyup-splash .pu-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.05) 0%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.85) 100%);z-index:1}
 .pinkyup-splash .pu-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center;padding:0 24px}
-.pinkyup-splash .pu-lxoxo-logo{width:clamp(120px,18vw,200px);margin-bottom:-4px;filter:drop-shadow(0 0 30px rgba(255,255,255,.15))}
+.pinkyup-splash::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,var(--bg));z-index:3;pointer-events:none}
+.pinkyup-splash .pu-lxoxo-logo{width:clamp(200px,30vw,360px);margin-bottom:-4px;filter:drop-shadow(0 0 30px rgba(255,255,255,.15))}
 .pinkyup-splash .pu-logo{width:clamp(280px,55vw,700px);mix-blend-mode:screen;filter:drop-shadow(0 0 40px rgba(255,105,180,.3)) drop-shadow(0 0 80px rgba(255,105,180,.15))}
 .pinkyup-splash .pu-play-btn{width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .4s;margin-top:8px}
 .pinkyup-splash .pu-play-btn:hover{background:rgba(255,105,180,.2);border-color:rgba(255,105,180,.6);transform:scale(1.1)}
-.pinkyup-splash .pu-play-btn svg{width:28px;height:28px;fill:#fff;margin-left:3px}
-.pinkyup-splash .pu-play-btn.is-playing svg{display:none}
-.pinkyup-splash .pu-play-btn.is-playing::after{content:'';width:18px;height:22px;border-left:5px solid #fff;border-right:5px solid #fff}
+.pinkyup-splash .pu-play-btn svg{width:28px;height:28px;fill:#fff}
+.pinkyup-splash .pu-play-btn .pu-icon-muted,.pinkyup-splash .pu-play-btn .pu-icon-unmuted{display:none}
+.pinkyup-splash .pu-play-btn.is-muted .pu-icon-muted{display:block}
+.pinkyup-splash .pu-play-btn.is-unmuted .pu-icon-unmuted{display:block}
 .pinkyup-splash .pu-label{font-size:.7rem;text-transform:uppercase;letter-spacing:5px;color:rgba(255,255,255,.45);font-weight:500}
 .pinkyup-splash .pu-buttons{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;justify-content:center}
 .pinkyup-splash .pu-btn{padding:14px 36px;border-radius:50px;font-size:.85rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
@@ -337,15 +339,16 @@ footer .footer-links a:hover{color:var(--blue)}
 <!-- ====== PINKY UP COLLECTION SPLASH ====== -->
 <section class="pinkyup-splash" id="pinkyupSplash">
   <div class="pu-video-wrap">
-    <video class="pu-bg" id="puVideo" loop playsinline webkit-playsinline preload="metadata" src="pinkyup-trailer.mp4"></video>
+    <video class="pu-bg" id="puVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" src="pinkyup-trailer.mp4"></video>
     <div class="pu-overlay"></div>
   </div>
   <div class="pu-content">
     <img class="pu-lxoxo-logo" src="lxoxoicon.png" alt="L,XOXO">
     <img class="pu-logo" src="pinkyup-logo.png" alt="Pinky Up Collection">
     <div class="pu-label">New Collection</div>
-    <div class="pu-play-btn" id="puPlayBtn">
-      <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+    <div class="pu-play-btn is-muted" id="puMuteBtn">
+      <svg class="pu-icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+      <svg class="pu-icon-unmuted" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
     </div>
     <div class="pu-volume" id="puVolume">
       <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
@@ -587,30 +590,31 @@ footer .footer-links a:hover{color:var(--blue)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-/* ====== PINKY UP — click to play trailer with sound + volume ====== */
+/* ====== PINKY UP — autoplay muted, click to unmute/mute ====== */
 (function(){
   var vid=document.getElementById('puVideo');
-  var btn=document.getElementById('puPlayBtn');
+  var btn=document.getElementById('puMuteBtn');
   var volWrap=document.getElementById('puVolume');
   var volSlider=document.getElementById('puVolSlider');
   if(!vid||!btn)return;
-  var playing=false;
   vid.volume=0.8;
-  function showPlaying(){vid.classList.add('playing');btn.classList.add('is-playing');volWrap.classList.add('visible');playing=true;}
-  function showStopped(){vid.classList.remove('playing');btn.classList.remove('is-playing');volWrap.classList.remove('visible');playing=false;}
+  // Ensure autoplay starts
+  vid.muted=true;
+  vid.play().catch(function(){});
+  function updateBtn(){
+    btn.classList.toggle('is-muted',vid.muted);
+    btn.classList.toggle('is-unmuted',!vid.muted);
+    volWrap.classList.toggle('visible',!vid.muted);
+  }
+  updateBtn();
   btn.addEventListener('click',function(){
-    if(!playing){
-      vid.muted=false;
-      vid.currentTime=0;
-      vid.play().then(showPlaying).catch(function(){
-        vid.muted=true;vid.play();showPlaying();
-      });
-    }else{
-      vid.pause();showStopped();
-    }
+    vid.muted=!vid.muted;
+    if(!vid.muted)vid.volume=volSlider?volSlider.value/100:0.8;
+    updateBtn();
   });
-  vid.addEventListener('ended',showStopped);
-  if(volSlider){volSlider.addEventListener('input',function(){vid.volume=this.value/100;vid.muted=false;});}
+  if(volSlider){volSlider.addEventListener('input',function(){vid.volume=this.value/100;if(vid.muted){vid.muted=false;updateBtn();}});}
+  // Force play for restrictive WebViews
+  ['touchstart','scroll','click'].forEach(function(e){document.addEventListener(e,function(){if(vid.paused)vid.play().catch(function(){});},{once:true});});
 })();
 </script>
 <script>
