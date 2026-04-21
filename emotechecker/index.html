@@ -218,6 +218,16 @@ footer a{color:var(--text2);text-decoration:none;border-bottom:1px dotted var(--
   </div>
 
   <aside class="sidebar">
+    <div class="side-card" id="workerCard">
+      <h4>Worker <span class="pill" id="workerStatus">not set</span></h4>
+      <input id="workerUrl" type="text" placeholder="https://name.workers.dev" style="width:100%;background:#15171a;border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:.78rem;font-family:monospace;outline:none" />
+      <div class="row" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn small" id="saveWorkerBtn">Save &amp; Test</button>
+        <a class="btn small ghost" id="deployGuideBtn" href="#" style="text-decoration:none">How to deploy?</a>
+      </div>
+      <div id="workerNote" style="font-size:.7rem;color:var(--text3);margin-top:8px;line-height:1.5"></div>
+    </div>
+
     <div class="side-card">
       <h4>Corpus <span class="pill" id="corpusPill">0</span></h4>
       <div class="kv-grid">
@@ -267,13 +277,19 @@ footer a{color:var(--text2);text-decoration:none;border-bottom:1px dotted var(--
 const STORAGE = {
   CORPUS:  'lxoxo:ec:v1:corpus',     // { [emoteId]: CorpusEntry }
   HISTORY: 'lxoxo:ec:v1:history',    // [{id, ts}]
+  WORKER:  'lxoxo:ec:v1:worker',     // string (base URL of Cloudflare Worker)
 };
-const PROXY = {
-  economy:        'https://economy.roproxy.com',
-  catalog:        'https://catalog.roproxy.com',
-  thumbnails:     'https://thumbnails.roproxy.com',
-  assetdelivery:  'https://assetdelivery.roproxy.com',
-};
+function getWorkerBase(){
+  return (localStorage.getItem(STORAGE.WORKER) || '').replace(/\/+$/,'');
+}
+function setWorkerBase(v){
+  localStorage.setItem(STORAGE.WORKER, String(v||'').replace(/\/+$/,''));
+}
+function requireWorker(){
+  const base = getWorkerBase();
+  if(!base) throw new Error('NO_WORKER_CONFIGURED');
+  return base;
+}
 const MAX_HISTORY = 60;
 const FEATURE = {
   BONES: ['HumanoidRootPart','Torso','UpperTorso','LowerTorso','Head','LeftArm','RightArm','LeftLeg','RightLeg','LeftUpperArm','LeftLowerArm','LeftHand','RightUpperArm','RightLowerArm','RightHand','LeftUpperLeg','LeftLowerLeg','LeftFoot','RightUpperLeg','RightLowerLeg','RightFoot'],
@@ -292,6 +308,8 @@ const els = {
   seedInput: $('seedInput'), seedBtn: $('seedBtn'), seedStopBtn: $('seedStopBtn'), seedProgress: $('seedProgress'),
   historyPill: $('historyPill'), historyList: $('historyList'),
   clearAllBtn: $('clearAllBtn'),
+  workerUrl: $('workerUrl'), workerStatus: $('workerStatus'), saveWorkerBtn: $('saveWorkerBtn'),
+  workerNote: $('workerNote'), deployGuideBtn: $('deployGuideBtn'),
 };
 
 // ---------- Storage -------------------------------------------------------
@@ -330,28 +348,40 @@ async function fetchBytes(url){
 }
 
 async function getAssetDetails(id){
-  // economy v2 returns: Name, Description, AssetTypeId, Creator, Created, Updated, etc.
+  const base = requireWorker();
   try{
-    return await fetchJSON(`${PROXY.economy}/v2/assets/${id}/details`);
+    return await fetchJSON(`${base}/economy/v2/assets/${id}/details`);
   }catch(e){
-    // Fallback to v1 product info
-    return await fetchJSON(`${PROXY.economy}/v1/assets/${id}/details`);
+    return await fetchJSON(`${base}/economy/v1/assets/${id}/details`);
   }
 }
 async function getThumbUrl(id){
   try{
-    const d = await fetchJSON(`${PROXY.thumbnails}/v1/assets?assetIds=${id}&size=150x150&format=Png&isCircular=false`);
+    const base = requireWorker();
+    const d = await fetchJSON(`${base}/thumbnails?assetIds=${id}&size=150x150`);
     return (d && d.data && d.data[0] && d.data[0].imageUrl) || null;
   }catch(e){ return null; }
 }
 async function getFavorites(id){
   try{
-    const d = await fetchJSON(`${PROXY.catalog}/v1/favorites/assets/${id}/count`);
+    const base = requireWorker();
+    const d = await fetchJSON(`${base}/favorites?id=${id}`);
     return (typeof d === 'number') ? d : (d && d.count) || 0;
   }catch(e){ return 0; }
 }
 async function getAssetBytes(id){
-  return await fetchBytes(`${PROXY.assetdelivery}/v1/asset/?id=${id}`);
+  const base = requireWorker();
+  return await fetchBytes(`${base}/asset?id=${id}`);
+}
+async function pingWorker(){
+  const base = getWorkerBase();
+  if(!base) return { ok:false, reason:'not-configured' };
+  try{
+    const r = await fetch(`${base}/health`, {cache:'no-store'});
+    if(!r.ok) return { ok:false, reason:'http-'+r.status };
+    const j = await r.json();
+    return { ok: !!j.ok, hasCookie: !!j.hasCookie };
+  }catch(e){ return { ok:false, reason:e.message||String(e) }; }
 }
 
 // ---------- Animation chasing -------------------------------------------
@@ -712,6 +742,10 @@ function timeAgo(ts){
 async function runSearch(id, {force=false}={}){
   id = String(id).trim();
   if(!/^\d+$/.test(id)){ setStatus('err','Enter a numeric emote ID.'); return; }
+  if(!getWorkerBase()){
+    setStatus('err','No Worker configured. Set your Cloudflare Worker URL in the Worker panel → Save & Test.');
+    return;
+  }
   els.idInput.value = id;
   els.btn.disabled = true;
   setStatus('info','Fetching emote '+id+' …', true);
@@ -724,9 +758,9 @@ async function runSearch(id, {force=false}={}){
     }
     renderSearched(entry);
     if(entry.kind==='binary'){
-      setStatus('warn','KeyframeSequence is in binary format — feature extraction not available, only hash-match duplicates will show. Hash: '+entry.hash.slice(0,16)+'…');
+      setStatus('warn','KeyframeSequence is in binary format — feature extraction not yet supported, only hash-match duplicates will show. Hash: '+entry.hash.slice(0,16)+'…');
     } else if(!entry.feat && !entry.hash){
-      setStatus('err','Could not download the animation for this emote. It may be off-sale, private, or the proxy is rate-limited — try again.');
+      setStatus('err','Worker returned no animation bytes. Likely causes: cookie missing or expired in Worker Secrets, or asset is private. Check /health on the Worker.');
     } else if(!entry.feat){
       setStatus('warn','Parsed animation, but no features extracted. Duplicate match only.');
     } else {
@@ -737,10 +771,66 @@ async function runSearch(id, {force=false}={}){
     refreshSidebar();
   }catch(e){
     console.error(e);
-    setStatus('err', 'Failed: '+(e.message||e));
+    if((e.message||'').includes('NO_WORKER_CONFIGURED')){
+      setStatus('err','Set your Cloudflare Worker URL in the Worker panel first.');
+    } else {
+      setStatus('err', 'Failed: '+(e.message||e));
+    }
   }finally{
     els.btn.disabled = false;
   }
+}
+
+// ---------- Worker config --------------------------------------------------
+async function refreshWorkerStatus(){
+  const base = getWorkerBase();
+  els.workerUrl.value = base;
+  if(!base){
+    els.workerStatus.textContent = 'not set';
+    els.workerStatus.style.background = 'rgba(255,90,106,.15)';
+    els.workerStatus.style.color = '#ffb3bb';
+    els.workerNote.textContent = 'You need a Cloudflare Worker to fetch animation bytes from Roblox. Click "How to deploy?" for step-by-step.';
+    return;
+  }
+  els.workerStatus.textContent = 'checking…';
+  els.workerStatus.style.background = 'rgba(58,138,253,.15)';
+  els.workerStatus.style.color = '#b8d6ff';
+  const res = await pingWorker();
+  if(res.ok && res.hasCookie){
+    els.workerStatus.textContent = 'ready';
+    els.workerStatus.style.background = 'rgba(61,215,86,.15)';
+    els.workerStatus.style.color = '#b7f0c2';
+    els.workerNote.textContent = 'Worker is reachable and has a Roblox cookie configured.';
+  } else if(res.ok && !res.hasCookie){
+    els.workerStatus.textContent = 'no cookie';
+    els.workerStatus.style.background = 'rgba(255,180,58,.15)';
+    els.workerStatus.style.color = '#ffd89b';
+    els.workerNote.textContent = 'Worker is reachable but ROBLOX_COOKIE secret is not set. Without it, asset downloads will 401.';
+  } else {
+    els.workerStatus.textContent = 'unreachable';
+    els.workerStatus.style.background = 'rgba(255,90,106,.15)';
+    els.workerStatus.style.color = '#ffb3bb';
+    els.workerNote.textContent = 'Worker URL not reachable ('+(res.reason||'unknown')+'). Double-check the URL and that the Worker is deployed.';
+  }
+}
+
+function showDeployGuide(){
+  const html = `
+    <div style="padding:12px 0;line-height:1.6;font-size:.85rem;color:var(--text2)">
+    <b style="color:var(--text)">Deploy the Worker — 5 minutes:</b>
+    <ol style="padding-left:22px;margin-top:8px;display:flex;flex-direction:column;gap:10px">
+      <li>Open <a href="https://dash.cloudflare.com/?to=/:account/workers-and-pages" target="_blank" style="color:var(--blue)">dash.cloudflare.com → Workers &amp; Pages</a> and click <b>Create application → Create Worker</b>.</li>
+      <li>Name it something like <code>lxoxo-proxy</code>. Click <b>Deploy</b> to get a placeholder. Then click <b>Edit Code</b>.</li>
+      <li>Delete the default code. Paste the contents of <code>worker.js</code> (sibling file to this HTML). Click <b>Save and Deploy</b>.</li>
+      <li>Go to <b>Settings → Variables and Secrets → Add variable</b>. Name: <code>ROBLOX_COOKIE</code>, type <b>Secret</b>, value: your <code>.ROBLOSECURITY</code> cookie (from Chrome DevTools → Application → Cookies on roblox.com — just the value, not the name). Save.</li>
+      <li>Add a second variable, <code>ALLOWED_ORIGIN</code> (Text, not Secret), value: <code>https://l-xoxo.com,https://www.l-xoxo.com</code>. Save.</li>
+      <li>Copy the Worker's URL from the top of the page (e.g. <code>lxoxo-proxy.your-name.workers.dev</code>). Paste it into the Worker field here and click <b>Save &amp; Test</b>.</li>
+    </ol>
+    <p style="margin-top:12px;color:var(--text3);font-size:.78rem">Your cookie lives inside Cloudflare's secret storage — it never touches this page's JavaScript. If it ever leaks, log out of Roblox to invalidate it, then replace the secret.</p>
+    </div>`;
+  const w = window.open('', '_blank', 'width=640,height=720');
+  w.document.write('<html><head><title>Deploy Guide</title><style>body{background:#0d0e10;color:#e8eaed;font-family:-apple-system,Segoe UI,sans-serif;padding:24px;max-width:680px;margin:0 auto}a{color:#3a8afd}code{background:#1e2022;padding:2px 6px;border-radius:4px;font-size:.82rem}</style></head><body>'+html+'</body></html>');
+  w.document.close();
 }
 
 // Bulk seed
@@ -790,9 +880,20 @@ els.clearAllBtn.addEventListener('click', (ev)=>{
   refreshSidebar();
 });
 
+els.saveWorkerBtn.addEventListener('click', async ()=>{
+  const v = (els.workerUrl.value||'').trim();
+  if(v && !/^https?:\/\//i.test(v)){
+    setStatus('err','Worker URL must start with https://'); return;
+  }
+  setWorkerBase(v);
+  await refreshWorkerStatus();
+});
+els.deployGuideBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); showDeployGuide(); });
+
 // Deep-link: ?id=12345
 (function init(){
   refreshSidebar();
+  refreshWorkerStatus();
   const q = new URLSearchParams(location.search);
   const qid = q.get('id');
   if(qid && /^\d+$/.test(qid)){ els.idInput.value = qid; runSearch(qid); }
