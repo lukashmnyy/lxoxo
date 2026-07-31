@@ -186,7 +186,7 @@ section{position:relative;z-index:1}
 .pcc-legend{display:flex;gap:26px;margin-top:18px;font-size:.82rem;font-weight:600;color:var(--text2);justify-content:center;flex-wrap:wrap}
 .pcc-legend .chip{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:8px;vertical-align:3px}
 /* bars */
-.pc-bars{display:flex;flex-direction:column;gap:60px;margin-bottom:120px;max-width:1020px;margin-left:auto;margin-right:auto}
+.pc-bars{display:flex;flex-direction:column;gap:64px;justify-content:center;min-height:100vh;max-width:1020px;margin:0 auto;width:100%}
 .pc-brow .pc-lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px;flex-wrap:wrap}
 .pc-brow .pc-name{font-size:.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text2)}
 .pc-brow .pc-mult{font-size:.82rem;font-weight:800;color:var(--blue);letter-spacing:.5px}
@@ -196,10 +196,10 @@ section{position:relative;z-index:1}
 .pc-track{flex:1;height:32px;border-radius:99px;background:rgba(255,255,255,.05);position:relative;display:flex;align-items:center}
 .pc-fill{height:100%;width:2.5%;border-radius:99px;display:flex;align-items:center;justify-content:flex-end;padding-right:15px;background:linear-gradient(90deg,#1f6fd9,#7cc0ff);box-shadow:0 0 36px rgba(58,138,253,.45)}
 .pc-line.dim .pc-fill{background:#3a3d41;box-shadow:none;justify-content:flex-start;padding-right:0}
-.pc-fill .pc-val{font-size:.85rem;font-weight:900;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pc-fill .pc-val{font-size:.85rem;font-weight:900;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums;transition:opacity .25s}
 .pc-val-out{font-size:.8rem;font-weight:800;color:var(--text3);margin-left:12px}
 /* tabs */
-.pc-tabs{max-width:1020px;margin:0 auto;padding-top:8vh}
+.pc-tabs{max-width:1020px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;width:100%}
 .pc-tabbar{display:flex;gap:6px;justify-content:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:99px;padding:6px;width:max-content;max-width:100%;margin:0 auto 44px;overflow-x:auto}
 .pc-tab{border:none;background:transparent;color:var(--text2);font-family:var(--font);font-size:.85rem;font-weight:700;padding:11px 26px;border-radius:99px;cursor:pointer;transition:all .35s;white-space:nowrap}
 .pc-tab:hover{color:#fff}
@@ -704,8 +704,6 @@ footer .footer-links a:hover{color:var(--blue)}
 <div class="brand">L,XOXO</div>
 <p>#1 Best-Selling Emote Community on Roblox</p>
 <div class="footer-links">
-  <a href="#marketplace">Marketplace</a>
-  <a href="#videos">Videos</a>
   <a href="https://www.roblox.com/communities/10783491" target="_blank">Community</a>
   <a href="https://www.roblox.com/games/102071609564196" target="_blank">Emote Catalog</a>
   <a href="https://x.com/lukashmny" target="_blank">Twitter</a>
@@ -861,7 +859,7 @@ var words=document.querySelectorAll('#textReveal .word');
 var trSection=document.querySelector('.text-reveal-section');
 var trWords=document.querySelectorAll('.text-reveal .word');
 var trWordCount=trWords.length;
-gsap.timeline({scrollTrigger:{trigger:'.text-reveal-section',start:'top 15%',end:'+=120%',pin:true,scrub:2.0,
+gsap.timeline({scrollTrigger:{trigger:'.text-reveal-section',start:'top 15%',end:'+=120%',pin:true,scrub:2.0,refreshPriority:10,
   onUpdate:function(self){
     var p=self.progress;
     // 0-0.55: words reveal one by one (slow)
@@ -2006,7 +2004,7 @@ if(catLayout){
   }
   drawChart(hasGsap?0:1);
   if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart',start:'top top',end:'+=120%',pin:true,scrub:.5,
+    ScrollTrigger.create({trigger:'#pcChart',start:'top top',end:'+=120%',pin:true,scrub:.5,refreshPriority:9,
       onUpdate:function(self){drawChart(Math.min(1,self.progress/0.85))},
       onRefresh:function(self){drawChart(Math.min(1,self.progress/0.85))}});
   }
@@ -2019,7 +2017,7 @@ if(catLayout){
       var target=parseFloat(f.dataset.w);
       f.style.width=(2.5+(target-2.5)*e)+'%';
       var val=f.querySelector('.pc-val');
-      if(val)val.textContent=Math.round(e*(+f.dataset.count)).toLocaleString('en-US')+(f.dataset.suffix||'');
+      if(val){val.textContent=Math.round(e*(+f.dataset.count)).toLocaleString('en-US')+(f.dataset.suffix||'');val.style.opacity=(2.5+(target-2.5)*e)>12?1:0;}
     });
     var out=row.querySelector('.pc-val-out');if(out)out.style.opacity=pr>.75?1:0;
     var mult=row.querySelector('.pc-mult');if(mult)mult.style.opacity=pr>.85?1:0;
@@ -2035,7 +2033,7 @@ if(catLayout){
         setBar(r,(pr-start)/(seg*1.1));
       });
     };
-    ScrollTrigger.create({trigger:'.pc-bars',start:'top top',end:'+=90%',pin:true,scrub:.5,
+    ScrollTrigger.create({trigger:'.pc-bars',start:'top top',end:'+=80%',pin:true,scrub:.5,refreshPriority:8,
       onUpdate:applyBars,onRefresh:applyBars});
   }
 
@@ -2079,7 +2077,7 @@ if(catLayout){
     });
   });
   if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcTabs',start:'center 52%',end:'+=65%',pin:true});
+    ScrollTrigger.create({trigger:'#pcTabs',start:'top top',end:'+=60%',pin:true,refreshPriority:6});
     ScrollTrigger.create({trigger:'#pcTabs',start:'top 74%',once:true,onEnter:function(){
       gsap.from('#pcTabs .pc-tabbar',{opacity:0,y:24,duration:.7,ease:'power3.out'});
       var pn=document.querySelector('.pc-panel.active');
@@ -2287,7 +2285,7 @@ if(catLayout){
   }
   draw(hasGsap?0:1);
   if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart2',start:'top top',end:'+=120%',pin:true,scrub:.5,
+    ScrollTrigger.create({trigger:'#pcChart2',start:'top top',end:'+=120%',pin:true,scrub:.5,refreshPriority:7,
       onUpdate:function(self){draw(Math.min(1,self.progress/0.85))},
       onRefresh:function(self){draw(Math.min(1,self.progress/0.85))}});
     ScrollTrigger.sort();
