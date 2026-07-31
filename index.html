@@ -473,7 +473,7 @@ footer .footer-links a:hover{color:var(--blue)}
     <svg class="mv-off" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
     <svg class="mv-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
   </button>
-  <input type="range" id="mvSlider" min="0" max="100" value="70">
+  <input type="range" id="mvSlider" min="0" max="100" value="25">
 </div>
 
 <div class="bg-glow">
@@ -792,8 +792,7 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   // Aggressive autoplay for restrictive WebViews (Google app, etc.)
   function forcePlay(){
     if(vid.paused||vid.currentTime===0){
-      vid.muted=true;
-      vid.setAttribute('muted','');
+      if(!window.__bgAudioOn){vid.muted=true;vid.setAttribute('muted','');}
       vid.play().catch(function(){});
     }
   }
@@ -834,13 +833,13 @@ window.addEventListener('scroll',function(){
   var eased=postP*postP*(3-2*postP);
   var blurAmount=eased*6; // light blur — keeps video motion visible
   // Darkness: gentle tint, never too opaque so video stays alive
-  var darkness=eased*0.3;
+  var darkness=eased*0.72;
   if(scrollY<=0){blurAmount=0;darkness=0;}
   if(!isMobile){
     vbfOverlay.style.backdropFilter='blur('+blurAmount+'px)';
     vbfOverlay.style.webkitBackdropFilter='blur('+blurAmount+'px)';
   }
-  vbfOverlay.style.background='rgba(25,27,29,'+Math.min(darkness,0.40)+')';
+  vbfOverlay.style.background='rgba(16,17,19,'+Math.min(darkness,0.72)+')';
 });
 
 /* ==================== TEXT REVEAL ==================== */
@@ -2097,22 +2096,43 @@ if(catLayout){
   var mvBtn=document.getElementById('mvBtn');
   var mvSlider=document.getElementById('mvSlider');
   if(bgVid&&mv){
+    var AUTO_VOL=0.25;
     function sync(){mv.classList.toggle('sound',!bgVid.muted)}
     mvBtn.addEventListener('click',function(){
       bgVid.muted=!bgVid.muted;
+      window.__bgAudioOn=!bgVid.muted;
       if(!bgVid.muted){bgVid.volume=mvSlider.value/100;bgVid.play().catch(function(){});}
       sync();
     });
     mvSlider.addEventListener('input',function(){
       bgVid.volume=this.value/100;
-      if(bgVid.muted){bgVid.muted=false;sync();}
+      if(bgVid.muted){bgVid.muted=false;window.__bgAudioOn=true;sync();}
     });
+    /* autoplay with LOW volume — fall back to muted + unlock on first interaction */
+    function startAudio(){
+      bgVid.volume=AUTO_VOL;
+      bgVid.muted=false;
+      bgVid.removeAttribute('muted');
+      window.__bgAudioOn=true;
+      var pr=bgVid.play();
+      if(pr&&pr.catch)pr.catch(function(){
+        /* blocked: play muted now, unmute quietly on first gesture */
+        window.__bgAudioOn=false;
+        bgVid.muted=true;bgVid.play().catch(function(){});sync();
+        var unlock=function(){
+          bgVid.muted=false;bgVid.volume=AUTO_VOL;window.__bgAudioOn=true;sync();
+          ['pointerdown','keydown','touchstart','wheel'].forEach(function(e){document.removeEventListener(e,unlock)});
+        };
+        ['pointerdown','keydown','touchstart','wheel'].forEach(function(e){document.addEventListener(e,unlock,{passive:true})});
+      });
+      sync();
+    }
+    if(bgVid.readyState>=2)startAudio();else bgVid.addEventListener('loadeddata',startAudio,{once:true});
     sync();
   }
   /* videos gallery */
   var VIDEOS=[
-    {name:'RIA 26 Teaser',src:'LukashRIA26Teaser.mp4',cap:'The brand-new RIA 26 teaser.'},
-    {name:'RIA 2026 Trailer',src:'NewRIA2026Trailer.mp4',cap:'The official RIA 2026 nomination trailer.'},
+    {name:'RIA 26 Trailer',src:'LukashRIA26Teaser.mp4',cap:'The official RIA 26 trailer.'},
     {name:'Pinky Up Collection',src:'pinkyup-trailer.mp4',cap:'Pinky Up — the collection trailer.'},
     {name:'L,XOXO Showcase',src:'hero-video-compressed.mp4',cap:'The original L,XOXO community showcase.'}
   ];
