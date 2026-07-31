@@ -654,7 +654,7 @@ footer .footer-links a:hover{color:var(--blue)}
   </div>
   <div class="mk-meta">
     <span id="mkCount">Loading catalog&hellip;</span>
-    <a id="mkFullLink" href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group" target="_blank" rel="noopener">Search all of L,XOXO on Roblox &nearr;</a>
+    <a id="mkFullLink" href="https://www.roblox.com/catalog?Category=12&CreatorName=L%2CXOXO&CreatorType=Group" target="_blank" rel="noopener">Search all of L,XOXO on Roblox &nearr;</a>
   </div>
   <div class="mk-grid" id="mkGrid"></div>
   <div class="mk-empty" id="mkEmpty">No matches here &mdash; <a id="mkEmptyLink" href="#" target="_blank" rel="noopener">search the full Roblox catalog &nearr;</a></div>
@@ -943,11 +943,11 @@ var emoteDataReady=(async function fetchEmoteNames(){
     return null;
   }
   try{
-    /* Category=12 & Subcategory=39 = Emotes ONLY. sortType=2 = best selling.
+    /* Category=12 = Animations overall (emotes + bundles). sortType=2 = best selling.
        /details endpoint returns name, price, favorites etc — /search/items does NOT return names!
        Using limit=10 per page to avoid truncated responses through Cloudflare */
     var allItems=[];
-    var baseUrl='https://catalog.roblox.com/v1/search/items/details?Category=12&Subcategory=39&creatorTargetId=10783491&creatorType=Group&limit=10&sortType=2&salesTypeFilter=1';
+    var baseUrl='https://catalog.roblox.com/v1/search/items/details?Category=12&creatorTargetId=10783491&creatorType=Group&limit=10&sortType=2&salesTypeFilter=1';
 
     // Fetch up to 3 pages of 10
     var cursor=null;
@@ -2126,7 +2126,7 @@ if(catLayout){
     }).join('');
     countEl.textContent=list.length+' of '+items.length+' items'+(q?' for \u201c'+searchEl.value.trim()+'\u201d':'');
     emptyEl.style.display=list.length?'none':'block';
-    var rbxSearch='https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group'+(q?'&Keyword='+encodeURIComponent(searchEl.value.trim()):'');
+    var rbxSearch='https://www.roblox.com/catalog?Category=12&CreatorName=L%2CXOXO&CreatorType=Group'+(q?'&Keyword='+encodeURIComponent(searchEl.value.trim()):'');
     emptyLink.href=rbxSearch;
     document.getElementById('mkFullLink').href=rbxSearch;
     if(window.gsap&&grid.children.length){
