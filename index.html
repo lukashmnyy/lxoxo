@@ -433,7 +433,7 @@ footer .footer-links a:hover{color:var(--blue)}
 .stat-counter .sc-number{font-size:clamp(3.5rem,12vw,5.5rem);line-height:1.15;padding:.08em .04em;overflow:visible!important}
 .stats-dots{right:16px}
 /* MOBILE PERF: kill expensive GPU filters */
-.video-bg-fixed .vbf-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(25,27,29,.3)!important}
+.video-bg-fixed .vbf-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 .bg-glow .orb{display:none!important}
 .stat-counter .sc-glow{filter:none!important;opacity:.15!important}
 .glass-btn .liquid-bg{display:none!important}
@@ -776,6 +776,8 @@ var vbfOverlay=document.getElementById('vbfOverlay');
   if(!vid||!cvs) return;
   var ctx=cvs.getContext('2d');
   var lastW=0,lastH=0;
+  // Cheap mobile blur: downscale video into a tiny offscreen canvas, then upscale.
+  var off=document.createElement('canvas'),offCtx=off.getContext('2d');
 
   var vidPaintFrame=0;
   function paint(){
@@ -794,7 +796,17 @@ var vbfOverlay=document.getElementById('vbfOverlay');
       var sx,sy,sw,sh;
       if(winR>vidR){sw=vidW;sh=vidW/winR;sx=0;sy=(vidH-sh)/2;}
       else{sh=vidH;sw=vidH*winR;sy=0;sx=(vidW-sw)/2;}
-      ctx.drawImage(vid,sx,sy,sw,sh,0,0,vw,vh);
+      var bp=window.__vbfBlurP||0;
+      if(bp>0.03){
+        var s=1-0.9*bp; // 1 → 0.1: smaller offscreen = stronger blur on upscale
+        var dw=Math.max(24,Math.round(vw*s)),dh=Math.max(14,Math.round(vh*s));
+        if(off.width!==dw||off.height!==dh){off.width=dw;off.height=dh;}
+        offCtx.drawImage(vid,sx,sy,sw,sh,0,0,dw,dh);
+        ctx.imageSmoothingEnabled=true;
+        ctx.drawImage(off,0,0,dw,dh,0,0,vw,vh);
+      }else{
+        ctx.drawImage(vid,sx,sy,sw,sh,0,0,vw,vh);
+      }
     }
     requestAnimationFrame(paint);
   }
@@ -845,15 +857,19 @@ window.addEventListener('scroll',function(){
   // Single fixed video: clear in hero → blurred glass as you scroll past
   var postP=Math.max(0,Math.min(1,(scrollY-heroH*0.5)/(heroH*0.6)));
   var eased=postP*postP*(3-2*postP);
-  var blurAmount=eased*6; // light blur — keeps video motion visible
-  // Darkness: gentle tint, never too opaque so video stays alive
-  var darkness=eased*0.72;
-  if(scrollY<=0){blurAmount=0;darkness=0;}
+  var blurAmount=eased*10;
+  // Darker past the hero so charts stay readable over the video
+  var darkness=eased*(isMobile?0.92:0.85);
+  if(scrollY<=0){blurAmount=0;darkness=0;eased=0;}
   if(!isMobile){
     vbfOverlay.style.backdropFilter='blur('+blurAmount+'px)';
     vbfOverlay.style.webkitBackdropFilter='blur('+blurAmount+'px)';
+    window.__vbfBlurP=0;
+  }else{
+    // Mobile: blur happens in the canvas paint loop (cheap downscale blur)
+    window.__vbfBlurP=eased;
   }
-  vbfOverlay.style.background='rgba(16,17,19,'+Math.min(darkness,0.72)+')';
+  vbfOverlay.style.background='rgba(16,17,19,'+darkness+')';
 });
 
 /* ==================== TEXT REVEAL ==================== */
