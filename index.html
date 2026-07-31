@@ -177,7 +177,7 @@ section{position:relative;z-index:1}
 .pc-title .pc-grad{background:linear-gradient(90deg,#7cc0ff,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 .pc-sub{font-size:clamp(.9rem,1.5vw,1.1rem);color:var(--text2);margin-top:18px;font-weight:500}
 /* line chart */
-.pc-chart{max-width:1020px;margin:0 auto 120px}
+.pc-chart{max-width:1020px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;width:100%}
 .pc-chart .pcc-lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;gap:12px;flex-wrap:wrap}
 .pc-chart .pcc-name{font-size:.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text2)}
 .pc-chart .pcc-live{font-size:1rem;font-weight:900;color:var(--blue);font-variant-numeric:tabular-nums}
@@ -199,7 +199,7 @@ section{position:relative;z-index:1}
 .pc-fill .pc-val{font-size:.85rem;font-weight:900;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
 .pc-val-out{font-size:.8rem;font-weight:800;color:var(--text3);margin-left:12px}
 /* tabs */
-.pc-tabs{max-width:1020px;margin:0 auto}
+.pc-tabs{max-width:1020px;margin:0 auto;padding-top:8vh}
 .pc-tabbar{display:flex;gap:6px;justify-content:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:99px;padding:6px;width:max-content;max-width:100%;margin:0 auto 44px;overflow-x:auto}
 .pc-tab{border:none;background:transparent;color:var(--text2);font-family:var(--font);font-size:.85rem;font-weight:700;padding:11px 26px;border-radius:99px;cursor:pointer;transition:all .35s;white-space:nowrap}
 .pc-tab:hover{color:#fff}
@@ -230,18 +230,19 @@ section{position:relative;z-index:1}
 .mk-controls{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .mk-search{flex:1;min-width:240px;position:relative}
 .mk-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;fill:var(--text3);pointer-events:none}
-.mk-search input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 16px 13px 46px;font-family:var(--font);font-size:.92rem;color:var(--text);outline:none;transition:border-color .3s,box-shadow .3s}
+.mk-search input{width:100%;background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:13px 16px 13px 46px;font-family:var(--font);font-size:.92rem;color:var(--text);outline:none;transition:border-color .3s,box-shadow .3s}
 .mk-search input::placeholder{color:var(--text3)}
 .mk-search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(58,138,253,.15)}
-.mk-sort{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 16px;font-family:var(--font);font-size:.88rem;color:var(--text);outline:none;cursor:pointer}
+.mk-sort{background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:13px 16px;font-family:var(--font);font-size:.88rem;color:var(--text);outline:none;cursor:pointer}
 .mk-sort:focus{border-color:var(--blue)}
+.mk-sort option{background:#1e2022;color:var(--text)}
 .mk-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--text3);flex-wrap:wrap;gap:8px}
 .mk-meta a{color:var(--blue);text-decoration:none;font-weight:600}
 .mk-meta a:hover{text-decoration:underline}
 .mk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:12px}
-.mk-card{background:var(--card);border:1px solid transparent;border-radius:12px;overflow:hidden;text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column}
+.mk-card{background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.03));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column}
 .mk-card:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 10px 30px rgba(0,0,0,.4),0 0 24px rgba(58,138,253,.12)}
-.mk-thumb{position:relative;aspect-ratio:1/1;background:var(--bg2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mk-thumb{position:relative;aspect-ratio:1/1;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .mk-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
 .mk-card:hover .mk-thumb img{transform:scale(1.06)}
 .mk-badge{position:absolute;top:8px;left:8px;background:rgba(58,138,253,.92);color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:6px;text-transform:uppercase}
@@ -285,6 +286,13 @@ section{position:relative;z-index:1}
 .vd-player video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
 .vd-caption{text-align:center;font-size:.8rem;color:var(--text3);margin-top:16px}
 @media(max-width:640px){.videos-section{padding:80px 16px 70px}.vd-player{border-radius:16px}}
+
+
+.footer-contact{margin-top:22px;font-size:.78rem;color:var(--text3);letter-spacing:.04em}
+.footer-contact .fc-label{font-size:.62rem;text-transform:uppercase;letter-spacing:3px;color:var(--text3);margin-bottom:8px;font-weight:700}
+.footer-contact a{color:var(--text2);text-decoration:none;font-weight:600;transition:color .3s}
+.footer-contact a:hover{color:var(--blue)}
+.footer-contact .fc-sep{margin:0 10px;color:var(--text3)}
 
 /* ======== CATALOG — side-by-side layout ======== */
 .catalog-section{padding:120px 24px;position:relative;z-index:1}
@@ -701,6 +709,12 @@ footer .footer-links a:hover{color:var(--blue)}
   <a href="https://www.roblox.com/communities/10783491" target="_blank">Community</a>
   <a href="https://www.roblox.com/games/102071609564196" target="_blank">Emote Catalog</a>
   <a href="https://x.com/lukashmny" target="_blank">Twitter</a>
+</div>
+<div class="footer-contact">
+  <div class="fc-label">Business Inquiries</div>
+  <a href="mailto:lukash@l-xoxo.com">lukash@l-xoxo.com</a>
+  <span class="fc-sep">&middot;</span>
+  Discord: <a href="https://discord.com/users/lukashmny" target="_blank" rel="noopener">lukashmny</a>
 </div>
 </footer>
 
@@ -1750,20 +1764,58 @@ if(catLayout){
     }
     return null;
   }
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+  /* show cached values instantly if we have them */
   try{
-    var d=await safeJsonGet('https://games.roblox.com/v1/games?universeIds=9209811415');
-    if(d&&d.data&&d.data[0]){
-      var g=d.data[0];
-      document.getElementById('catVisits').textContent=fmt(g.visits);
-      document.getElementById('catPlaying').textContent=fmt(g.playing);
-      document.getElementById('catFavs').textContent=fmt(g.favoritedCount);
-      var id2=await safeJsonGet('https://thumbnails.roblox.com/v1/games/icons?universeIds=9209811415&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false');
-      if(id2&&id2.data&&id2.data[0]&&id2.data[0].imageUrl){
-        document.getElementById('catGameIcon').src=id2.data[0].imageUrl;
-      }
+    var cached=JSON.parse(localStorage.getItem('lx_cat_stats')||'null');
+    if(cached){
+      document.getElementById('catVisits').textContent=cached.v;
+      document.getElementById('catPlaying').textContent=cached.p;
+      document.getElementById('catFavs').textContent=cached.f;
+      if(cached.icon)document.getElementById('catGameIcon').src=cached.icon;
     }
-  }catch(e){console.warn('Catalog stats fetch failed:',e);
-  }
+  }catch(e){}
+  /* stats — up to 4 rounds with backoff */
+  try{
+    var g=null;
+    for(var round=0;round<4&&!g;round++){
+      if(round)await sleep(2000*round);
+      var d=await safeJsonGet('https://games.roblox.com/v1/games?universeIds=9209811415');
+      if(d&&d.data&&d.data[0])g=d.data[0];
+    }
+    if(g){
+      var v=fmt(g.visits),pl=fmt(g.playing),f=fmt(g.favoritedCount);
+      document.getElementById('catVisits').textContent=v;
+      document.getElementById('catPlaying').textContent=pl;
+      document.getElementById('catFavs').textContent=f;
+      try{
+        var prev=JSON.parse(localStorage.getItem('lx_cat_stats')||'{}');
+        localStorage.setItem('lx_cat_stats',JSON.stringify({v:v,p:pl,f:f,icon:prev.icon||''}));
+      }catch(e){}
+    }
+  }catch(e){console.warn('Catalog stats fetch failed:',e)}
+  /* icon — independent retries so a stats failure never blocks it */
+  try{
+    var iconUrl=null;
+    for(var r2=0;r2<4&&!iconUrl;r2++){
+      if(r2)await sleep(2000*r2);
+      var id2=await safeJsonGet('https://thumbnails.roblox.com/v1/games/icons?universeIds=9209811415&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false');
+      if(id2&&id2.data&&id2.data[0]&&id2.data[0].imageUrl&&id2.data[0].state!=='Pending')iconUrl=id2.data[0].imageUrl;
+    }
+    if(iconUrl){
+      var img=document.getElementById('catGameIcon');
+      /* only swap once the image actually loads — never a broken frame */
+      var probe=new Image();
+      probe.onload=function(){
+        img.src=iconUrl;
+        try{
+          var pr=JSON.parse(localStorage.getItem('lx_cat_stats')||'{}');
+          pr.icon=iconUrl;localStorage.setItem('lx_cat_stats',JSON.stringify(pr));
+        }catch(e){}
+      };
+      probe.src=iconUrl;
+    }
+  }catch(e){console.warn('Catalog icon fetch failed:',e)}
 })();
 
 /* carousel removed — replaced by Marketplace */
@@ -1954,9 +2006,9 @@ if(catLayout){
   }
   drawChart(hasGsap?0:1);
   if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart',start:'top 30%',end:'+=120%',pin:true,scrub:.5,
-      onUpdate:function(self){drawChart(self.progress)},
-      onRefresh:function(self){drawChart(self.progress)}});
+    ScrollTrigger.create({trigger:'#pcChart',start:'top top',end:'+=120%',pin:true,scrub:.5,
+      onUpdate:function(self){drawChart(Math.min(1,self.progress/0.85))},
+      onRefresh:function(self){drawChart(Math.min(1,self.progress/0.85))}});
   }
 
   /* ---------- bars — scrub-driven fill + live numbers ---------- */
@@ -1972,12 +2024,20 @@ if(catLayout){
     var out=row.querySelector('.pc-val-out');if(out)out.style.opacity=pr>.75?1:0;
     var mult=row.querySelector('.pc-mult');if(mult)mult.style.opacity=pr>.85?1:0;
   }
-  document.querySelectorAll('.pc-brow').forEach(function(row){
-    if(!hasGsap){setBar(row,1);return}
-    setBar(row,0);
-    ScrollTrigger.create({trigger:row,start:'top 90%',end:'top 30%',scrub:.4,
-      onUpdate:function(self){setBar(row,self.progress)}});
-  });
+  var barRows=Array.prototype.slice.call(document.querySelectorAll('.pc-brow'));
+  if(!hasGsap){barRows.forEach(function(r){setBar(r,1)});}
+  else{
+    barRows.forEach(function(r){setBar(r,0)});
+    var applyBars=function(self){
+      var pr=Math.min(1,self.progress/0.85);
+      barRows.forEach(function(r,i){
+        var seg=1/barRows.length,start=i*seg*0.82;
+        setBar(r,(pr-start)/(seg*1.1));
+      });
+    };
+    ScrollTrigger.create({trigger:'.pc-bars',start:'top top',end:'+=90%',pin:true,scrub:.5,
+      onUpdate:applyBars,onRefresh:applyBars});
+  }
 
   if(hasGsap){
     gsap.from('.pc-head > *',{scrollTrigger:{trigger:'.pc-head',start:'top 78%'},opacity:0,y:44,duration:1,stagger:.14,ease:'power3.out'});
@@ -2019,6 +2079,7 @@ if(catLayout){
     });
   });
   if(hasGsap){
+    ScrollTrigger.create({trigger:'#pcTabs',start:'center 52%',end:'+=65%',pin:true});
     ScrollTrigger.create({trigger:'#pcTabs',start:'top 74%',once:true,onEnter:function(){
       gsap.from('#pcTabs .pc-tabbar',{opacity:0,y:24,duration:.7,ease:'power3.out'});
       var pn=document.querySelector('.pc-panel.active');
@@ -2226,12 +2287,25 @@ if(catLayout){
   }
   draw(hasGsap?0:1);
   if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart2',start:'top 30%',end:'+=110%',pin:true,scrub:.5,
-      onUpdate:function(self){draw(self.progress)},
-      onRefresh:function(self){draw(self.progress)}});
+    ScrollTrigger.create({trigger:'#pcChart2',start:'top top',end:'+=120%',pin:true,scrub:.5,
+      onUpdate:function(self){draw(Math.min(1,self.progress/0.85))},
+      onRefresh:function(self){draw(Math.min(1,self.progress/0.85))}});
+    ScrollTrigger.sort();
     ScrollTrigger.refresh();
   }
 })();
+</script>
+
+
+<script>
+/* pin-order safety: some pins are created in separate scripts; sort by
+   document position and refresh once everything (fonts, video metadata) settled */
+window.addEventListener('load',function(){
+  if(window.ScrollTrigger){
+    try{ScrollTrigger.sort();ScrollTrigger.refresh();}catch(e){}
+    setTimeout(function(){try{ScrollTrigger.sort();ScrollTrigger.refresh();}catch(e){}},1200);
+  }
+});
 </script>
 
 </body>
