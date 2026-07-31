@@ -252,6 +252,8 @@ section{position:relative;z-index:1}
 .mk-creator span{color:var(--text2)}
 .mk-price{display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:800;color:#fff}
 .mk-price svg{width:15px;height:15px}
+.mk-robux{width:15px;height:15px;object-fit:contain;display:inline-block}
+.mk-verified{width:13px;height:13px;object-fit:contain;display:inline-block;vertical-align:-2px;margin-left:2px}
 .mk-price .free{color:var(--green)}
 .mk-empty{text-align:center;color:var(--text2);padding:60px 0;font-size:.95rem;display:none}
 .mk-empty a{color:var(--blue);font-weight:700;text-decoration:none}
@@ -642,7 +644,7 @@ footer .footer-links a:hover{color:var(--blue)}
   <div class="mk-controls">
     <div class="mk-search">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="mkSearch" placeholder="Search L,XOXO emotes..." autocomplete="off">
+      <input type="text" id="mkSearch" placeholder="Search L,XOXO emotes &amp; bundles..." autocomplete="off">
     </div>
     <select class="mk-sort" id="mkSort">
       <option value="selling">Best Selling</option>
@@ -2102,7 +2104,8 @@ if(catLayout){
   if(!grid)return;
   await emoteDataReady;
   var items=emoteData.filter(function(e){return e.id&&e.name!=='Loading...'});
-  var robux='<svg viewBox="0 0 24 24" fill="none"><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="3.4" transform="rotate(15 12 12)" stroke="#fff" stroke-width="2"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1" transform="rotate(15 12 12)" fill="#fff"/></svg>';
+  var robux='<img class="mk-robux" src="RobuxBadge.png" alt="Robux">';
+  var verified='<img class="mk-verified" src="VerifiedBadge.png" alt="Verified">';
   function link(e){
     var slug=(e.name||'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'');
     return (e.itemType==='Bundle'?'https://www.roblox.com/bundles/':'https://www.roblox.com/catalog/')+e.id+'/'+slug;
@@ -2121,7 +2124,7 @@ if(catLayout){
       return '<a class="mk-card" href="'+link(e)+'" target="_blank" rel="noopener">'
         +'<div class="mk-thumb">'+badge+(e.url?'<img loading="lazy" src="'+e.url+'" alt="">':'')+'</div>'
         +'<div class="mk-info"><div class="mk-name">'+e.name+'</div>'
-        +'<div class="mk-creator">By <span>L,XOXO</span> &#9989;</div>'
+        +'<div class="mk-creator">By <span>L,XOXO</span> '+verified+'</div>'
         +'<div class="mk-price">'+priceHtml+'</div></div></a>';
     }).join('');
     countEl.textContent=list.length+' of '+items.length+' items'+(q?' for \u201c'+searchEl.value.trim()+'\u201d':'');
