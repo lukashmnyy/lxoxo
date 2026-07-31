@@ -256,6 +256,36 @@ section{position:relative;z-index:1}
 .mk-empty a{color:var(--blue);font-weight:700;text-decoration:none}
 @media(max-width:640px){.mk-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}.marketplace{padding:90px 16px 80px}}
 
+
+/* ======== MASTER VOLUME — fixed bottom-right ======== */
+.master-vol{position:fixed;bottom:26px;right:24px;z-index:50;display:flex;align-items:center;gap:10px;background:rgba(20,22,25,.55);border:1px solid rgba(255,255,255,.14);border-radius:99px;padding:8px 12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .3s}
+.master-vol:hover{background:rgba(20,22,25,.75)}
+.master-vol button{background:none;border:none;cursor:pointer;padding:2px;display:flex}
+.master-vol svg{width:22px;height:22px;fill:rgba(255,255,255,.75)}
+.master-vol .mv-on{display:none}
+.master-vol.sound .mv-on{display:block}
+.master-vol.sound .mv-off{display:none}
+.master-vol input{-webkit-appearance:none;appearance:none;width:0;height:4px;background:rgba(255,255,255,.25);border-radius:2px;outline:none;cursor:pointer;transition:width .3s;margin:0}
+.master-vol.sound input{width:84px}
+.master-vol input::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--blue);border:none;cursor:pointer}
+.master-vol input::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--blue);border:none;cursor:pointer}
+@media(max-width:640px){.master-vol{bottom:18px;right:14px}}
+
+/* ======== VIDEOS — past releases ======== */
+.videos-section{position:relative;z-index:1;padding:110px 24px 90px}
+.vd-inner{max-width:1020px;margin:0 auto}
+.vd-head{text-align:center;margin-bottom:34px}
+.vd-head h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.02em}
+.vd-head p{font-size:.9rem;color:var(--text2);margin-top:8px}
+.vd-tabs{display:flex;gap:6px;justify-content:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:99px;padding:6px;width:max-content;max-width:100%;margin:0 auto 30px;overflow-x:auto}
+.vd-tab{border:none;background:transparent;color:var(--text2);font-family:var(--font);font-size:.85rem;font-weight:700;padding:11px 24px;border-radius:99px;cursor:pointer;transition:all .35s;white-space:nowrap}
+.vd-tab:hover{color:#fff}
+.vd-tab.active{background:linear-gradient(135deg,#2a7de0,#3a8afd);color:#fff;box-shadow:0 4px 20px rgba(58,138,253,.4)}
+.vd-player{position:relative;border-radius:24px;overflow:hidden;border:1.5px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 90px rgba(58,138,253,.1),inset 0 1px 0 rgba(255,255,255,.1);background:#000}
+.vd-player video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.vd-caption{text-align:center;font-size:.8rem;color:var(--text3);margin-top:16px}
+@media(max-width:640px){.videos-section{padding:80px 16px 70px}.vd-player{border-radius:16px}}
+
 /* ======== CATALOG — side-by-side layout ======== */
 .catalog-section{padding:120px 24px;position:relative;z-index:1}
 
@@ -431,9 +461,19 @@ footer .footer-links a:hover{color:var(--blue)}
 
 <!-- FIXED VIDEO BG — persists blurred behind all content -->
 <div class="video-bg-fixed" id="videoBgFixed">
-  <video autoplay muted loop playsinline webkit-playsinline preload="auto" src="NewRIA2026Trailer.mp4"></video>
+  <video autoplay muted loop playsinline webkit-playsinline preload="auto" src="LukashRIA26Teaser.mp4"></video>
   <canvas class="vbf-canvas" id="vbfCanvas"></canvas>
   <div class="vbf-overlay" id="vbfOverlay"></div>
+</div>
+
+
+<!-- MASTER VOLUME — controls the background trailer -->
+<div class="master-vol" id="masterVol">
+  <button id="mvBtn" aria-label="Toggle sound">
+    <svg class="mv-off" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    <svg class="mv-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+  </button>
+  <input type="range" id="mvSlider" min="0" max="100" value="70">
 </div>
 
 <div class="bg-glow">
@@ -515,15 +555,23 @@ footer .footer-links a:hover{color:var(--blue)}
       <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="18" data-suffix=" weeks"><span class="pc-val">18 weeks</span></div></div></div>
       <div class="pc-line dim"><div class="pc-who">next best</div><div class="pc-track"><div class="pc-fill" data-w="11"></div><span class="pc-val-out">2</span></div></div>
     </div>
-    <div class="pc-brow" id="pcBar3">
-      <div class="pc-lab"><div class="pc-name">Item-weeks on chart &middot; all items combined</div><div class="pc-mult">16&times; the average creator</div></div>
-      <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="142" data-suffix=" item-weeks"><span class="pc-val">142 item-weeks</span></div></div></div>
-      <div class="pc-line dim"><div class="pc-who">avg creator</div><div class="pc-track"><div class="pc-fill" data-w="6.3"></div><span class="pc-val-out">9</span></div></div>
-    </div>
     <div class="pc-brow" id="pcBar2">
-      <div class="pc-lab"><div class="pc-name">Longest consecutive #1 streak</div><div class="pc-mult">12&times; the next best streak</div></div>
-      <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="12" data-suffix=" weeks straight"><span class="pc-val">12 weeks straight</span></div></div></div>
-      <div class="pc-line dim"><div class="pc-who">next best</div><div class="pc-track"><div class="pc-fill" data-w="8.3"></div><span class="pc-val-out">1</span></div></div>
+      <div class="pc-lab"><div class="pc-name">Favorites per release &middot; this year&rsquo;s items</div><div class="pc-mult">11&times; the nearest creator</div></div>
+      <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="9353" data-suffix=" favs / release"><span class="pc-val">9,353</span></div></div></div>
+      <div class="pc-line dim"><div class="pc-who">nearest</div><div class="pc-track"><div class="pc-fill" data-w="8.8"></div><span class="pc-val-out">825</span></div></div>
+    </div>
+  </div>
+
+
+  <div class="pc-chart" id="pcChart2">
+    <div class="pcc-lab">
+      <div class="pcc-name">Weeks on chart &middot; every item combined &middot; 22 weeks</div>
+      <div class="pcc-live" id="pccLive2">0 item-weeks</div>
+    </div>
+    <div class="pcc-svgwrap"><svg id="pccSvg2" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet"></svg></div>
+    <div class="pcc-legend">
+      <span><span class="chip" style="background:linear-gradient(90deg,#1f6fd9,#7cc0ff)"></span>L,XOXO &mdash; 142 item-weeks</span>
+      <span><span class="chip" style="background:#4a4d52"></span>average creator &mdash; 9</span>
     </div>
   </div>
 
@@ -606,6 +654,20 @@ footer .footer-links a:hover{color:var(--blue)}
 </section>
 
 
+
+<!-- ======== VIDEOS — past releases ======== -->
+<section class="videos-section" id="videos">
+<div class="vd-inner">
+  <div class="vd-head">
+    <h2>Videos</h2>
+    <p>Trailers &amp; releases from the L,XOXO universe</p>
+  </div>
+  <div class="vd-tabs" id="vdTabs"></div>
+  <div class="vd-player"><video id="vdPlayer" controls playsinline preload="metadata"></video></div>
+  <div class="vd-caption" id="vdCaption"></div>
+</div>
+</section>
+
 <!-- ======== EMOTE CATALOG — SIDE-BY-SIDE ======== -->
 <section class="catalog-section" id="catalog">
 <div class="catalog-layout" id="catalogLayout">
@@ -635,6 +697,7 @@ footer .footer-links a:hover{color:var(--blue)}
 <p>#1 Best-Selling Emote Community on Roblox</p>
 <div class="footer-links">
   <a href="#marketplace">Marketplace</a>
+  <a href="#videos">Videos</a>
   <a href="https://www.roblox.com/communities/10783491" target="_blank">Community</a>
   <a href="https://www.roblox.com/games/102071609564196" target="_blank">Emote Catalog</a>
   <a href="https://x.com/lukashmny" target="_blank">Twitter</a>
@@ -1905,7 +1968,7 @@ if(catLayout){
       var target=parseFloat(f.dataset.w);
       f.style.width=(2.5+(target-2.5)*e)+'%';
       var val=f.querySelector('.pc-val');
-      if(val)val.textContent=Math.round(e*(+f.dataset.count))+(f.dataset.suffix||'');
+      if(val)val.textContent=Math.round(e*(+f.dataset.count)).toLocaleString('en-US')+(f.dataset.suffix||'');
     });
     var out=row.querySelector('.pc-val-out');if(out)out.style.opacity=pr>.75?1:0;
     var mult=row.querySelector('.pc-mult');if(mult)mult.style.opacity=pr>.85?1:0;
@@ -2020,6 +2083,132 @@ if(catLayout){
   render();
   if(window.gsap&&window.ScrollTrigger){
     gsap.from('.mk-head, .mk-sub, .mk-controls, .mk-meta',{scrollTrigger:{trigger:'.marketplace',start:'top 80%'},opacity:0,y:34,duration:.8,stagger:.1,ease:'power3.out'});
+    ScrollTrigger.refresh();
+  }
+})();
+</script>
+
+
+<script>
+/* ==================== MASTER VOLUME + VIDEOS ==================== */
+(function(){
+  var bgVid=document.querySelector('.video-bg-fixed video');
+  var mv=document.getElementById('masterVol');
+  var mvBtn=document.getElementById('mvBtn');
+  var mvSlider=document.getElementById('mvSlider');
+  if(bgVid&&mv){
+    function sync(){mv.classList.toggle('sound',!bgVid.muted)}
+    mvBtn.addEventListener('click',function(){
+      bgVid.muted=!bgVid.muted;
+      if(!bgVid.muted){bgVid.volume=mvSlider.value/100;bgVid.play().catch(function(){});}
+      sync();
+    });
+    mvSlider.addEventListener('input',function(){
+      bgVid.volume=this.value/100;
+      if(bgVid.muted){bgVid.muted=false;sync();}
+    });
+    sync();
+  }
+  /* videos gallery */
+  var VIDEOS=[
+    {name:'RIA 26 Teaser',src:'LukashRIA26Teaser.mp4',cap:'The brand-new RIA 26 teaser.'},
+    {name:'RIA 2026 Trailer',src:'NewRIA2026Trailer.mp4',cap:'The official RIA 2026 nomination trailer.'},
+    {name:'Pinky Up Collection',src:'pinkyup-trailer.mp4',cap:'Pinky Up — the collection trailer.'},
+    {name:'L,XOXO Showcase',src:'hero-video-compressed.mp4',cap:'The original L,XOXO community showcase.'}
+  ];
+  var tabsWrap=document.getElementById('vdTabs');
+  var player=document.getElementById('vdPlayer');
+  var caption=document.getElementById('vdCaption');
+  if(!tabsWrap||!player)return;
+  VIDEOS.forEach(function(v,i){
+    var b=document.createElement('button');
+    b.className='vd-tab'+(i===0?' active':'');
+    b.textContent=v.name;
+    b.addEventListener('click',function(){
+      tabsWrap.querySelectorAll('.vd-tab').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      player.pause();
+      player.src=v.src;
+      caption.textContent=v.cap;
+      if(window.gsap)gsap.fromTo('.vd-player',{opacity:.35,scale:.985},{opacity:1,scale:1,duration:.5,ease:'power2.out'});
+      player.play().catch(function(){});
+    });
+    tabsWrap.appendChild(b);
+  });
+  player.src=VIDEOS[0].src;
+  caption.textContent=VIDEOS[0].cap;
+  /* playing a gallery video silences the background trailer */
+  player.addEventListener('play',function(){
+    if(bgVid&&!bgVid.muted){bgVid.muted=true;if(mv)mv.classList.remove('sound');}
+  });
+  if(window.gsap&&window.ScrollTrigger){
+    gsap.from('.vd-head, .vd-tabs, .vd-player',{scrollTrigger:{trigger:'.videos-section',start:'top 78%'},opacity:0,y:36,duration:.8,stagger:.12,ease:'power3.out'});
+    ScrollTrigger.refresh();
+  }
+})();
+</script>
+
+
+<script>
+/* ==================== CHART 2 — item-weeks race ==================== */
+(function(){
+  var hasGsap=!!(window.gsap&&window.ScrollTrigger);
+  var svg=document.getElementById('pccSvg2');
+  var liveNum=document.getElementById('pccLive2');
+  if(!svg)return;
+  var W=1000,H=420,PL=52,PR=30,PT=24,PB=44;
+  var N=22,MAX=142;
+  var lx=[],av=[];
+  for(var i=0;i<=N;i++){lx.push(Math.round(142*i/N));av.push(Math.round(9*i/N));}
+  function X(i){return PL+(W-PL-PR)*i/N}
+  function Y(v){return H-PB-(H-PT-PB)*v/MAX}
+  function path(arr){var d='M'+X(0)+' '+Y(arr[0]);for(var j=1;j<arr.length;j++)d+=' L'+X(j)+' '+Y(arr[j]);return d}
+  var ns='http://www.w3.org/2000/svg';
+  function el(tag,attrs){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e}
+  var defs=el('defs',{});
+  defs.innerHTML='<linearGradient id="pccGrad2" x1="0" y1="0" x2="1" y2="0">'
+    +'<stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient>'
+    +'<linearGradient id="pccArea2" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" stop-color="rgba(58,138,253,.28)"/><stop offset="1" stop-color="rgba(58,138,253,0)"/></linearGradient>'
+    +'<filter id="pccGlow2" x="-40%" y="-40%" width="180%" height="180%">'
+    +'<feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg.appendChild(defs);
+  [0,50,100,142].forEach(function(v){
+    svg.appendChild(el('line',{x1:PL,y1:Y(v),x2:W-PR,y2:Y(v),stroke:'rgba(255,255,255,.06)','stroke-width':1}));
+    var t=el('text',{x:PL-12,y:Y(v)+4,'text-anchor':'end',fill:'#6b7075','font-size':'13','font-weight':'600'});
+    t.textContent=v;svg.appendChild(t);
+  });
+  [1,6,11,16,22].forEach(function(w){
+    var t=el('text',{x:X(w-1<0?0:w-0),y:H-14,'text-anchor':'middle',fill:'#6b7075','font-size':'12','font-weight':'600'});
+    t.setAttribute('x',X(w===1?0:w));
+    t.textContent='W'+w;svg.appendChild(t);
+  });
+  var areaP=el('path',{d:path(lx)+' L'+X(N)+' '+Y(0)+' L'+X(0)+' '+Y(0)+' Z',fill:'url(#pccArea2)',opacity:0});
+  svg.appendChild(areaP);
+  var avP=el('path',{d:path(av),fill:'none',stroke:'#4a4d52','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'});
+  svg.appendChild(avP);
+  var lxP=el('path',{d:path(lx),fill:'none',stroke:'url(#pccGrad2)','stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round',filter:'url(#pccGlow2)'});
+  svg.appendChild(lxP);
+  var dot=el('circle',{r:8,fill:'#7cc0ff',filter:'url(#pccGlow2)',opacity:0});
+  svg.appendChild(dot);
+  var lxLen=lxP.getTotalLength(),avLen=avP.getTotalLength();
+  lxP.style.strokeDasharray=lxLen;avP.style.strokeDasharray=avLen;
+  function draw(pr){
+    pr=Math.max(0,Math.min(1,pr));
+    lxP.style.strokeDashoffset=lxLen*(1-pr);
+    avP.style.strokeDashoffset=avLen*(1-pr);
+    areaP.setAttribute('opacity',String(pr*.9));
+    var pt=lxP.getPointAtLength(lxLen*pr);
+    dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
+    dot.setAttribute('opacity',pr>0.02?'1':'0');
+    var wk=Math.round(pr*N);
+    liveNum.textContent=lx[Math.min(wk,N)].toLocaleString('en-US')+' item-weeks';
+  }
+  draw(hasGsap?0:1);
+  if(hasGsap){
+    ScrollTrigger.create({trigger:'#pcChart2',start:'top 30%',end:'+=110%',pin:true,scrub:.5,
+      onUpdate:function(self){draw(self.progress)},
+      onRefresh:function(self){draw(self.progress)}});
     ScrollTrigger.refresh();
   }
 })();
