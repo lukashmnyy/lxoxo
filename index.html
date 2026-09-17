@@ -566,7 +566,7 @@ footer .footer-links a:hover{color:var(--blue)}
     <div class="hero-logo"><img src="lxoxoicon.png" alt="L,XOXO"></div>
     <div class="hero-tagline">Where Emotes Go #1</div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num" data-count="6700000">6.7M</div><div class="label">Emotes Sold</div></div>
+      <div class="hero-stat"><div class="num" data-count="6700000">6.7M</div><div class="label">UGC Sold</div></div>
       <div class="hero-stat"><div class="num" data-count="612504">612K+</div><div class="label">Members</div></div>
       <div class="hero-stat"><div class="num" data-count="25">25</div><div class="label">Weeks at #1</div></div>
     </div>
@@ -584,7 +584,7 @@ footer .footer-links a:hover{color:var(--blue)}
   <p class="text-reveal" id="textReveal">
     <span class="word">6.7</span>
     <span class="word">million</span>
-    <span class="word">emotes</span>
+    <span class="word">UGC</span>
     <span class="word">sold.</span>
     <span class="word brand-word"><img src="lxoxoicon.png" alt="L,XOXO" class="inline-logo"></span>
     <span class="word">isn't</span>
@@ -610,14 +610,14 @@ footer .footer-links a:hover{color:var(--blue)}
 <section class="live-sales" id="liveSales">
   <div class="ls-card">
     <div>
-      <div class="ls-kicker"><i></i>Live estimate &middot; emotes sold</div>
+      <div class="ls-kicker"><i></i>Live estimate &middot; UGC sold</div>
       <div class="odo" id="odo"></div>
     </div>
     <div class="ls-right">
       <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="ringFg" cx="60" cy="60" r="52"/></svg><div class="ring-in"><div class="rn" id="spm">12.4</div><div class="rl">sales / min</div></div></div>
       <div class="ls-facts">
         <div><b id="perSec">1 every 4.8s</b><span>around the clock</span></div>
-        <div><b>17,800</b><span>sales per day</span></div>
+        <div><b>17,900</b><span>sales per day</span></div>
         <div><b>~540K</b><span>sales per month</span></div>
       </div>
     </div>
@@ -634,7 +634,7 @@ footer .footer-links a:hover{color:var(--blue)}
     </div>
     <div class="pcy-grid">
       <div class="pcy-card" data-pct="3250" data-then="200K" data-now="6.7M" data-w="3">
-        <div class="pcy-lab">Emotes sold</div>
+        <div class="pcy-lab">UGC sold</div>
         <div class="pcy-pct"><span class="n">0</span>%</div>
         <div class="pcy-row"><span class="t">Sep 2025</span><span class="v">200K</span></div>
         <div class="pcy-bar"><i></i></div>
@@ -2315,7 +2315,7 @@ if(catLayout){
 <script>
 /* ==================== LIVE SALES ODOMETER ==================== */
 (function(){
-  var SOLD=6700000, BASE=new Date('2026-09-17T00:00:00Z').getTime(), SPM=12.4; // edit these
+  var SOLD=6700000, BASE=new Date('2026-09-17T00:00:00Z').getTime(), SPM=12.44; // SPM = last-7-day dashboard pace (125,379 sales / 7 days); edit these
   var odo=document.getElementById('odo');if(!odo)return;
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var perMs=SPM/60000;
