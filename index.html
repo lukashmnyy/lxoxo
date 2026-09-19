@@ -520,9 +520,102 @@ footer .footer-links a:hover{color:var(--blue)}
 .pcy-sum{text-align:center;margin-top:40px;font-size:.9rem;color:var(--text2);font-weight:600;line-height:2}
 .pcy-big{font-size:1.25rem;font-weight:900;color:#fff}
 @media(max-width:600px){.pcy-card{padding:20px 14px 16px}.pcy-pct{font-size:1.75rem;letter-spacing:-.04em}.pcy-sum{font-size:.8rem}}
+
+/* ====== TOP NAV — liquid glass pill ====== */
+.topnav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(20,22,26,.42);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.18),inset 0 -1px 1px rgba(0,0,0,.25);transition:top .5s cubic-bezier(.2,.8,.2,1),opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1);max-width:calc(100vw - 24px)}
+.topnav::before{content:'';position:absolute;inset:0;border-radius:999px;padding:1.2px;background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,.06) 35%,transparent 55%,rgba(255,255,255,.08) 80%,rgba(255,255,255,.4));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.topnav::after{content:'';position:absolute;top:0;left:18%;right:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6) 50%,transparent);pointer-events:none}
+.topnav.hide{top:-80px;opacity:0}
+.topnav .tn-logo{display:flex;align-items:center;padding:0 10px 0 6px;flex:none}
+.topnav .tn-logo img{width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.tn-tabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.tn-tabs::-webkit-scrollbar{display:none}
+.tn-pill{position:absolute;top:0;left:0;height:100%;width:0;border-radius:999px;background:rgba(255,255,255,.14);box-shadow:inset 0 1px 1px rgba(255,255,255,.25),0 2px 10px rgba(0,0,0,.25);transition:transform .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1),opacity .3s;opacity:0;pointer-events:none}
+.tn-pill.on{opacity:1}
+.tn-tab{position:relative;z-index:1;padding:10px 16px;border-radius:999px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.62);white-space:nowrap;text-decoration:none;transition:color .3s;letter-spacing:.01em;cursor:pointer;background:none;border:0;font-family:var(--font)}
+.tn-tab:hover{color:#fff}
+.tn-tab.active{color:#fff}
+.tn-cta{margin-left:4px;padding:10px 18px;border-radius:999px;font-size:.82rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),#7cc0ff);box-shadow:0 4px 18px rgba(58,138,253,.35),inset 0 1px 1px rgba(255,255,255,.35);white-space:nowrap;border:0;cursor:pointer;font-family:var(--font);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;flex:none}
+.tn-cta:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 8px 28px rgba(58,138,253,.5),inset 0 1px 1px rgba(255,255,255,.4)}
+@media(max-width:640px){.topnav{top:10px;padding:5px}.tn-tab{padding:9px 12px;font-size:.76rem}.tn-cta{padding:9px 13px;font-size:.76rem}.topnav .tn-logo{padding:0 6px 0 4px}}
+
+/* ====== CONTACT MODAL ====== */
+.cm{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .35s}
+.cm.open{opacity:1;pointer-events:auto}
+.cm-card{position:relative;width:min(520px,100%);border-radius:28px;padding:34px 32px 28px;background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14);transform:translateY(18px) scale(.97);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.cm.open .cm-card{transform:none}
+.cm-card::after{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6) 50%,transparent)}
+.cm-x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:1.1rem;display:grid;place-items:center;cursor:pointer}
+.cm-x:hover{background:rgba(255,255,255,.14)}
+.cm-k{font-size:.66rem;letter-spacing:4px;text-transform:uppercase;color:var(--text2);font-weight:700;margin-bottom:10px}
+.cm-t{font-size:1.9rem;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1.05;margin-bottom:6px}
+.cm-s{font-size:.88rem;color:var(--text2);margin-bottom:22px}
+.cm-s a{color:#7cc0ff;font-weight:600}
+.cm-f{display:grid;gap:10px}
+.cm-f .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.cm-f .row2{grid-template-columns:1fr}}
+.cm-f input,.cm-f textarea,.cm-f select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 15px;color:#fff;font:inherit;font-size:.92rem;outline:0;transition:border-color .25s,box-shadow .25s}
+.cm-f input:focus,.cm-f textarea:focus,.cm-f select:focus{border-color:rgba(58,138,253,.7);box-shadow:0 0 0 4px rgba(58,138,253,.15)}
+.cm-f textarea{min-height:120px;resize:vertical}
+.cm-f select option{background:#1e2022}
+.cm-f ::placeholder{color:var(--text3)}
+.cm-send{margin-top:6px;width:100%;padding:15px;border-radius:999px;border:0;font:inherit;font-weight:800;font-size:.95rem;color:#fff;background:linear-gradient(135deg,var(--blue),#7cc0ff);box-shadow:0 8px 30px rgba(58,138,253,.4),inset 0 1px 1px rgba(255,255,255,.35);cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.cm-send:hover{transform:translateY(-2px)}
+.cm-send[disabled]{opacity:.55;transform:none;cursor:default}
+.cm-ok{display:none;text-align:center;padding:30px 0 10px}
+.cm-ok .big{font-size:2.6rem;margin-bottom:10px}
+.cm-ok h4{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.cm-ok p{color:var(--text2);font-size:.9rem}
+.cm.done .cm-f,.cm.done .cm-s{display:none}.cm.done .cm-ok{display:block}
+.cm-hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
 </style>
 </head>
 <body>
+<!-- ======== TOP NAV — liquid glass ======== -->
+<nav class="topnav" id="topnav" aria-label="Site">
+  <a class="tn-logo" href="#hero" data-go="hero"><img src="lxoxoicon.png" alt="L,XOXO"></a>
+  <div class="tn-tabs" id="tnTabs">
+    <span class="tn-pill" id="tnPill"></span>
+    <a class="tn-tab" href="stats.html" data-go="liveSales">Stats</a>
+    <a class="tn-tab" href="achievements.html" data-go="perfChapter">Achievements</a>
+    <a class="tn-tab" href="#marketplace" data-go="marketplace">Shop</a>
+    <a class="tn-tab" href="#videos" data-go="videos">Videos</a>
+    <a class="tn-tab" href="#catalog" data-go="catalog">Play</a>
+  </div>
+  <button class="tn-cta" id="tnContact" type="button">Let&rsquo;s talk</button>
+</nav>
+
+<!-- ======== CONTACT MODAL ======== -->
+<div class="cm" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+  <div class="cm-card">
+    <button class="cm-x" id="cmClose" aria-label="Close">&times;</button>
+    <div class="cm-k">Partnerships &middot; commissions &middot; press</div>
+    <div class="cm-t" id="cmTitle">Let&rsquo;s talk business.</div>
+    <div class="cm-s">Goes straight to <a href="mailto:lukash@l-xoxo.com">lukash@l-xoxo.com</a>. Or DM <a href="https://discord.com/users/lukashmny" target="_blank" rel="noopener">lukashmny</a> on Discord.</div>
+    <form class="cm-f" id="cmForm" action="https://formsubmit.co/lukash@l-xoxo.com" method="POST">
+      <input type="hidden" name="_subject" value="New message from l-xoxo.com">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" class="cm-hp" tabindex="-1" autocomplete="off">
+      <div class="row2">
+        <input type="text" name="name" placeholder="Your name / brand" required>
+        <input type="email" name="email" placeholder="Your email" required>
+      </div>
+      <select name="topic" required>
+        <option value="" disabled selected>What&rsquo;s this about?</option>
+        <option>Brand collab / commission</option>
+        <option>Emote or bundle request</option>
+        <option>Press / interview</option>
+        <option>Business inquiry</option>
+        <option>Something else</option>
+      </select>
+      <textarea name="message" placeholder="Tell us what you have in mind." required></textarea>
+      <button class="cm-send" id="cmSend" type="submit">Send message</button>
+    </form>
+    <div class="cm-ok"><div class="big">&#10003;</div><h4>Message sent.</h4><p>It&rsquo;s in our inbox. Expect a reply within a few days.</p></div>
+  </div>
+</div>
+
 <!-- SVG Liquid Glass — real displacement on cloned video (desktop only, simplified on mobile) -->
 <svg width="0" height="0" style="position:absolute" color-interpolation-filters="sRGB">
   <filter id="liquid-refract" x="-2%" y="-2%" width="104%" height="104%">
@@ -573,7 +666,6 @@ footer .footer-links a:hover{color:var(--blue)}
     </div>
     <div class="hero-buttons">
       <a href="#marketplace" class="glass-btn btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1z"/></svg>Shop Marketplace</a>
-      <a href="https://www.roblox.com/catalog?Category=12&Subcategory=39&CreatorName=L%2CXOXO&CreatorType=Group&Keyword=Pinky+Up" target="_blank" class="glass-btn btn-secondary">Pinky Up Collection</a>
     </div>
   </div>
   <div class="scroll-indicator"><div class="scroll-mouse"></div></div>
@@ -2379,6 +2471,64 @@ if(catLayout){
       ScrollTrigger.refresh();
     }else setY(1);
   }
+})();
+</script>
+<script>
+/* ==================== TOP NAV + CONTACT ==================== */
+(function(){
+  var nav=document.getElementById('topnav'),tabs=Array.prototype.slice.call(document.querySelectorAll('.tn-tab')),pill=document.getElementById('tnPill'),wrap=document.getElementById('tnTabs');
+  var ids=tabs.map(function(t){return t.getAttribute('href').charAt(0)==='#'?t.dataset.go:'__'});
+  function targetY(id){
+    var el=document.getElementById(id);if(!el)return 0;
+    if(window.ScrollTrigger){var st=ScrollTrigger.getAll().find(function(t){return t.trigger===el||(t.vars.trigger&&(t.vars.trigger==='#'+id))});if(st)return st.start;}
+    return el.getBoundingClientRect().top+window.scrollY-8;
+  }
+  function movePill(tab){
+    if(!tab){pill.classList.remove('on');return;}
+    pill.style.width=tab.offsetWidth+'px';pill.style.transform='translateX('+tab.offsetLeft+'px)';pill.classList.add('on');
+  }
+  function go(id){var y=targetY(id);window.scrollTo({top:y,behavior:'smooth'});}
+  tabs.forEach(function(t){if(t.getAttribute('href').charAt(0)==='#')t.addEventListener('click',function(e){e.preventDefault();go(t.dataset.go);t.scrollIntoView({block:'nearest',inline:'center'});});});
+  document.querySelector('.tn-logo').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
+  /* scroll spy + hide on fast scroll down, show on scroll up */
+  var lastY=0,ticking=false;
+  function spy(){
+    var y=window.scrollY+window.innerHeight*0.35,cur=null;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(!el)return;var top=el.getBoundingClientRect().top+window.scrollY;if(y>=top)cur=tabs[i];});
+    if(window.scrollY<window.innerHeight*0.5)cur=null;
+    tabs.forEach(function(t){t.classList.toggle('active',t===cur)});movePill(cur);
+    var dy=window.scrollY-lastY;
+    if(dy>12&&window.scrollY>200)nav.classList.add('hide');else if(dy<-4)nav.classList.remove('hide');
+    lastY=window.scrollY;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(function(){spy();ticking=false});ticking=true}},{passive:true});
+  window.addEventListener('resize',function(){movePill(document.querySelector('.tn-tab.active'))});
+  spy();
+  /* contact modal */
+  var modal=document.getElementById('contactModal'),form=document.getElementById('cmForm'),send=document.getElementById('cmSend');
+  function open(){modal.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var f=form.querySelector('input[name=name]');if(f)f.focus()},350);}
+  function close(){modal.classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('tnContact').addEventListener('click',open);
+  document.getElementById('cmClose').addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  /* also let footer "Business Inquiries" open the modal */
+  document.querySelectorAll('a[href="mailto:lukash@l-xoxo.com"]').forEach(function(a){if(!a.closest('.cm'))a.addEventListener('click',function(e){e.preventDefault();open()})});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();send.disabled=true;send.textContent='Sending…';
+    var fd=new FormData(form);var body={};fd.forEach(function(v,k){body[k]=v});
+    fetch('https://formsubmit.co/ajax/lukash@l-xoxo.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){return r.json()}).then(function(j){
+        if(j&&(j.success==='true'||j.success===true)){modal.classList.add('done');}
+        else throw new Error('fail');
+      }).catch(function(){
+        /* fallback: open the user's mail client with everything prefilled */
+        var subj=encodeURIComponent('['+(body.topic||'Inquiry')+'] '+(body.name||''));
+        var txt=encodeURIComponent((body.message||'')+'\n\n— '+(body.name||'')+' <'+(body.email||'')+'>');
+        window.location.href='mailto:lukash@l-xoxo.com?subject='+subj+'&body='+txt;
+        modal.classList.add('done');
+      }).finally(function(){send.disabled=false;send.textContent='Send message';});
+  });
 })();
 </script>
 <script>
