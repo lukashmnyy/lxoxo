@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>L,XOXO — Stats</title>
-<meta name="description" content="Live L,XOXO stats: UGC sales pace, year-over-year growth, community size and the Roblox Marketplace Chart Report.">
+<meta name="description" content="Live L,XOXO stats: UGC sales pace and projections, creator leaderboards, every charting item, and the live catalog.">
 <link rel="icon" href="lxoxoicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -618,6 +618,25 @@ footer .footer-links a:hover{color:var(--blue)}
 .foot-note{margin-top:22px;font-size:.7rem;color:var(--text3);line-height:1.6}
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 .live-community .gv{font-variant-numeric:tabular-nums}
+
+.gcard .pt{font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:#fff;margin:-2px 0 16px}
+.gcard .pf{margin-top:14px;font-size:.76rem;color:#6b7075;line-height:1.5}
+svg.chart text{font-family:var(--font)}
+.wrow{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center}
+@media(max-width:560px){.wrow{grid-template-columns:1fr}}
+.wleg div{display:flex;align-items:center;gap:10px;font-size:.92rem;color:#9ca0a5;margin-bottom:10px}.wleg b{color:#fff;font-size:1.25rem;min-width:34px}.wleg i{width:16px;height:16px;border-radius:5px;display:inline-block;flex:none}.wleg .wnote{display:block;color:#6b7075;font-size:.78rem;margin-top:4px}
+.dl{display:flex;gap:18px;font-size:.78rem;color:#9ca0a5;margin-bottom:6px}.dl span{display:flex;align-items:center;gap:6px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.dot.b{background:linear-gradient(135deg,#1f6fd9,#7cc0ff)}.dot.g{background:#3a3d41}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:.82rem;color:#e8eaed}.chip b{color:#7cc0ff}.chip i{color:#6b7075;font-style:normal;margin-left:4px}
+.pace{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}@media(max-width:900px){.pace{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.pace{grid-template-columns:1fr}}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.proj{grid-template-columns:1fr}}
+.proj table{width:100%;border-collapse:collapse;font-size:.9rem}.proj td{padding:10px 0;border-top:1px solid rgba(255,255,255,.08);color:#9ca0a5}.proj td:last-child{text-align:right;color:#fff;font-weight:800;font-variant-numeric:tabular-nums}.proj tr.hl td:last-child{color:#7cc0ff}
+.favgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}@media(max-width:900px){.favgrid{grid-template-columns:repeat(3,1fr)}}@media(max-width:520px){.favgrid{grid-template-columns:repeat(2,1fr)}}
+.fav{border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03);display:block;transition:transform .35s,border-color .35s}.fav:hover{transform:translateY(-4px);border-color:rgba(124,192,255,.5)}
+.fav .th{aspect-ratio:1;background:#1a1d22;position:relative}.fav .th img{width:100%;height:100%;object-fit:cover}.fav .rk{position:absolute;top:8px;left:8px;background:#191b1d;border:1px solid rgba(255,255,255,.16);padding:3px 8px;border-radius:999px;font-size:.66rem;font-weight:800;color:#fff}
+.fav .nm{padding:10px 12px 2px;font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}.fav .fv{padding:0 12px 12px;font-size:.72rem;color:#9ca0a5}.fav .fv b{color:#7cc0ff}
+.skel{aspect-ratio:1/1.3;border-radius:16px;background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.07),rgba(255,255,255,.03));background-size:200% 100%;animation:sk 1.4s infinite}@keyframes sk{to{background-position:-200% 0}}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}@media(max-width:900px){.facts{grid-template-columns:repeat(2,1fr)}}
+.facts .gv{font-size:2.4rem}
 </style>
 </head>
 <body class="sub">
@@ -670,9 +689,9 @@ footer .footer-links a:hover{color:var(--blue)}
 <div class="page">
 
 <header class="page-head">
-  <div class="pc-kicker">Stats &middot; live &middot; updated Sep 2026</div>
+  <div class="pc-kicker">Stats &middot; live &middot; week 37 &middot; Sep 2026</div>
   <h1>Every number. <span class="pc-grad">Live.</span></h1>
-  <p>Sales pace, year-over-year growth, community size and the full Chart Report &mdash; straight from the Roblox API and the in-game Hot 100 tracker.</p>
+  <p>Sales pace, projections, the creator leaderboards, every charting item and the live catalog &mdash; from the Roblox API, the Creator Dashboard and the in-game Hot 100 tracker.</p>
 </header>
 <section class="live-sales" id="liveSales" style="padding-top:20px">
   <div class="ls-card">
@@ -692,170 +711,57 @@ footer .footer-links a:hover{color:var(--blue)}
   </div>
 </section>
 
-<section class="sec live-community" id="community">
-<div class="sec-in">
-  <div class="sec-h rv"><h2>Live from Roblox.</h2><p>Pulled from the Roblox API every time this page loads.</p></div>
+<section class="sec" id="pace"><div class="sec-in">
+  <div class="sec-h rv"><h2>Pace &amp; projections.</h2><p>Current rate from the Creator Dashboard, last 7 days.</p></div>
+  <div class="pace">
+    <div class="gcard rv"><div class="gl">Per minute</div><div class="gv" id="pMin">12.4</div><div class="gc">one sale every <b id="pSec">4.8s</b></div></div>
+    <div class="gcard rv"><div class="gl">Per hour</div><div class="gv" id="pHour">746</div><div class="gc">around the clock</div></div>
+    <div class="gcard rv"><div class="gl">Per day</div><div class="gv" id="pDay">17.9K</div><div class="gc">125,379 in the last 7 days</div></div>
+    <div class="gcard rv"><div class="gl">Last 28 days</div><div class="gv">626K</div><div class="gc">sales</div></div>
+    <div class="gcard rv"><div class="gl">Since last RDC</div><div class="gv">6.5M</div><div class="gc">200K &rarr; 6.7M in 12 months</div></div>
+  </div>
+  <div class="proj" style="margin-top:16px">
+    <div class="gcard rv "><div class="gl">Next milestone</div><div class="pt">7,000,000</div><table><tr><td>Sold right now</td><td id='prNow'>&mdash;</td></tr><tr><td>Left to 7M</td><td id='prLeft'>&mdash;</td></tr><tr class='hl'><td>ETA at current pace</td><td id='prEta'>&mdash;</td></tr></table><div class=pf>Estimate from the live counter. Sales are units sold across L,XOXO groups.</div></div>
+    <div class="gcard rv "><div class="gl">Year-end projection</div><div class="pt">Where 2026 lands</div><table><tr><td>Dec 1 at current pace</td><td>~8.0M</td></tr><tr><td>Dec 31 &middot; flat December</td><td>~8.6M</td></tr><tr class='hl'><td>Dec 31 &middot; holiday peak (1.5&ndash;2&times;)</td><td>8.9&ndash;9.1M</td></tr><tr><td>Dec 31 &middot; peak + Christmas week 3&times;</td><td>~9.4M</td></tr></table><div class=pf>December on Roblox runs hot (gift cards, school break). Scenarios, not promises.</div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="live"><div class="sec-in">
+  <div class="sec-h rv"><h2>Live from Roblox.</h2><p>Fetched from the Roblox API every time this page loads.</p></div>
   <div class="g4">
     <div class="gcard rv"><div class="gl">Community members</div><div class="gv" id="lvMembers">612K</div><div class="gc">L,XOXO on Roblox &middot; <b>from 99K a year ago</b></div></div>
     <div class="gcard rv"><div class="gl">Emote Catalog visits</div><div class="gv" id="catVisits">50.5M+</div><div class="gc">the game behind the chart tracker</div></div>
     <div class="gcard rv"><div class="gl">Playing right now</div><div class="gv" id="catPlaying">&mdash;</div><div class="gc">in Emote Catalog</div></div>
-    <div class="gcard rv"><div class="gl">Catalog favorites</div><div class="gv" id="catFavs">119K+</div><div class="gc">on the experience</div></div>
+    <div class="gcard rv"><div class="gl">Catalog favorites</div><div class="gv" id="lvFavs">1.9M</div><div class="gc">across <b id="lvItems">164</b> items on sale</div></div>
   </div>
-</div>
-</section>
+</div></section>
 
-<section class="yoy-section" id="yoySection">
-<div class="pc-inner">
-  <div class="pc-yoy" id="pcYoy">
-    <div class="pcy-head">
-      <div class="pc-kicker">Year over year &middot; RDC 2025 &rarr; RDC 2026</div>
-      <div class="pcy-title">Last RDC <span class="pc-grad">vs. this RDC.</span></div>
-    </div>
-    <div class="pcy-grid">
-      <div class="pcy-card" data-pct="3250" data-then="200K" data-now="6.7M" data-w="3">
-        <div class="pcy-lab">UGC sold</div>
-        <div class="pcy-pct"><span class="n">0</span>%</div>
-        <div class="pcy-row"><span class="t">Sep 2025</span><span class="v">200K</span></div>
-        <div class="pcy-bar"><i></i></div>
-        <div class="pcy-row now"><span class="t">Sep 2026</span><span class="v">6.7M</span></div>
-        <div class="pcy-bar now"><i></i></div>
-      </div>
-      <div class="pcy-card" data-pct="519" data-w="16">
-        <div class="pcy-lab">Community members</div>
-        <div class="pcy-pct"><span class="n">0</span>%</div>
-        <div class="pcy-row"><span class="t">Sep 2025</span><span class="v">99K</span></div>
-        <div class="pcy-bar"><i></i></div>
-        <div class="pcy-row now"><span class="t">Sep 2026</span><span class="v">612K</span></div>
-        <div class="pcy-bar now"><i></i></div>
-      </div>
-      <div class="pcy-card" data-pct="3700" data-w="2.6">
-        <div class="pcy-lab">Item favorites</div>
-        <div class="pcy-pct"><span class="n">0</span>%</div>
-        <div class="pcy-row"><span class="t">Sep 2025</span><span class="v">~50K</span></div>
-        <div class="pcy-bar"><i></i></div>
-        <div class="pcy-row now"><span class="t">Sep 2026</span><span class="v">1.9M</span></div>
-        <div class="pcy-bar now"><i></i></div>
-      </div>
-      <div class="pcy-card" data-pct="505" data-w="0" data-fmt="m10">
-        <div class="pcy-lab">Emote Catalog visits</div>
-        <div class="pcy-pct"><span class="n">0</span></div>
-        <div class="pcy-row"><span class="t">Sep 2025</span><span class="v">0 &middot; didn&rsquo;t exist</span></div>
-        <div class="pcy-bar"><i></i></div>
-        <div class="pcy-row now"><span class="t">Sep 2026</span><span class="v">50.5M</span></div>
-        <div class="pcy-bar now"><i></i></div>
-      </div>
-    </div>
-    <div class="pcy-sum"><span class="pcy-big">+3,250%</span> sales &middot; <span class="pcy-big">+519%</span> members &middot; <span class="pcy-big">+3,700%</span> favorites &middot; <span class="pcy-big">50.5M</span> Emote Catalog visits, from zero</div>
+<section class="sec" id="fav"><div class="sec-in">
+  <div class="sec-h rv"><h2>Most favorited, live.</h2><p>Top 10 L,XOXO items by favorites, straight from the catalog.</p></div>
+  <div class="favgrid" id="favGrid"><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+</div></section>
+
+
+
+<section class="sec" id="boards"><div class="sec-in">
+  <div class="sec-h rv"><h2>Creator leaderboards.</h2><p>In-game Hot 100 tracker, week 37. Score = rank tier + 30% of peak tier + 1.5/week on chart, &times; (1 + 0.12 per extra entry).</p></div>
+  <div class="g2">
+    <div class="gcard rv "><div class="gl">Emotes chart · top 10 of 50</div><div class="pt">790 pts. Next best: 565.</div><svg viewBox="0 0 1000 450" width="100%" class="chart"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><text x="0" y="37" fill="#fff" font-size="17" font-weight="800">1. L,XOXO</text><rect x="250" y="18" width="500" height="26" rx="6" fill="url(#g)"/><text x="762" y="37" fill="#fff" font-size="16" font-weight="800">790<tspan fill="#6b7075" font-weight="600"> · 7 entries</tspan></text><text x="0" y="81" fill="#9ca0a5" font-size="17" font-weight="600">2. Animations</text><rect x="250" y="62" width="358" height="26" rx="6" fill="#3a3d41"/><text x="620" y="81" fill="#9ca0a5" font-size="16" font-weight="800">565<tspan fill="#6b7075" font-weight="600"> · 5 entries</tspan></text><text x="0" y="125" fill="#9ca0a5" font-size="17" font-weight="600">3. Voxelates</text><rect x="250" y="106" width="180" height="26" rx="6" fill="#3a3d41"/><text x="442" y="125" fill="#9ca0a5" font-size="16" font-weight="800">284<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="169" fill="#9ca0a5" font-size="17" font-weight="600">4. MocapAnimations</text><rect x="250" y="150" width="125" height="26" rx="6" fill="#3a3d41"/><text x="387" y="169" fill="#9ca0a5" font-size="16" font-weight="800">197<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="213" fill="#9ca0a5" font-size="17" font-weight="600">5. VeD_DeV</text><rect x="250" y="194" width="103" height="26" rx="6" fill="#3a3d41"/><text x="365" y="213" fill="#9ca0a5" font-size="16" font-weight="800">163<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="257" fill="#9ca0a5" font-size="17" font-weight="600">6. sanari</text><rect x="250" y="238" width="96" height="26" rx="6" fill="#3a3d41"/><text x="358" y="257" fill="#9ca0a5" font-size="16" font-weight="800">152<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="301" fill="#9ca0a5" font-size="17" font-weight="600">7. Animations World</text><rect x="250" y="282" width="91" height="26" rx="6" fill="#3a3d41"/><text x="353" y="301" fill="#9ca0a5" font-size="16" font-weight="800">144<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="345" fill="#9ca0a5" font-size="17" font-weight="600">8. Yukare</text><rect x="250" y="326" width="70" height="26" rx="6" fill="#3a3d41"/><text x="332" y="345" fill="#9ca0a5" font-size="16" font-weight="800">111<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="389" fill="#9ca0a5" font-size="17" font-weight="600">9. UGC Emotes & Dances</text><rect x="250" y="370" width="70" height="26" rx="6" fill="#3a3d41"/><text x="332" y="389" fill="#9ca0a5" font-size="16" font-weight="800">110<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="433" fill="#9ca0a5" font-size="17" font-weight="600">10. UGCics</text><rect x="250" y="414" width="60" height="26" rx="6" fill="#3a3d41"/><text x="322" y="433" fill="#9ca0a5" font-size="16" font-weight="800">95<tspan fill="#6b7075" font-weight="600"> · 1</tspan></text></svg></div>
+    <div class="gcard rv "><div class="gl">Hot This Week · whole catalog · top 10 of 50</div><div class="pt">#1 on the momentum chart. Ahead of adidas.</div><svg viewBox="0 0 1000 450" width="100%" class="chart"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><text x="0" y="37" fill="#fff" font-size="17" font-weight="800">1. L,XOXO</text><rect x="250" y="18" width="500" height="26" rx="6" fill="url(#g)"/><text x="762" y="37" fill="#fff" font-size="16" font-weight="800">288<tspan fill="#6b7075" font-weight="600"> · 4 items</tspan></text><text x="0" y="81" fill="#9ca0a5" font-size="17" font-weight="600">2. Animations</text><rect x="250" y="62" width="365" height="26" rx="6" fill="#3a3d41"/><text x="627" y="81" fill="#9ca0a5" font-size="16" font-weight="800">210<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="125" fill="#9ca0a5" font-size="17" font-weight="600">3. Forgotten Island</text><rect x="250" y="106" width="316" height="26" rx="6" fill="#3a3d41"/><text x="578" y="125" fill="#9ca0a5" font-size="16" font-weight="800">182<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="169" fill="#9ca0a5" font-size="17" font-weight="600">4. solyne</text><rect x="250" y="150" width="273" height="26" rx="6" fill="#3a3d41"/><text x="535" y="169" fill="#9ca0a5" font-size="16" font-weight="800">157<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="213" fill="#9ca0a5" font-size="17" font-weight="600">5. adidas</text><rect x="250" y="194" width="271" height="26" rx="6" fill="#3a3d41"/><text x="533" y="213" fill="#9ca0a5" font-size="16" font-weight="800">156<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="257" fill="#9ca0a5" font-size="17" font-weight="600">6. infchris</text><rect x="250" y="238" width="245" height="26" rx="6" fill="#3a3d41"/><text x="507" y="257" fill="#9ca0a5" font-size="16" font-weight="800">141<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="301" fill="#9ca0a5" font-size="17" font-weight="600">7. Forever Prime UGC</text><rect x="250" y="282" width="208" height="26" rx="6" fill="#3a3d41"/><text x="470" y="301" fill="#9ca0a5" font-size="16" font-weight="800">120<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="345" fill="#9ca0a5" font-size="17" font-weight="600">8. Flobodos</text><rect x="250" y="326" width="201" height="26" rx="6" fill="#3a3d41"/><text x="463" y="345" fill="#9ca0a5" font-size="16" font-weight="800">116<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text><text x="0" y="389" fill="#9ca0a5" font-size="17" font-weight="600">9. Dodanuki UGC</text><rect x="250" y="370" width="201" height="26" rx="6" fill="#3a3d41"/><text x="463" y="389" fill="#9ca0a5" font-size="16" font-weight="800">116<tspan fill="#6b7075" font-weight="600"> · 3</tspan></text><text x="0" y="433" fill="#9ca0a5" font-size="17" font-weight="600">10. XAO UGC</text><rect x="250" y="414" width="182" height="26" rx="6" fill="#3a3d41"/><text x="444" y="433" fill="#9ca0a5" font-size="16" font-weight="800">105<tspan fill="#6b7075" font-weight="600"> · 2</tspan></text></svg><div class=pf>This week&rsquo;s sales across every UGC category. 62 of its 100 items were uploaded in 2026; 36 are bundles.</div></div>
   </div>
+</div></section>
 
-</div>
-</section>
-<!-- ======== PERFORMANCE — THE CHART REPORT ======== -->
-<section class="perf-chapter" id="perfChapter">
-<div class="pc-inner">
-
-  <div class="pc-head">
-    <div class="pc-kicker">The Chart Report &middot; 29 weeks of marketplace data</div>
-    <h2 class="pc-title">The <span class="pc-grad">#1 emote creator.</span><br>29 weeks running.</h2>
-    <p class="pc-sub">Roblox Marketplace best-seller charts &middot; tracked daily, snapshotted weekly &middot; updated Sep 2026</p>
+<section class="sec" id="items"><div class="sec-in">
+  <div class="sec-h rv"><h2>Every charting item.</h2></div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="gcard rv "><div class="gl">Who owns the emotes Top 100</div><div class="pt">7 of 100 are L,XOXO. Biggest block on the chart.</div><div class="wrow"><svg viewBox="0 0 456 456" width="100%"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><rect x="0" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="46" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="92" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="138" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="184" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="230" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="276" y="0" width="40" height="40" rx="8" fill="url(#g2)"/><rect x="322" y="0" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="368" y="0" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="414" y="0" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="0" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="46" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="92" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="138" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="184" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="230" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="276" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="322" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="368" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="414" y="46" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="0" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="46" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="92" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="138" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="184" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="230" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="276" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="322" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="368" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.28)"/><rect x="414" y="92" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="138" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="184" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="230" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="276" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="322" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="368" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="0" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="46" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="92" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="138" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="184" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="230" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="276" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="322" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="368" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/><rect x="414" y="414" width="40" height="40" rx="8" fill="rgba(255,255,255,.08)"/></svg><div class="wleg"><div><i style="background:linear-gradient(135deg,#1f6fd9,#7cc0ff)"></i><b>7</b> L,XOXO</div><div><i style="background:rgba(255,255,255,.28)"></i><b>22</b> next 9 creators</div><div><i style="background:rgba(255,255,255,.08)"></i><b>71</b> 71 creators, one each</div><div class="wnote">81 creators share 100 slots. Nobody else has more than 5.</div></div></div></div>
+    <div class="gcard rv "><div class="gl">The chart itself</div><div class="pt">Sticky. Old. Hard to get into.</div><div class="facts"><div><div class="gl">Charted 28+ wks</div><div class="gv">73<span style="font-size:.5em">/100</span></div></div><div><div class="gl">Uploaded 2026</div><div class="gv">11<span style="font-size:.5em">/100</span></div></div><div><div class="gl">Creators</div><div class="gv">81</div></div><div><div class="gl">Verified · top 50</div><div class="gv">39<span style="font-size:.5em">/50</span></div></div></div><div class=pf>cute dancy dance is one of only 11 emotes from 2026 that broke in. Six of the top ten are aura or floating idles.</div></div>
   </div>
-
-  <div class="pc-chart" id="pcChart">
-    <div class="pcc-lab">
-      <div class="pcc-name">Creator-of-the-week #1&#39;s &middot; cumulative &middot; 27 recorded weeks</div>
-      <div class="pcc-live" id="pccLive">0 #1&#39;s</div>
-    </div>
-    <div class="pcc-svgwrap"><svg id="pccSvg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet"></svg></div>
-    <div class="pcc-legend">
-      <span><span class="chip" style="background:linear-gradient(90deg,#1f6fd9,#7cc0ff)"></span>L,XOXO &mdash; 25 #1&#39;s</span>
-      <span><span class="chip" style="background:#4a4d52"></span>next best creator &mdash; 2</span>
-    </div>
-  </div>
-
-  <div class="pc-bars">
-    <div class="pc-brow" id="pcBar1">
-      <div class="pc-lab"><div class="pc-name">Weeks at #1 &middot; Emotes creator chart</div><div class="pc-mult">12&times; the next best creator</div></div>
-      <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="25" data-suffix=" weeks"><span class="pc-val">25 weeks</span></div></div></div>
-      <div class="pc-line dim"><div class="pc-who">next best</div><div class="pc-track"><div class="pc-fill" data-w="8"></div><span class="pc-val-out">2</span></div></div>
-    </div>
-    <div class="pc-brow" id="pcBar2">
-      <div class="pc-lab"><div class="pc-name">Total favorites &middot; every emote creator on the chart</div><div class="pc-mult">1.5&times; the nearest creator</div></div>
-      <div class="pc-line"><div class="pc-who">L,XOXO</div><div class="pc-track"><div class="pc-fill" data-w="100" data-count="1899348" data-fmt="m" data-suffix=" favorites"><span class="pc-val">1.9M</span></div></div></div>
-      <div class="pc-line dim"><div class="pc-who">nearest</div><div class="pc-track"><div class="pc-fill" data-w="67"></div><span class="pc-val-out">1.28M</span></div></div>
-    </div>
-  </div>
-
-
-  <div class="pc-chart" id="pcChart2">
-    <div class="pcc-lab">
-      <div class="pcc-name">Weeks on chart &middot; every item combined &middot; 29 weeks</div>
-      <div class="pcc-live" id="pccLive2">0 item-weeks</div>
-    </div>
-    <div class="pcc-svgwrap"><svg id="pccSvg2" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet"></svg></div>
-    <div class="pcc-legend">
-      <span><span class="chip" style="background:linear-gradient(90deg,#1f6fd9,#7cc0ff)"></span>L,XOXO &mdash; 202 item-weeks</span>
-      <span><span class="chip" style="background:#4a4d52"></span>average creator &mdash; 34</span>
-    </div>
-  </div>
-
-  <div class="pc-tabs" id="pcTabs">
-    <div class="pc-tabbar">
-      <button class="pc-tab active" data-panel="pcEmotes">Emotes</button>
-      <button class="pc-tab" data-panel="pcBundles">Anim Bundles</button>
-      <button class="pc-tab" data-panel="pcHot">Hot 100</button>
-      <button class="pc-tab" data-panel="pcFavs">Favorites</button>
-    </div>
-    <div class="pc-panel active" id="pcEmotes">
-      <div class="pc-grid">
-        <div class="pc-cardstat"><div class="v" data-count="29" data-suffix="/29">29/29</div><div class="c">weeks on the chart.<br><b>Never left once.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="202">202</div><div class="c">item-weeks on the chart.<br><b>Biggest footprint of anyone.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="7">7</div><div class="c">items charting at once.<br><b>Chart record.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="6">6</div><div class="c">items that never left the chart.<br><b>All 29 weeks.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="25">25</div><div class="c">weeks as creator of the week.<br><b>Out of 27 recorded.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="12">12</div><div class="c">consecutive weeks at #1 &mdash; the record.<br><b>Current streak: 11 and counting.</b></div></div>
-      </div>
-    </div>
-    <div class="pc-panel" id="pcBundles">
-      <div class="pc-grid">
-        <div class="pc-cardstat"><div class="v" data-count="7">7</div><div class="c">bundles charting simultaneously.<br><b>Every week since the chart launched.</b></div></div>
-        <div class="pc-cardstat"><div class="v">#3</div><div class="c">Cute Kawaii &mdash; a top-3 bundle<br>on the Anim Bundles chart. <b>Right now.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="2">2</div><div class="c">bundles in the top 10.<br><b>#3 and #8.</b></div></div>
-        <div class="pc-cardstat"><div class="v">#2</div><div class="c">creator on the Anim Bundles chart.<br><b>Peaked at #1.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="8" data-suffix="/8">8/8</div><div class="c">weeks on the chart.<br><b>Since day one.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="56">56</div><div class="c">bundle-weeks on the chart.<br><b>7 bundles &times; 8 weeks. Zero drop-offs.</b></div></div>
-      </div>
-    </div>
-    <div class="pc-panel" id="pcHot">
-      <div class="pc-grid">
-        <div class="pc-cardstat"><div class="v">#1</div><div class="c">creator on the all-catalog<br>Hot 100. <b>Right now.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="7" data-suffix="/8">7/8</div><div class="c">weeks as the #1 Hot 100 creator.<br><b>Every category, every item type.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="4">4</div><div class="c">items in the all-catalog<br>Hot 100. <b>At once.</b></div></div>
-        <div class="pc-cardstat"><div class="v">#12</div><div class="c">&ldquo;I got that&rdquo; &mdash; the newest drop,<br>top-15 catalog-wide. <b>4 weeks in.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="3">3</div><div class="c">items that never left the Hot 100.<br><b>All 8 weeks.</b></div></div>
-        <div class="pc-cardstat"><div class="v">Only</div><div class="c">emote creator in the Hot 100 top 3.<br><b>Against every accessory &amp; bundle on Roblox.</b></div></div>
-      </div>
-    </div>
-    <div class="pc-panel" id="pcFavs">
-      <div class="pc-grid">
-        <div class="pc-cardstat"><div class="v" data-count="1899348" data-fmt="m">1.9M</div><div class="c">favorites across the whole catalog.<br><b>Aug 2025 &rarr; today.</b></div></div>
-        <div class="pc-cardstat"><div class="v">1.5&times;</div><div class="c">more favorites than the next<br>emote creator. <b>Nobody&rsquo;s close.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="11581">11,581</div><div class="c">favorites per release,<br>averaged over 164 items.</div></div>
-        <div class="pc-cardstat"><div class="v" data-count="204826" data-fmt="k">205K</div><div class="c">favorites on the most-favorited item &mdash;<br><b>Cute Kawaii Posing.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="159">159</div><div class="c">unique designs in 164 items.<br><b>97% original. Zero filler.</b></div></div>
-        <div class="pc-cardstat"><div class="v" data-count="9">9</div><div class="c">items with over 100,000<br>favorites. <b>Almost doubled since July.</b></div></div>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="pc-foot">
-    Source: Roblox Marketplace best-seller charts, tracked daily in-game &middot; emotes chart: 29 weeks (Mar &ndash; Sep 2026), top 100 items, top 50 creators &middot; Anim Bundles &amp; Hot 100 charts: 8 weeks &middot;
-    crown-timeline: 27 recorded weeks, totals &amp; streaks exact, the two non-L,XOXO weeks placed indicatively &middot; favorites via Roblox catalog API, all 164 on-sale items (first release Aug 8, 2025), recolors grouped into designs &middot;
-    year-over-year baseline: Sep 2025 figures approximate &middot; snapshot Sep 17, 2026
-  </div>
-
-</div>
-</section>
+  <div class="gcard rv "><div class="gl">Your 7 charting emotes · peak → today</div><div class="pt">All 7 on the chart 28–29 weeks.</div><div class="dl"><span><i class="dot b"></i>peak rank</span><span><i class="dot g"></i>rank today</span></div><svg viewBox="0 0 980 360" width="100%" class="chart"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><text x="250" y="352" fill="#6b7075" font-size="12" text-anchor="middle">#1</text><line x1="250" x2="250" y1="4" y2="335" stroke="rgba(255,255,255,.05)"/><text x="420" y="352" fill="#6b7075" font-size="12" text-anchor="middle">#25</text><line x1="420" x2="420" y1="4" y2="335" stroke="rgba(255,255,255,.05)"/><text x="596" y="352" fill="#6b7075" font-size="12" text-anchor="middle">#50</text><line x1="596" x2="596" y1="4" y2="335" stroke="rgba(255,255,255,.05)"/><text x="773" y="352" fill="#6b7075" font-size="12" text-anchor="middle">#75</text><line x1="773" x2="773" y1="4" y2="335" stroke="rgba(255,255,255,.05)"/><text x="950" y="352" fill="#6b7075" font-size="12" text-anchor="middle">#100</text><line x1="950" x2="950" y1="4" y2="335" stroke="rgba(255,255,255,.05)"/><text x="0" y="27" fill="#e8eaed" font-size="16" font-weight="600">Lush Life</text><line x1="321" x2="398" y1="22" y2="22" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="398" cy="22" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="321" cy="22" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="307" y="27" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#11</text><text x="412" y="27" fill="#9ca0a5" font-size="13" font-weight="700">#22</text><text x="0" y="73" fill="#e8eaed" font-size="16" font-weight="600">Cute Feet Kicking</text><line x1="363" x2="406" y1="68" y2="68" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="406" cy="68" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="363" cy="68" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="349" y="73" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#17</text><text x="420" y="73" fill="#9ca0a5" font-size="13" font-weight="700">#23</text><text x="0" y="119" fill="#e8eaed" font-size="16" font-weight="600">Cute Kawaii Posing</text><line x1="413" x2="476" y1="114" y2="114" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="476" cy="114" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="413" cy="114" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="399" y="119" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#24</text><text x="490" y="119" fill="#9ca0a5" font-size="13" font-weight="700">#33</text><text x="0" y="165" fill="#e8eaed" font-size="16" font-weight="600">cute dancy dance</text><line x1="299" x2="575" y1="160" y2="160" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="575" cy="160" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="299" cy="160" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="285" y="165" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#8</text><text x="589" y="165" fill="#9ca0a5" font-size="13" font-weight="700">#47</text><text x="0" y="211" fill="#e8eaed" font-size="16" font-weight="600">apple store girl</text><line x1="540" x2="688" y1="206" y2="206" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="688" cy="206" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="540" cy="206" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="526" y="211" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#42</text><text x="702" y="211" fill="#9ca0a5" font-size="13" font-weight="700">#63</text><text x="0" y="257" fill="#e8eaed" font-size="16" font-weight="600">ACELERADA</text><line x1="547" x2="809" y1="252" y2="252" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="809" cy="252" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="547" cy="252" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="533" y="257" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#43</text><text x="823" y="257" fill="#9ca0a5" font-size="13" font-weight="700">#80</text><text x="0" y="303" fill="#e8eaed" font-size="16" font-weight="600">feelin myself sway</text><line x1="773" x2="872" y1="298" y2="298" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/><circle cx="872" cy="298" r="8" fill="#3a3d41" stroke="#191b1d" stroke-width="2"/><circle cx="773" cy="298" r="8" fill="url(#g)" stroke="#191b1d" stroke-width="2"/><text x="759" y="303" fill="#7cc0ff" font-size="13" font-weight="800" text-anchor="end">#75</text><text x="886" y="303" fill="#9ca0a5" font-size="13" font-weight="700">#89</text></svg><div class=pf>cute dancy dance slipped furthest (#8 → #47). Below #90 an emote risks leaving the chart.</div></div>
+  <div style="height:16px"></div>
+  <div class="gcard rv "><div class="gl">Anim Bundles chart · your 7 packs</div><div class="pt">Two of them have been #1. All seven charting every week since launch.</div><svg viewBox="0 0 980 92" width="100%" class="chart"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient></defs><line x1="30" x2="950" y1="46" y2="46" stroke="rgba(255,255,255,.12)" stroke-width="6" stroke-linecap="round"/><text x="30" y="84" fill="#6b7075" font-size="12" text-anchor="middle">#1</text><text x="253" y="84" fill="#6b7075" font-size="12" text-anchor="middle">#25</text><text x="485" y="84" fill="#6b7075" font-size="12" text-anchor="middle">#50</text><text x="718" y="84" fill="#6b7075" font-size="12" text-anchor="middle">#75</text><text x="950" y="84" fill="#6b7075" font-size="12" text-anchor="middle">#100</text><circle cx="58" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="58" y="22" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#4</text><circle cx="95" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="95" y="10" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#8</text><circle cx="188" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="188" y="22" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#18</text><circle cx="225" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="225" y="10" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#22</text><circle cx="690" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="690" y="22" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#72</text><circle cx="829" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="829" y="10" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#87</text><circle cx="950" cy="46" r="11" fill="url(#g)" stroke="#191b1d" stroke-width="3"/><text x="950" y="22" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">#100</text></svg><div class="chips"><span class="chip"><b>#4</b> Cute Kawaii <i>peak #1</i></span><span class="chip"><b>#8</b> Victoria Model <i>peak #1</i></span><span class="chip"><b>#18</b> Endless Levitating Aura <i>peak #10</i></span><span class="chip"><b>#22</b> Cute Joy <i>peak #8</i></span><span class="chip"><b>#72</b> Nonchalant <i>peak #27</i></span><span class="chip"><b>#87</b> Silent Nurse <i>peak #28</i></span><span class="chip"><b>#100</b> Bossy Confidence <i>peak #31</i></span></div><div class=pf>Off the chart right now: Runway Diva (peak #30) · Fairy (#41) · Cute Shy (#49) · Zombie (#68) · Social Anxiety (#94)</div></div>
+  <div class="cta-row" style="margin-top:30px"><a class="glass-btn btn-primary" href="achievements.html">Every record &rarr;</a><a class="glass-btn btn-primary" href="index.html#perfChapter">The Chart Report &rarr;</a></div>
+</div></section>
 
 <footer>
 <div class="brand">L,XOXO</div>
@@ -947,226 +853,30 @@ footer .footer-links a:hover{color:var(--blue)}
   }
 })();
 </script><script>
-/* live community + game stats */
 (function(){
+  var SOLD=6700000,BASE=new Date('2026-09-17T00:00:00Z').getTime(),SPM=12.44;
   function fmtM(n){return n>=1e6?(n/1e6).toFixed(1)+'M+':n>=1e3?Math.floor(n/1e3)+'K+':n+''}
   async function rbx(url){var hdr={headers:{'Accept-Language':'en-US,en;q=0.9'}};var tries=[function(){return fetch(url.replace('.roblox.com','.roproxy.com'),hdr)},function(){return fetch('https://corsproxy.io/?'+encodeURIComponent(url),hdr)},function(){return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url),hdr)},function(){return fetch(url,hdr)}];for(var i=0;i<tries.length;i++){try{var r=await tries[i]();if(!r.ok)continue;var t=await r.text();try{return JSON.parse(t)}catch(e){continue}}catch(e){continue}}return null;}
+  /* pace */
+  document.getElementById('pMin').textContent=SPM.toFixed(1);document.getElementById('pSec').textContent=(60/SPM).toFixed(1)+'s';document.getElementById('pHour').textContent=Math.round(SPM*60).toLocaleString('en-US');document.getElementById('pDay').textContent=(SPM*1440/1000).toFixed(1)+'K';
+  function proj(){var now=SOLD+Math.max(0,Date.now()-BASE)*SPM/60000;var left=Math.max(0,7000000-now);var days=left/(SPM*1440);document.getElementById('prNow').textContent=Math.round(now).toLocaleString('en-US');document.getElementById('prLeft').textContent=Math.round(left).toLocaleString('en-US');var eta=new Date(Date.now()+days*864e5);document.getElementById('prEta').textContent=left?('~'+Math.ceil(days)+' days · '+eta.toLocaleDateString('en-US',{month:'short',day:'numeric'})):'Crossed';}
+  proj();setInterval(proj,5000);
+  /* live */
   rbx('https://groups.roblox.com/v1/groups/10783491').then(function(g){if(g&&g.memberCount)document.getElementById('lvMembers').textContent=Math.round(g.memberCount/1000)+'K'});
-  rbx('https://games.roblox.com/v1/games?universeIds=9209811415').then(function(d){var g=d&&d.data&&d.data[0];if(!g)return;document.getElementById('catVisits').textContent=fmtM(g.visits);document.getElementById('catPlaying').textContent=g.playing.toLocaleString('en-US');document.getElementById('catFavs').textContent=fmtM(g.favoritedCount);});
-})();
-</script><script>
-/* ==================== PERFORMANCE CHAPTER v3 ==================== */
-(function(){
-  var hasGsap=!!(window.gsap&&window.ScrollTrigger);
-
-  /* ---------- crowns line chart (SVG, scroll-drawn) ---------- */
-  var svg=document.getElementById('pccSvg');
-  var liveNum=document.getElementById('pccLive');
-  var W=1000,H=420,PL=46,PR=30,PT=24,PB=44;
-  // cumulative crowns: totals & streak exact; the 2 non-LX weeks placed indicatively
-  var lx=[0,1,2,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15,16,17,18,19,20,21,22,23,24,25];
-  var nb=[0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2];
-  var N=lx.length-1,MAX=25;
-  function X(i){return PL+(W-PL-PR)*i/N}
-  function Y(v){return H-PB-(H-PT-PB)*v/MAX}
-  function path(arr){var d='M'+X(0)+' '+Y(arr[0]);for(var i=1;i<arr.length;i++)d+=' L'+X(i)+' '+Y(arr[i]);return d}
-  var ns='http://www.w3.org/2000/svg';
-  function el(tag,attrs){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e}
-  // defs: gradient + glow
-  var defs=el('defs',{});
-  defs.innerHTML='<linearGradient id="pccGrad" x1="0" y1="0" x2="1" y2="0">'
-    +'<stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient>'
-    +'<linearGradient id="pccArea" x1="0" y1="0" x2="0" y2="1">'
-    +'<stop offset="0" stop-color="rgba(58,138,253,.28)"/><stop offset="1" stop-color="rgba(58,138,253,0)"/></linearGradient>'
-    +'<filter id="pccGlow" x="-40%" y="-40%" width="180%" height="180%">'
-    +'<feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-  svg.appendChild(defs);
-  // grid lines + y labels
-  [0,5,10,15,20,25].forEach(function(v){
-    svg.appendChild(el('line',{x1:PL,y1:Y(v),x2:W-PR,y2:Y(v),stroke:'rgba(255,255,255,.06)','stroke-width':1}));
-    var t=el('text',{x:PL-12,y:Y(v)+4,'text-anchor':'end',fill:'#6b7075','font-size':'13','font-family':'inherit','font-weight':'600'});
-    t.textContent=v;svg.appendChild(t);
-  });
-  // x labels
-  [0,5,10,15,20,25,27].forEach(function(w){
-    var t=el('text',{x:X(w),y:H-14,'text-anchor':'middle',fill:'#6b7075','font-size':'12','font-weight':'600'});
-    t.textContent='W'+(w===0?1:w);svg.appendChild(t);
-  });
-  // area under LX
-  var areaP=el('path',{d:path(lx)+' L'+X(N)+' '+Y(0)+' L'+X(0)+' '+Y(0)+' Z',fill:'url(#pccArea)',opacity:0});
-  svg.appendChild(areaP);
-  // next-best line
-  var nbP=el('path',{d:path(nb),fill:'none',stroke:'#4a4d52','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'});
-  svg.appendChild(nbP);
-  // LX line
-  var lxP=el('path',{d:path(lx),fill:'none',stroke:'url(#pccGrad)','stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round',filter:'url(#pccGlow)'});
-  svg.appendChild(lxP);
-  // moving tip dot
-  var dot=el('circle',{r:8,fill:'#7cc0ff',filter:'url(#pccGlow)',opacity:0});
-  svg.appendChild(dot);
-  var lxLen=lxP.getTotalLength(),nbLen=nbP.getTotalLength();
-  lxP.style.strokeDasharray=lxLen;nbP.style.strokeDasharray=nbLen;
-  function drawChart(pr){
-    pr=Math.max(0,Math.min(1,pr));
-    lxP.style.strokeDashoffset=lxLen*(1-pr);
-    nbP.style.strokeDashoffset=nbLen*(1-pr);
-    areaP.setAttribute('opacity',String(pr*.9));
-    var pt=lxP.getPointAtLength(lxLen*pr);
-    dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
-    dot.setAttribute('opacity',pr>0.02?'1':'0');
-    var wk=Math.round(pr*N);
-    var cv=lx[Math.min(wk,N)];liveNum.textContent=cv+" #1\u2019s";
-  }
-  drawChart(hasGsap?0:1);
-  if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart',start:'top top',end:'+=120%',pin:true,scrub:.5,refreshPriority:9,
-      onUpdate:function(self){drawChart(Math.min(1,self.progress/0.85))},
-      onRefresh:function(self){drawChart(Math.min(1,self.progress/0.85))}});
-  }
-
-  /* ---------- bars — scrub-driven fill + live numbers ---------- */
-  function setBar(row,pr){
-    pr=Math.max(0,Math.min(1,pr));
-    var e=pr<.5?2*pr*pr:1-Math.pow(-2*pr+2,2)/2;
-    row.querySelectorAll('.pc-fill').forEach(function(f){
-      var target=parseFloat(f.dataset.w);
-      f.style.width=(2.5+(target-2.5)*e)+'%';
-      var val=f.querySelector('.pc-val');
-      if(val){var cv=e*(+f.dataset.count);val.textContent=(f.dataset.fmt==='m'?(cv/1e6).toFixed(1)+'M':Math.round(cv).toLocaleString('en-US'))+(f.dataset.suffix||'');val.style.opacity=(2.5+(target-2.5)*e)>12?1:0;}
-    });
-    var out=row.querySelector('.pc-val-out');if(out)out.style.opacity=pr>.75?1:0;
-    var mult=row.querySelector('.pc-mult');if(mult)mult.style.opacity=pr>.85?1:0;
-  }
-  var barRows=Array.prototype.slice.call(document.querySelectorAll('.pc-brow'));
-  if(!hasGsap){barRows.forEach(function(r){setBar(r,1)});}
-  else{
-    barRows.forEach(function(r){setBar(r,0)});
-    var applyBars=function(self){
-      var pr=Math.min(1,self.progress/0.85);
-      barRows.forEach(function(r,i){
-        var seg=1/barRows.length,start=i*seg*0.82;
-        setBar(r,(pr-start)/(seg*1.1));
-      });
-    };
-    ScrollTrigger.create({trigger:'.pc-bars',start:'top top',end:'+=80%',pin:true,scrub:.5,refreshPriority:8,
-      onUpdate:applyBars,onRefresh:applyBars});
-  }
-
-  if(hasGsap){
-    gsap.from('.pc-head > *',{scrollTrigger:{trigger:'.pc-head',start:'top 78%'},opacity:0,y:44,duration:1,stagger:.14,ease:'power3.out'});
-  }
-
-  /* ---------- count-up + tabs ---------- */
-  function countUp(elm,target,dur,suffix,fmt){
-    var st=null;dur=dur||1300;
-    function fv(v){
-      if(fmt==='m')return (v/1000000).toFixed(1)+'M';
-      if(fmt==='k')return Math.round(v/1000)+'K';
-      return v.toLocaleString('en-US');
-    }
-    function step(ts){
-      if(!st)st=ts;var pr=Math.min((ts-st)/dur,1);
-      var ease=1-Math.pow(1-pr,3);
-      elm.textContent=fv(Math.round(ease*target))+(suffix||'');
-      if(pr<1)requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  var counted={};
-  function runCounts(panel){
-    if(counted[panel.id])return;counted[panel.id]=true;
-    panel.querySelectorAll('.v[data-count]').forEach(function(elm,i){
-      setTimeout(function(){countUp(elm,+elm.dataset.count,1300,elm.dataset.suffix||'',elm.dataset.fmt)},i*90);
-    });
-  }
-  var tabs=document.querySelectorAll('.pc-tab');
-  tabs.forEach(function(t){
-    t.addEventListener('click',function(){
-      tabs.forEach(function(x){x.classList.remove('active')});
-      t.classList.add('active');
-      document.querySelectorAll('.pc-panel').forEach(function(pn){pn.classList.remove('active')});
-      var panel=document.getElementById(t.dataset.panel);
-      panel.classList.add('active');
-      if(hasGsap)gsap.fromTo(panel.querySelectorAll('.pc-cardstat'),{opacity:0,y:26,scale:.96},{opacity:1,y:0,scale:1,duration:.55,stagger:.07,ease:'power3.out'});
-      runCounts(panel);
-    });
-  });
-  if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcTabs',start:'top top',end:'+=60%',pin:true,refreshPriority:6});
-    ScrollTrigger.create({trigger:'#pcTabs',start:'top 74%',once:true,onEnter:function(){
-      gsap.from('#pcTabs .pc-tabbar',{opacity:0,y:24,duration:.7,ease:'power3.out'});
-      var pn=document.querySelector('.pc-panel.active');
-      gsap.from(pn.querySelectorAll('.pc-cardstat'),{opacity:0,y:30,scale:.95,duration:.6,stagger:.08,ease:'power3.out'});
-      runCounts(pn);
-    }});
-    ScrollTrigger.refresh();
-  }else{
-    runCounts(document.querySelector('.pc-panel.active'));
-  }
-})();
-</script><script>
-/* ==================== CHART 2 — item-weeks race ==================== */
-(function(){
-  var hasGsap=!!(window.gsap&&window.ScrollTrigger);
-  var svg=document.getElementById('pccSvg2');
-  var liveNum=document.getElementById('pccLive2');
-  if(!svg)return;
-  var W=1000,H=420,PL=52,PR=30,PT=24,PB=44;
-  var N=29,MAX=202;
-  var lx=[],av=[];
-  for(var i=0;i<=N;i++){lx.push(Math.round(202*i/N));av.push(Math.round(34*i/N));}
-  function X(i){return PL+(W-PL-PR)*i/N}
-  function Y(v){return H-PB-(H-PT-PB)*v/MAX}
-  function path(arr){var d='M'+X(0)+' '+Y(arr[0]);for(var j=1;j<arr.length;j++)d+=' L'+X(j)+' '+Y(arr[j]);return d}
-  var ns='http://www.w3.org/2000/svg';
-  function el(tag,attrs){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e}
-  var defs=el('defs',{});
-  defs.innerHTML='<linearGradient id="pccGrad2" x1="0" y1="0" x2="1" y2="0">'
-    +'<stop offset="0" stop-color="#1f6fd9"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient>'
-    +'<linearGradient id="pccArea2" x1="0" y1="0" x2="0" y2="1">'
-    +'<stop offset="0" stop-color="rgba(58,138,253,.28)"/><stop offset="1" stop-color="rgba(58,138,253,0)"/></linearGradient>'
-    +'<filter id="pccGlow2" x="-40%" y="-40%" width="180%" height="180%">'
-    +'<feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-  svg.appendChild(defs);
-  [0,50,100,150,202].forEach(function(v){
-    svg.appendChild(el('line',{x1:PL,y1:Y(v),x2:W-PR,y2:Y(v),stroke:'rgba(255,255,255,.06)','stroke-width':1}));
-    var t=el('text',{x:PL-12,y:Y(v)+4,'text-anchor':'end',fill:'#6b7075','font-size':'13','font-weight':'600'});
-    t.textContent=v;svg.appendChild(t);
-  });
-  [1,6,11,16,21,26,29].forEach(function(w){
-    var t=el('text',{x:X(w-1<0?0:w-0),y:H-14,'text-anchor':'middle',fill:'#6b7075','font-size':'12','font-weight':'600'});
-    t.setAttribute('x',X(w===1?0:w));
-    t.textContent='W'+w;svg.appendChild(t);
-  });
-  var areaP=el('path',{d:path(lx)+' L'+X(N)+' '+Y(0)+' L'+X(0)+' '+Y(0)+' Z',fill:'url(#pccArea2)',opacity:0});
-  svg.appendChild(areaP);
-  var avP=el('path',{d:path(av),fill:'none',stroke:'#4a4d52','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'});
-  svg.appendChild(avP);
-  var lxP=el('path',{d:path(lx),fill:'none',stroke:'url(#pccGrad2)','stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round',filter:'url(#pccGlow2)'});
-  svg.appendChild(lxP);
-  var dot=el('circle',{r:8,fill:'#7cc0ff',filter:'url(#pccGlow2)',opacity:0});
-  svg.appendChild(dot);
-  var lxLen=lxP.getTotalLength(),avLen=avP.getTotalLength();
-  lxP.style.strokeDasharray=lxLen;avP.style.strokeDasharray=avLen;
-  function draw(pr){
-    pr=Math.max(0,Math.min(1,pr));
-    lxP.style.strokeDashoffset=lxLen*(1-pr);
-    avP.style.strokeDashoffset=avLen*(1-pr);
-    areaP.setAttribute('opacity',String(pr*.9));
-    var pt=lxP.getPointAtLength(lxLen*pr);
-    dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
-    dot.setAttribute('opacity',pr>0.02?'1':'0');
-    var wk=Math.round(pr*N);
-    liveNum.textContent=lx[Math.min(wk,N)].toLocaleString('en-US')+' item-weeks';
-  }
-  draw(hasGsap?0:1);
-  if(hasGsap){
-    ScrollTrigger.create({trigger:'#pcChart2',start:'top top',end:'+=120%',pin:true,scrub:.5,refreshPriority:7,
-      onUpdate:function(self){draw(Math.min(1,self.progress/0.85))},
-      onRefresh:function(self){draw(Math.min(1,self.progress/0.85))}});
-    ScrollTrigger.sort();
-    ScrollTrigger.refresh();
-  }
+  rbx('https://games.roblox.com/v1/games?universeIds=9209811415').then(function(d){var g=d&&d.data&&d.data[0];if(!g)return;document.getElementById('catVisits').textContent=fmtM(g.visits);document.getElementById('catPlaying').textContent=g.playing.toLocaleString('en-US');});
+  /* catalog: favorites + top 10 */
+  (async function(){
+    var all=[],cursor=null,base='https://catalog.roblox.com/v1/search/items/details?Category=12&creatorTargetId=10783491&creatorType=Group&limit=30&salesTypeFilter=1';
+    for(var pg=0;pg<8;pg++){var d=await rbx(pg?base+'&cursor='+encodeURIComponent(cursor):base);if(!d||!d.data)break;all.push.apply(all,d.data);cursor=d.nextPageCursor;if(!cursor)break;}
+    if(!all.length){document.getElementById('favGrid').innerHTML='<div class="pf">Catalog unavailable right now.</div>';return;}
+    var tot=all.reduce(function(a,x){return a+(x.favoriteCount||0)},0);
+    document.getElementById('lvFavs').textContent=(tot/1e6).toFixed(2)+'M';document.getElementById('lvItems').textContent=all.length;
+    var top=all.slice().sort(function(a,b){return (b.favoriteCount||0)-(a.favoriteCount||0)}).slice(0,10);
+    var assets=top.filter(function(x){return x.itemType!=='Bundle'}).map(function(x){return x.id}),bundles=top.filter(function(x){return x.itemType==='Bundle'}).map(function(x){return x.id}),th={};
+    if(assets.length){var td=await rbx('https://thumbnails.roblox.com/v1/assets?assetIds='+assets.join(',')+'&returnPolicy=PlaceHolder&size=420x420&format=Png&isCircular=false');if(td&&td.data)td.data.forEach(function(t){if(t.imageUrl)th[t.targetId]=t.imageUrl});}
+    if(bundles.length){var bd=await rbx('https://thumbnails.roblox.com/v1/bundles/thumbnails?bundleIds='+bundles.join(',')+'&size=420x420&format=Png&isCircular=false');if(bd&&bd.data)bd.data.forEach(function(t){if(t.imageUrl)th[t.targetId]=t.imageUrl});}
+    document.getElementById('favGrid').innerHTML=top.map(function(e,i){var slug=(e.name||'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'');var href=(e.itemType==='Bundle'?'https://www.roblox.com/bundles/':'https://www.roblox.com/catalog/')+e.id+'/'+slug;return '<a class="fav" href="'+href+'" target="_blank" rel="noopener"><div class="th"><span class="rk">#'+(i+1)+'</span>'+(th[e.id]?'<img loading="lazy" src="'+th[e.id]+'" alt="">':'')+'</div><div class="nm">'+e.name+'</div><div class="fv"><b>'+(e.favoriteCount||0).toLocaleString('en-US')+'</b> favorites'+(e.itemType==='Bundle'?' · bundle':'')+'</div></a>'}).join('');
+  })();
 })();
 </script>
 <script>
