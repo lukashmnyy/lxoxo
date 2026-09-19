@@ -522,7 +522,7 @@ footer .footer-links a:hover{color:var(--blue)}
 @media(max-width:600px){.pcy-card{padding:20px 14px 16px}.pcy-pct{font-size:1.75rem;letter-spacing:-.04em}.pcy-sum{font-size:.8rem}}
 
 /* ====== TOP NAV — liquid glass pill ====== */
-.topnav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(20,22,26,.42);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.18),inset 0 -1px 1px rgba(0,0,0,.25);transition:top .5s cubic-bezier(.2,.8,.2,1),opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1);max-width:calc(100vw - 24px)}
+.topnav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;gap:4px;padding:6px 6px 6px 8px;border-radius:999px;background:rgba(20,22,26,.42);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.18),inset 0 -1px 1px rgba(0,0,0,.25);transition:top .5s cubic-bezier(.2,.8,.2,1),opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1);max-width:calc(100vw - 24px)}
 .topnav::before{content:'';position:absolute;inset:0;border-radius:999px;padding:1.2px;background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,.06) 35%,transparent 55%,rgba(255,255,255,.08) 80%,rgba(255,255,255,.4));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
 .topnav::after{content:'';position:absolute;top:0;left:18%;right:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6) 50%,transparent);pointer-events:none}
 .topnav.hide{top:-80px;opacity:0}
@@ -573,14 +573,11 @@ footer .footer-links a:hover{color:var(--blue)}
 <body>
 <!-- ======== TOP NAV — liquid glass ======== -->
 <nav class="topnav" id="topnav" aria-label="Site">
-  <a class="tn-logo" href="#hero" data-go="hero"><img src="lxoxoicon.png" alt="L,XOXO"></a>
   <div class="tn-tabs" id="tnTabs">
     <span class="tn-pill" id="tnPill"></span>
     <a class="tn-tab" href="stats.html" data-go="liveSales">Stats</a>
     <a class="tn-tab" href="achievements.html" data-go="perfChapter">Achievements</a>
     <a class="tn-tab" href="#marketplace" data-go="marketplace">Shop</a>
-    <a class="tn-tab" href="#videos" data-go="videos">Videos</a>
-    <a class="tn-tab" href="#catalog" data-go="catalog">Play</a>
   </div>
   <button class="tn-cta" id="tnContact" type="button">Let&rsquo;s talk</button>
 </nav>
@@ -2489,7 +2486,7 @@ if(catLayout){
   }
   function go(id){var y=targetY(id);window.scrollTo({top:y,behavior:'smooth'});}
   tabs.forEach(function(t){if(t.getAttribute('href').charAt(0)==='#')t.addEventListener('click',function(e){e.preventDefault();go(t.dataset.go);t.scrollIntoView({block:'nearest',inline:'center'});});});
-  document.querySelector('.tn-logo').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
+  var _lg=document.querySelector('.tn-logo');if(_lg)_lg.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
   /* scroll spy + hide on fast scroll down, show on scroll up */
   var lastY=0,ticking=false;
   function spy(){
